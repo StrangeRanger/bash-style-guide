@@ -1,59 +1,54 @@
-Bash Style Guide
-================
+# Bash Style Guide
 
-This style guide is meant to outline how to write bash scripts with
-a style that makes them safe and predictable.  This guide is based
-on [this wiki](http://mywiki.wooledge.org), specifically this page:
+This style guide is meant to outline how to write bash scripts
+with a style that makes them safe and predictable.  Most of this
+guide is based on [this wiki](http://mywiki.wooledge.org), specifically this page:
 
 http://mywiki.wooledge.org/BashGuide/Practices
 
-If anything is not mentioned explicitly in this guide, it defaults to matching
-whatever is outlined in the wiki.
+If anything is not mentioned explicitly in this guide, it
+defaults to matching whatever is outlined in the wiki.
 
-Fork this style guide on GitHub https://github.com/bahamas10/bash-style-guide
+You can fork this style guide on GitHub: https://github.com/bahamas10/bash-style-guide
 
-Preface
--------
-
-I wrote this guide originally for a project I had worked on called
-[Basher](https://github.com/bahamas10/basher).  The idea was to make a program
-like [Puppet](https://puppet.com/) or [Chef](https://www.chef.io/) but using
-nothing but Bash - simple scripts that could do automation tasks instead of
-complex ruby scripts or whatever else is used by existing configuration
-management software.
-
-Basher was fun to write, and for what it does it works pretty well.  As part of
-writing it I also wrote this style guide to show 1. how I write bash and 2. how
-bash can be safe and predictable if written carefully.
+## Preface
 
 This guide will try to be as objective as possible, providing reasoning for why
 certain decisions were made.  For choices that are purely aesthetic (and may
 not be universally agreeable) they will exist in the `Aesthetics` section
 below.
 
-Aesthetics
-----------
+## Aesthetics
 
-### Tabs / Spaces
+### Indents
 
-tabs.
+Indents should be 4 spaces. Don't use tabs.
+
+``` bash
+var=true
+
+if [[ var = true ]]; then
+    echo "true"
+fi
+```
 
 ### Columns
 
-not to exceed 80.
+It's preferred that columns are 80 characters or less, though should not exceed
+90 characters in length unless it can't be helped.
 
 ### Semicolons
 
-You don't use semicolons on the command line (I hope), don't use them in
+You don't use semicolons on the command line (I hope), so don't use them in
 scripts.
 
 ``` bash
-# wrong
-name='dave';
+# Wrong
+name="dave";
 echo "hello $name";
 
-#right
-name='dave'
+# Right
+name="dave"
 echo "hello $name"
 ```
 
@@ -62,18 +57,19 @@ Namely, semicolons should be used for control statements like `if` or `while`.
 
 ### Functions
 
-Don't use the `function` keyword.  All variables created in a function should
-be made local.
+Don't use the `function` keyword. All variables created in a function should
+be made local, unless you plan on calling them outside of the function they're
+defined in.
 
 ``` bash
-# wrong
+# Wrong
 function foo {
-    i=foo # this is now global, wrong depending on intent
+    i=foo # This is now global, wrong depending on intent
 }
 
-# right
+# Right
 foo() {
-    local i=foo # this is local, preferred
+    local i=foo # This is local, preferred
 }
 ```
 
@@ -83,18 +79,18 @@ foo() {
 as `while`.
 
 ``` bash
-# wrong
+# Wrong
 if true
 then
     ...
 fi
 
-# also wrong, though admittedly looks kinda cool
+# Also wrong, though admittedly looks kinda cool
 true && {
     ...
 }
 
-# right
+# Right
 if true; then
     ...
 fi
@@ -102,32 +98,98 @@ fi
 
 ### Spacing
 
-No more than 2 consecutive newline characters (ie. no more than 1 blank line in
-a row)
+No more than 2 consecutive newline characters (i.e., no more than 1 blank line
+in a row)
 
 ### Comments
 
-No explicit style guide for comments.  Don't change someones comments for
-aesthetic reasons unless you are rewriting or updating them.
+No explicit style guide for comments, other than capitalizing the first letter
+of the first word of each comment. Don't change someones comments for aesthetic
+reasons unless you are rewriting or updating them.
 
-Bashisms
---------
+### Commenting/File Formatting
 
-This style guide is for bash.  This means when given the choice, always prefer
+Though not required, it is preferred to follow the comment/file formatting
+described below.
+
+If your file is fairly big and has many parts (variables,
+error trapping, functions, main code, etc.), then the comments and overall
+formatting should look similar to below:
+
+``` bash
+#!/bin/bash
+
+################################################################################
+#
+# Script description
+#
+################################################################################
+#
+# Variables
+#
+################################################################################
+#
+    var=var
+
+#
+################################################################################
+#
+# Functions
+#
+################################################################################
+#
+    func() {
+        ...
+    }
+
+#
+################################################################################
+#
+# Main code
+#
+################################################################################
+#
+    ...
+```
+
+Though if your file is fairly small and doesn't have many parts (variables, functions, etc.), then the comments and overall formatting should look similar
+to below:
+
+``` bash
+#!/bin/bash
+
+################################################################################
+#
+# File description
+#
+################################################################################
+
+var=var
+
+...
+```
+
+If you don't know which formatting to use based on your situation, just use your best judgment.
+
+Refer to these files for examples: [example 1](Examples/1.md) and [example 2](Examples/2.md).
+
+## Bashisms
+
+This style guide is for bash. This means when given the choice, always prefer
 bash builtins or keywords instead of external commands or `sh(1)` syntax.
 
 ### `test(1)`
 
-Use `[[ ... ]]` for conditional testing, not `[ .. ]` or `test ...`
+Use `[[ ... ]]` for conditional testing, not `[ .. ]` or `test ...`.
 
 ``` bash
-# wrong
+# Wrong
 test -d /etc
 
-# also wrong
+# Also wrong
 [ -d /etc ]
 
-# correct
+# Right
 [[ -d /etc ]]
 ```
 
@@ -135,27 +197,27 @@ See http://mywiki.wooledge.org/BashFAQ/031 for more information
 
 ### Sequences
 
-Use bash builtins for generating sequences
+Use bash builtins for generating sequences.
 
 ``` bash
 n=10
 
-# wrong
+# Wrong
 for f in $(seq 1 5); do
     ...
 done
 
-# wrong
+# Wrong
 for f in $(seq 1 "$n"); do
     ...
 done
 
-# right
+# Right
 for f in {1..5}; do
     ...
 done
 
-# right
+# Right
 for ((i = 0; i < n; i++)); do
     ...
 done
@@ -166,8 +228,8 @@ done
 Use `$(...)` for command substitution.
 
 ``` bash
-foo=`date`  # wrong
-foo=$(date) # right
+foo=`date`  # Wrong
+foo=$(date) # Right
 ```
 
 ### Math / Integer Manipulation
@@ -178,12 +240,12 @@ Use `((...))` and `$((...))`.
 a=5
 b=4
 
-# wrong
+# Wrong
 if [[ $a -gt $b ]]; then
     ...
 fi
 
-# right
+# Right
 if ((a > b)); then
     ...
 fi
@@ -198,13 +260,13 @@ expansion](http://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion)
 over external commands like `echo`, `sed`, `awk`, etc.
 
 ``` bash
-name='bahamas10'
+name="bahamas10"
 
-# wrong
+# Wrong
 prog=$(basename "$0")
 nonumbers=$(echo "$name" | sed -e 's/[0-9]//g')
 
-# right
+# Right
 prog=${0##*/}
 nonumbers=${name//[0-9]/}
 ```
@@ -220,22 +282,11 @@ for f in $(ls); do
     ...
 done
 
-# right
+# Right
 for f in *; do
     ...
 done
 ```
-
-### Determining path of the executable (`__dirname`)
-
-Simply stated, you can't know this for sure.  If you are trying to find out the
-full path of the executing program, you should rethink your software design.
-
-See http://mywiki.wooledge.org/BashFAQ/028 for more information
-
-For a case study on `__dirname` in multiple languages see my blog post
-
-http://daveeddy.com/2015/04/13/dirname-case-study-for-bash-and-node/
 
 ### Arrays and lists
 
@@ -243,13 +294,13 @@ Use bash arrays instead of a string separated by spaces (or newlines, tabs,
 etc.) whenever possible
 
 ``` bash
-# wrong
-modules='json httpserver jshint'
+# Wrong
+modules="json httpserver jshint"
 for module in $modules; do
     npm install -g "$module"
 done
 
-# right
+# Right
 modules=(json httpserver jshint)
 for module in "${modules[@]}"; do
     npm install -g "$module"
@@ -273,19 +324,18 @@ commands
 Example
 
 ``` bash
-fqdn='computer1.daveeddy.com'
+fqdn="computer1.daveeddy.com"
 
 IFS=. read -r hostname domain tld <<< "$fqdn"
 echo "$hostname is in $domain.$tld"
 # => "computer1 is in daveeddy.com"
 ```
 
-External Commands
------------------
+## External Commands
 
 ### GNU userland tools
 
-The whole world doesn't run on GNU or on Linux; avoid GNU specific options
+The whole world doesn't run on GNU or on Linux; try to avoid GNU specific options
 when forking external commands like `awk`, `sed`, `grep`, etc. to be as
 portable as possible.
 
@@ -293,16 +343,16 @@ When writing bash and using all the powerful tools and builtins bash gives you,
 you'll find it rare that you need to fork external commands to do simple string
 manipulation.
 
-### [UUOC](http://www.smallo.ruhr.de/award.html)
+### UUOC
 
 Don't use `cat(1)` when you don't need it.  If programs support reading from
 stdin, pass the data in using bash redirection.
 
 ``` bash
-# wrong
+# Wrong
 cat file | grep foo
 
-# right
+# Right
 grep foo < file
 
 # also right
@@ -311,113 +361,95 @@ grep foo file
 
 Prefer using a command line tools builtin method of reading a file instead of
 passing in stdin.  This is where we make the inference that, if a program says
-it can read a file passed by name, it's probably more performant to do that.
+it can read a file passed by name, it's probably more performance to do that.
 
-Style
------
+## Style
 
 ### Quoting
 
-Use double quotes for strings that require variable expansion or command
-substitution interpolation, and single quotes for all others.
+Use double quotes for strings that require variable expansion, command
+substitution interpolation, and everything in between.
 
 ``` bash
-# right
-foo='Hello World'
+# Right
+foo="Hello World"
 bar="You are $USER"
+bar="You are \$USER"
 
-# wrong
-foo="hello world"
-
-# possibly wrong, depending on intent
+# Wrong
+foo='hello world'
 bar='You are $USER'
 ```
 
-All variables that will undergo word-splitting *must* be quoted (1).  If no
-splitting will happen, the variable may remain unquoted.
+All variables should be quoted, whether or not they undergo word-splitting.
 
 ``` bash
-foo='hello world'
+foo="hello world"
 
-if [[ -n $foo ]]; then   # no quotes needed:
-                         # [[ ... ]] won't word-split variable expansions
+if [[ -n $foo ]]; then   # No quotes needed
 
-    echo "$foo"          # quotes needed
+    echo "$foo"          # Quotes needed
 fi
 
-bar=$foo  # no quotes needed - variable assignment doesn't word-split
+bar="$foo"  # Quotes needed
 ```
 
-1. The only exception to this rule is if the code or bash controls the variable
-for the duration of its lifetime.  For instance,
-[basher](https://github.com/bahamas10/basher) has code like:
+Two exceptions:
 
-``` bash
-printf_date_supported=false
-if printf '%()T' &>/dev/null; then
-    printf_date_supported=true
-fi
+1. The first exception to this rule is if you are calling a variable within double brackets, like shown above.
+2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
 
-if $printf_date_supported; then
-    ...
-fi
-```
-
-Even though `$printf_date_supported` undergoes word-splitting in the `if`
-statement in that example, quotes are not used because the contents of that
-variable are controlled explicitly by the programmer and not taken from a user
-or command.
-
-Also, variables like `$$`, `$?`, `$#`, etc. don't required quotes because they
-will never contain spaces, tabs, or newlines.
-
-When in doubt however, [quote all
+The mindset is that it's better safe than sorry, so [quote all
 expansions](http://mywiki.wooledge.org/Quotes).
 
 ### Variable Declaration
 
 Avoid uppercase variable names unless there's a good reason to use them.
 Don't use `let` or `readonly` to create variables.  `declare` should *only*
-be used for associative arrays.  `local` should *always* be used in functions.
+be used for associative arrays.  `local` should always be used in functions, unless the variable is called outside of the function.
 
 ``` bash
-# wrong
+# Wrong
 declare -i foo=5
 let foo++
-readonly bar='something'
+readonly bar="something"
 FOOBAR=baz
 
-# right
+# Right
 i=5
 ((i++))
-bar='something'
+bar="something"
 foobar=baz
 ```
 
 ### shebang
 
-Bash is not always located at `/bin/bash`, so use this line:
+Never use `#!/usr/bin/env bash`. This can cause your scripts to behave differently depending on who runs it. For this reason, use this line instead:
 
 ``` bash
-#!/usr/bin/env bash
+#!/bin/bash
 ```
 
-Unless you have a reason to use something else.
+...unless you have a reason to use something else.
 
-### Error Checking
+## Error Checking
 
 `cd`, for example, doesn't always work.  Make sure to check for any possible
 errors for `cd` (or commands like it) and exit or break if they are present.
 
 ``` bash
-# wrong
-cd /some/path # this could fail
-rm file       # if cd fails where am I? what am I deleting?
+# Wrong
+cd /some/path # This could fail
+rm file       # If cd fails where am I? what am I deleting?
 
-# right
+# Right
 cd /some/path || exit
 rm file
 ```
+
+### `trap`
+
+Trapping is very useful for catching system signals such as SIGTERM, SIGINT, and so on. Make sure to use it where necessary.
 
 ### `set -e`
 
@@ -425,7 +457,7 @@ Don't set `errexit`.  Like in C, sometimes you want an error, or you expect
 something to fail, and that doesn't necessarily mean you want the program
 to exit.
 
-This is a contreversial opinion that I have on the surface, but the link below
+This is a controversial opinion that I have on the surface, but the link below
 will show situations where `set -e` can do more harm than good because of its
 implications.
 
@@ -435,31 +467,37 @@ http://mywiki.wooledge.org/BashFAQ/105
 
 Never.
 
-Common Mistakes
----------------
+### Redirecting Errors
 
-### Using {} instead of quotes.
-
-Using `${f}` is potentially different than `"$f"` because of how word-splitting
-is performed.  For example.
+When echoing an error message, always redirect the message to stderr:
 
 ``` bash
-for f in '1 space' '2  spaces' '3   spaces'; do
+echo "Failed to execute file" >&2
+```
+
+## Common Mistakes
+
+### Using {} instead of quotes
+
+Using `${f}` is potentially different than `"$f"` because of how word-splitting
+is performed.  For example:
+
+``` bash
+for f in "1 space" "2  spaces" "3   spaces"; do
     echo ${f}
 done
 ```
 
 yields
 
-```
+```txt
 1 space
 2 spaces
 3 spaces
 ```
 
 Notice that it loses the amount of spaces.  This is due to the fact that the
-variable is expanded and undergoes word-splitting because it is unquoted.  This
-loop results in the 3 following commands being executed:
+variable is expanded and undergoes word-splitting because it is unquoted.  This loop results in the 3 following commands being executed:
 
 ``` bash
 echo 1 space
@@ -473,14 +511,14 @@ to the `echo` command in all 3 invocations.
 If the variable was quoted instead:
 
 ``` bash
-for f in '1 space' '2  spaces' '3   spaces'; do
+for f in "1 space" "2  spaces" "3   spaces"; do
     echo "$f"
 done
 ```
 
 yields
 
-```
+```txt
 1 space
 2  spaces
 3   spaces
@@ -543,12 +581,10 @@ This will read the file in a streaming fashion, not pulling it all into memory,
 and will break on colons extracting the first field and discarding (storing as
 the variable `_`) the rest - using nothing but bash builtin commands.
 
-Extra
------
+## Extra
 
 - http://mywiki.wooledge.org/BashPitfalls
 
-License
--------
+## License
 
 MIT License
