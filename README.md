@@ -98,7 +98,7 @@ fi
 
 ### Spacing
 
-No more than 2 consecutive newline characters (i.e., no more than 1 blank line
+No more than 3 consecutive newline characters (i.e., no more than 2 blank line
 in a row)
 
 ### Comments
