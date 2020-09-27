@@ -35,8 +35,8 @@ fi
 ### Columns
 
 It's preferred that columns are 80 characters or less, though they should not exceed
-90 characters in length unless it can't be helped. The only exception to this
-rule is if it affects the readability of the code significantly.
+100 characters in length unless it can't be helped. The only reason 80 characters
+should be exceeded is if it would negatively effect readability.
 
 ### Semicolons
 
