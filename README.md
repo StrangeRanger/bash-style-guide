@@ -1,8 +1,8 @@
 # Bash Style Guide
 
-This style guide is meant to outline how to write bash scripts
+This style guide outlines how to write bash scripts
 with a style that makes them safe and predictable.  Most of this
-guide is based on [this wiki](http://mywiki.wooledge.org), specifically this page:
+guide is based on [this wiki](http://mywiki.wooledge.org), precisely this page:
 
 http://mywiki.wooledge.org/BashGuide/Practices
 
@@ -14,8 +14,8 @@ You can fork this style guide on GitHub: https://github.com/bahamas10/bash-style
 ## Preface
 
 This guide will try to be as objective as possible, providing reasoning for why
-certain decisions were made.  For choices that are purely aesthetic (and may
-not be universally agreeable) they will exist in the `Aesthetics` section
+individual decisions were made.  For choices that are purely aesthetic (and may
+not be universally agreeable), they will exist in the `Aesthetics` section
 below.
 
 ## Aesthetics
@@ -34,8 +34,9 @@ fi
 
 ### Columns
 
-It's preferred that columns are 80 characters or less, though should not exceed
-90 characters in length unless it can't be helped.
+It's preferred that columns are 80 characters or less, though they should not exceed
+90 characters in length unless it can't be helped. The only exception to this
+rule is if it affects the readability of the code significantly.
 
 ### Semicolons
 
@@ -103,8 +104,8 @@ in a row)
 
 ### Comments
 
-No explicit style guide for comments, other than capitalizing the first letter
-of the first word of each comment. Don't change someones comments for aesthetic
+No definitive style guide for comments, other than capitalizing the first letter
+of the first word of each comment. Don't change someone's comments for aesthetic
 reasons unless you are rewriting or updating them.
 
 ### Commenting/File Formatting
@@ -175,7 +176,7 @@ Refer to these files for examples: [example 1](Examples/1.md) and [example 2](Ex
 
 ## Bashisms
 
-This style guide is for bash. This means when given the choice, always prefer
+This style guide is for bash. This means when given a choice, always prefer
 bash builtins or keywords instead of external commands or `sh(1)` syntax.
 
 ### `test(1)`
@@ -193,7 +194,7 @@ test -d /etc
 [[ -d /etc ]]
 ```
 
-See http://mywiki.wooledge.org/BashFAQ/031 for more information
+See http://mywiki.wooledge.org/BashFAQ/031 for more information.
 
 ### Sequences
 
@@ -307,7 +308,7 @@ for module in "${modules[@]}"; do
 done
 ```
 
-Of course, in this example it may be better expressed as:
+Of course, in this example, it may be better expressed as:
 
 ``` bash
 npm install -g "${modules[@]}"
@@ -359,7 +360,7 @@ grep foo < file
 grep foo file
 ```
 
-Prefer using a command line tools builtin method of reading a file instead of
+Prefer using a command-line tools builtin method of reading a file instead of
 passing in stdin.  This is where we make the inference that, if a program says
 it can read a file passed by name, it's probably more performance to do that.
 
@@ -396,7 +397,7 @@ bar="$foo"  # Quotes needed
 
 Two exceptions:
 
-1. The first exception to this rule is if you are calling a variable within double brackets, like shown above.
+1. The first exception to this rule is if you are calling a variable within double brackets like shown above.
 2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
 
 The mindset is that it's better safe than sorry, so [quote all
@@ -440,7 +441,7 @@ errors for `cd` (or commands like it) and exit or break if they are present.
 ``` bash
 # Wrong
 cd /some/path # This could fail
-rm file       # If cd fails where am I? what am I deleting?
+rm file       # If cd fails, where am I? what am I deleting?
 
 # Right
 cd /some/path || exit
@@ -454,7 +455,7 @@ Trapping is very useful for catching system signals such as SIGTERM, SIGINT, and
 ### `set -e`
 
 Don't set `errexit`.  Like in C, sometimes you want an error, or you expect
-something to fail, and that doesn't necessarily mean you want the program
+something to fail and that doesn't necessarily mean you want the program
 to exit.
 
 This is a controversial opinion that I have on the surface, but the link below
@@ -496,7 +497,7 @@ yields
 3 spaces
 ```
 
-Notice that it loses the amount of spaces.  This is due to the fact that the
+Notice that it loses the number of spaces.  This is due to the fact that the
 variable is expanded and undergoes word-splitting because it is unquoted.  This loop results in the 3 following commands being executed:
 
 ``` bash
@@ -505,7 +506,7 @@ echo 2  spaces
 echo 3   spaces
 ```
 
-The extra spaces are effectively ignored here and only 2 arguments are passed
+The extra spaces are effectively ignored here, and only 2 arguments are passed
 to the `echo` command in all 3 invocations.
 
 If the variable was quoted instead:
@@ -528,7 +529,7 @@ The variable `$f` is expanded but doesn't get split at all by bash, so it is
 passed as a single string (with spaces) to the `echo` command in all 3
 invocations.
 
-Note that, for the most part `$f` is the same as `${f}` and `"$f"` is the same
+Note that, for the most part, `$f` is the same as `${f}` and `"$f"` is the same
 as `"${f}"`.  The curly braces should only be used to ensure the variable name
 is expanded properly.  For example:
 
@@ -544,7 +545,7 @@ expanded.
 
 ### Abusing for-loops when while would work better
 
-`for` loops are great for iteration over arguments, or arrays.  Newline
+`for` loops are great for iteration over arguments or arrays.  Newline
 separated data is best left to a `while read -r ...` loop.
 
 ``` bash
@@ -565,7 +566,7 @@ contain spaces or tabs.
 streaming fashion.
 2. If the first field of that file contained spaces or tabs, the for loop would
 break on that as well as newlines
-3. This only works *because* `$users` is unquoted in the `for` loop - if
+3. These only works *because* `$users` is unquoted in the `for` loop - if
 variable expansion only works for your purposes while unquoted this is a good
 sign that something isn't implemented correctly.
 
