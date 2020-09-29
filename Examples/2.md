@@ -13,9 +13,9 @@
 #
 ################################################################################
 #
-    export linuxPMI_revision="4" # Keeps track of changes to linuxPMI.sh
-    export botler_version="latest" # Determins which version of Botler is used
-    export installer_branch="dev" # Determins which installer branch is used
+    export linuxPMI_revision="4"    # Keeps track of changes to linuxPMI.sh
+    export botler_version="latest"  # Determins which version of Botler is used
+    export installer_branch="dev"   # Determins which installer branch is used
 
     # Checks to see if this script was executed with root privilege
     if ((EUID != 0)); then 
