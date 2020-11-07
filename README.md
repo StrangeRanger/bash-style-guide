@@ -94,8 +94,8 @@ No more than two consecutive newline characters, meaning no more than one blank 
 Capitalize the first letter of each comment's first word unless referencing a variable or command that is not capitalized. Allow for two spaces when appending comments to the end of the code. Don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
 
 ```bash
-var=$(echo "True")  # This prints "True"
-box="Box"                 # This is a box
+var=$(echo "True")  # This prints "True"  (Two spaces between ')' and '#')
+box="Box"           # This is a box       (Aligned with the comment above for better readability)
 ```
 
 ### Commenting/File Formatting
