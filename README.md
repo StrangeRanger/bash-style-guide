@@ -158,7 +158,7 @@ Though if your file is fairly small and doesn't have many parts (variables, func
 
 If you don't know which formatting to use based on your situation, use your best judgment.
 
-Refer to these files for examples: [example 1](Examples/1.md) and [example 2](Examples/2.md).
+Refer to these files for examples: [example 1](Examples/example-1.md) and [example 2](Examples/example-2.md).
 
 ## Bashisms
 
