@@ -1,10 +1,13 @@
+The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/linuxAIO.sh
+
+The code is similar to the code in example-1.md, but from a different project, and older.
+
+## Example
+
 ``` bash
 #!/bin/bash
 
 ################################################################################
-#
-# THIS SCRIPT IS FROM THE BOTLER PROJECT THAT CAN BE FOUND HERE:
-# https://github.com/Botler-Dev/Installer/blob/master/linux-master-installer.sh
 #
 # linuxPMI acts as the intermediary between the server Botler is being hosted
 # on and the linux master installer. To prevent any conflict with updates to
@@ -25,7 +28,7 @@
     fi
 
     echo "Downloading 'installer-prep.sh'..."
-    wget -N https://raw.githubusercontent.com/Botler-Dev/Installer/$installer_branch/installer-prep.sh || {
+    wget -N https://raw.githubusercontent.com/Botler-Dev/Installer/"$installer_branch"/installer-prep.sh || {
         echo "Failed to download 'installer-prep.sh'..." >&2
         echo -e "\nExiting..."
         exit 1
