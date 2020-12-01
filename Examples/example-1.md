@@ -13,25 +13,27 @@ The code below is from an installer project that can be refered to at this link:
 #
 ################################################################################
 #
-# [ Development variables ]
+# [ Development Variables ]
 #
 # The variables below are for dev/testing purpouses (DO NOT MODIFY).
 #
-################################################################################
-#
+###
     export linuxAIO_revision="5"                                # Keeps track of changes to linuxAIO.sh
     export installer_repo="StrangeRanger/NadekoBot-BashScript"  # Determines which repo is used
-
+###
 #
+# End of [ Development Variables ]
+################################################################################
+
+
 ################################################################################
 #
-# [ Configuration varaibles ]
+# [ Configuration Varaibles ]
 #
 # The variables below are used to configure the installer in one way or another,
 # and CAN BE modified by the end user.
 #
-################################################################################
-#
+###
     # Determines from which branch from the installer repo will be used
     # release/latest = The most recent release
     # master         = The latest stable code
@@ -46,14 +48,17 @@ The code below is from an installer project that can be refered to at this link:
     #
     # Default: false
     allow_run_as_root=false
-
+###
 #
+# End of [ Configuration Varaibles ]
+################################################################################
+
+
 ################################################################################
 #
 # [ Main ]
 #
-################################################################################
-#
+###
     # Checks if the script was executed with root privilege
     if ((EUID == 0)) && [[ $allow_run_as_root = false ]]; then
         echo "\033[1;31mPlease run this script without root privilege" >&2
@@ -72,4 +77,8 @@ The code below is from an installer project that can be refered to at this link:
         exit 1
     }
     sudo chmod +x installer_prep.sh && ./installer_prep.sh
+###
+#
+# End of [ Main ]
+################################################################################
 ```
