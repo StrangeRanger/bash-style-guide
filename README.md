@@ -87,7 +87,7 @@ fi
 
 ### Spacing
 
-No more than two consecutive newline characters, meaning no more than one blank line.
+No more than two consecutive newline characters, meaning no more than one blank line. The only time two blank lines are acceptable is in between the section comments described in the `Commenting/File Formatting` section below.
 
 ### Comments
 
@@ -113,31 +113,42 @@ If your file is fairly big and has many parts (variables, error trapping, functi
 #
 ################################################################################
 #
-# Variables
+# [ Variables ]
 #
-################################################################################
-#
+###
     var=var
+###
+#
+# End of [ Variables ]
+################################################################################
 
-#
+
 ################################################################################
 #
-# Functions
+# [ Functions ]
 #
-################################################################################
-#
+###
     func() {
         ...
     }
+###
+#
+# End of [ Functions ]
+################################################################################
 
-#
+
 ################################################################################
 #
-# Main code
+# [ Main ]
 #
-################################################################################
-#
+###
     ...
+    ...
+    ...
+###
+#
+# End of [ Variables ]
+################################################################################
 ```
 
 Though if your file is fairly small and doesn't have many parts (variables, functions, etc.), then the comments and overall formatting should look similar to below:
@@ -150,10 +161,10 @@ Though if your file is fairly small and doesn't have many parts (variables, func
 # File description
 #
 ################################################################################
-#
-    var=var
 
-...
+    var=var
+    ...
+    ...
 ```
 
 If you don't know which formatting to use based on your situation, use your best judgment.
