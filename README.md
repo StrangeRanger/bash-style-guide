@@ -147,7 +147,7 @@ If your file is fairly big and has many parts (variables, error trapping, functi
     ...
 ###
 #
-# End of [ Variables ]
+# End of [ Main ]
 ################################################################################
 ```
 
