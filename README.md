@@ -161,7 +161,7 @@ Though if your file is fairly small and doesn't have many parts (variables, func
 # File description
 #
 ################################################################################
-
+#
     var=var
     ...
     ...
