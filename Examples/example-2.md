@@ -15,7 +15,7 @@ The code is similar to the code in example-1.md, but from a different project, a
 # addition, linuxPMI is the only script that will remain on the system.
 #
 ################################################################################
-
+#
     export linuxPMI_revision="4"    # Keeps track of changes to linuxPMI.sh
     export botler_version="latest"  # Determins which version of Botler is used
     export installer_branch="dev"   # Determins which installer branch is used
