@@ -87,7 +87,7 @@ fi
 
 ### Spacing
 
-No more than two consecutive newline characters, meaning no more than one blank line. The only time two blank lines are acceptable is in between the section comments described in the `Commenting/File Formatting` section below.
+No more than three consecutive newline characters, meaning no more than two blank lines.
 
 ### Comments
 
@@ -100,76 +100,9 @@ box="Box"           # This is a box       (Aligned with the comment above for be
 
 ### Commenting/File Formatting
 
-Though not required, it is preferred to follow the comment/file formatting described below.
+There is no required way to format your comments and files. That said, stay consistent with the chosen style.
 
-If your file is fairly big and has many parts (variables, error trapping, functions, main code, etc.), then the comments and overall formatting should look similar to below:
-
-``` bash
-#!/bin/bash
-
-################################################################################
-#
-# File description
-#
-################################################################################
-#
-# [ Variables ]
-#
-###
-    var=var
-###
-#
-# End of [ Variables ]
-################################################################################
-
-
-################################################################################
-#
-# [ Functions ]
-#
-###
-    func() {
-        ...
-    }
-###
-#
-# End of [ Functions ]
-################################################################################
-
-
-################################################################################
-#
-# [ Main ]
-#
-###
-    ...
-    ...
-    ...
-###
-#
-# End of [ Main ]
-################################################################################
-```
-
-Though if your file is fairly small and doesn't have many parts (variables, functions, etc.), then the comments and overall formatting should look similar to below:
-
-``` bash
-#!/bin/bash
-
-################################################################################
-#
-# File description
-#
-################################################################################
-#
-    var=var
-    ...
-    ...
-```
-
-If you don't know which formatting to use based on your situation, use your best judgment.
-
-Refer to these files for examples: [example 1](Examples/example-1.md) and [example 2](Examples/example-2.md).
+An example of my own style can be found in [example 1](Examples/example-1.md).
 
 ## Bashisms
 
