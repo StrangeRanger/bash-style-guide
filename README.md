@@ -301,8 +301,8 @@ bar='You are $USER'
 
 Two exceptions:
 
-1. When using commands that by default require/use single quotes, such as grep and sed.
-2. When saving output formating (text color, etc.) in variables (i.e. green=$'\033[0;32m'`)
+1. When using commands that by default require/use/recomment the use of single quotes, such as grep, sed, and trap.
+2. When saving output formating (text color, etc.) in variables (i.e. `green=$'\033[0;32m'`)
 
 All variables should be quoted, whether or not they undergo word-splitting.
 
