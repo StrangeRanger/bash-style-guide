@@ -1,5 +1,6 @@
 The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/installer_prep.sh
 
+## Example
 
 ```bash
 #!/bin/bash
