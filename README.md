@@ -26,7 +26,7 @@ fi
 
 ### Columns
 
-It's preferred that columns are 80 characters or less, though they should not exceed 100 characters in length unless it can't be helped. The only reason 80 characters should be exceeded is if it would negatively affect readability.
+It's preferred that columns are 88 characters or less. The only reason that the character limit should be exceeded is if it would negatively affect readability.
 
 ### Semicolons
 
@@ -91,18 +91,112 @@ No more than three consecutive newline characters, meaning no more than two blan
 
 ### Comments
 
-Capitalize the first letter of each comment's first word unless referencing a variable or command that is not capitalized. Allow for two spaces when appending comments to the end of the code. Don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
+#### Generals
+
+In general, the first letter of the first word of a comment, unless referencing a variable, should be capitalized. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
 
 ```bash
 var=$(echo "True")  # This prints "True"  (Two spaces between ')' and '#')
 box="Box"           # This is a box       (Aligned with the comment above for better readability)
 ```
 
-### Commenting/File Formatting
+#### Functions
 
-There is no required way to format your comments and files. That said, stay consistent with the chosen style.
+When commenting a function and describing its purpose, always follow the format below:
 
-An example of my own style can be found in [example 1](Examples/example-1.md).
+```bash
+func() {
+    ####
+    # FUNCTION INFO:
+    # 
+    # Functions description
+    #
+    # *Provide a description of any parameters used*
+    # @param $1 description
+    # @param $2 description
+    ####
+
+    ...
+}
+```
+
+#### Block of code
+
+When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two of them are used to indicate that you are commenting on a block of code instead of a single line/command. This is also applicable when making a single comment that speaks for several adjacent lines of code. In this case, a blank line should be used to signify that the comment is no longer applicable to the code beyond the line. When commenting on a single line of code, use a single pound sign to signify that you're referring to the following line of code instead of a section of code.
+
+```bash
+array=("a" "b" "c" "d" "e" "f" "g" "h")
+x=true
+
+## Prints out all items in $array, if x is true.
+if [[ $x = true ]]; then
+    for i in "${array[@]}"; do
+        echo "$i"
+    done
+fi
+```
+
+```bash
+## Variables the modify output color.
+export _YELLOW=$'\033[1;33m'
+export _GREEN=$'\033[0;32m'
+export _CYAN=$'\033[0;36m'
+export _RED=$'\033[1;31m'
+export _NC=$'\033[0m'
+export _CLRLN=$'\r\033[K'
+export _GREY=$'\033[0;90m'
+
+# Contains the raw url link to this 'README.md'.
+export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/master/README.md"
+```
+
+### File formatting and commenting
+
+Trying to describe this would take a lot of time and would be hard to explain. So below, I tried to create a detailed example with information about the formatting.
+
+```bash
+#!/bin/bash
+#
+# Script description
+#
+# Any other information
+# 
+########################################################################################
+#### [ Name of section: Variables ]
+
+
+# Two spaces between the '[ section name ]' comment and the beginning of the section code
+...code here....
+# Two spaces between the last line of code and the 'End of [ section name ]' comment
+
+
+#### End of [ Variables ]
+########################################################################################
+#### [ Functions ]
+#### If information or description about the section or something, it can be placed 
+#### here. 
+
+
+# Two spaces between the '[ section name ]' comment and the beginning of the section code
+...code here....
+# Two spaces between the last line of code and the 'End of [ section name ]' comment
+
+
+#### End of [ Functions ]
+########################################################################################
+#### [ Main ]
+
+
+# Two spaces between the '[ section name ]' comment and the beginning of the section code
+...code here....
+# Two spaces between the last line of code and the 'End of [ section name ]' comment
+
+
+#### End of [ Main ]
+########################################################################################
+```
+
+For a more detailed and example of how this format is used, take a look at the [example scripts](Examples/).
 
 ## Bashisms
 
@@ -260,7 +354,7 @@ echo "$hostname is in $domain.$tld"
 
 ### GNU userland tools
 
-The whole world doesn't run on GNU or Linux; try to avoid GNU specific options when forking external commands like `awk`, `sed`, `grep`, etc. to be as portable as possible.
+The whole world doesn't run on GNU or Linux; try to avoid GNU-specific options when forking external commands like `awk`, `sed`, `grep`, etc., to be as portable as possible.
 
 When writing bash and using all the powerful tools and builtins bash gives you, you'll find it rare that you need to fork external commands to do simple string manipulation.
 
@@ -279,7 +373,7 @@ grep foo < file
 grep foo file
 ```
 
-Prefer using a command-line tools builtin method of reading a file instead of passing in stdin.  This is where we make the inference that, if a program says it can read a file passed by name, it's probably more performance to do that.
+Prefer the use of the command-line tools built-in method of reading a file instead of passing in stdin.  This is where we make the inference that if a program says it can read a file passed by name, it's probably more performance to do that.
 
 ## Style
 
@@ -301,8 +395,8 @@ bar='You are $USER'
 
 Two exceptions:
 
-1. When using commands that by default require/use/recomment the use of single quotes, such as grep, sed, and trap.
-2. When saving output formating (text color, etc.) in variables (i.e. `green=$'\033[0;32m'`)
+1. When using commands that by default require/use/recommend using single quotes, such as grep, sed, and trap.
+2. When saving output formatting (text color, etc.) in variables (i.e. `green=$'\033[0;32m'`)
 
 All variables should be quoted, whether or not they undergo word-splitting.
 
@@ -322,12 +416,12 @@ Two exceptions:
 1. The first exception to this rule is if you call a variable within double brackets like shown above.
 2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
 
-The mindset is that it's better safe than sorry, so [quote all
-expansions](http://mywiki.wooledge.org/Quotes).
 
 ### Variable Declaration
 
-Avoid uppercase variable names unless there's a good reason to use them. Don't use `let` or `readonly` to create variables.  `declare` should *only* be used for associative arrays.  `local` should always be used in functions, unless the variable is called outside of the function.
+Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` appended to the beginning of the variable.
+
+Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function. 
 
 ``` bash
 # Wrong
@@ -335,12 +429,14 @@ declare -i foo=5
 let foo++
 readonly bar="something"
 FOOBAR=baz
+export food=5
 
 # Right
 i=5
 ((i++))
 bar="something"
 foobar=baz
+export _FOOD=5  # or MY_FOOD
 ```
 
 ### shebang
@@ -477,7 +573,7 @@ while IFS=: read -r user _; do
 done < /etc/passwd
 ```
 
-This will read the file in a streaming fashion, not pulling it all into memory, and will break on colons extracting the first field and discarding (storing as the variable `_`) the rest - using nothing but bash builtin commands.
+This will read the file in a streaming fashion, not pulling it all into memory, and will break on colons extracting the first field and discarding (storing as the variable `_`) the rest - using nothing but bash built-in commands.
 
 ## Extra
 
