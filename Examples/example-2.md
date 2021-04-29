@@ -133,14 +133,16 @@ detect_sys_info() {
     ## For Linux
     if [[ -f /etc/os-release ]]; then
         . /etc/os-release
+
+        pname="$PRETTY_NAME"
         _DISTRO="$ID"
         _VER="$VERSION_ID"  # Version: x.x.x...
         _SVER=${_VER//.*/}  # Version: x
         _CODENAME="$VERSION_CODENAME"
-        pname="$PRETTY_NAME"
     ## For macOS
     else
         _DISTRO=$(uname -s)
+
         if [[ $_DISTRO = "Darwin" ]]; then
             _VER=$(sw_vers -productVersion)  # macOS version: x.x.x
             _SVER=${_VER%.*}                 # macOS version: x.x
@@ -248,7 +250,7 @@ fi
 if [[ $supported = false ]]; then
     echo "${_RED}Your operating system/Linux Distribution is not OFFICIALLY supported" \
         "the installation, setup, and/or use of NadekoBot$_NC" >&2
-    read -rp "Would you like to continue with the installation anyways? [y/N] " choice
+    read -rp "Would you like to continue anyways? [y/N] " choice
     choice=$(echo "$choice" | tr '[A-Z]' '[a-z]')  # Convert user input to lowercase.
     case "$choice" in
         y|yes) clear -x; execute_master_installer ;;
