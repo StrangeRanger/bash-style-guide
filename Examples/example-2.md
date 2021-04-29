@@ -17,6 +17,7 @@ The code below is from an installer project that can be refered to at this link:
 # Refer to the '[ Prepping ]' section of this script for more information.
 current_linuxAIO_revision="10"
 
+# Keeps track of this script's process id, incase it needs to be manually killed.
 export _INSTALLER_PREP_PID=$$
 
 # The '--no-hostname' flag for journalctl only works with systemd 230 and later.
