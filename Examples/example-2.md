@@ -1,13 +1,13 @@
-The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/installer_prep.sh
+The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/installer_prep.sh. As a note, this code is what's executed by the code in the example-1.md file.
 
 ## Example
 
 ```bash
 #!/bin/bash
 #
-# This script looks at the operating system, architecture, bit type, etc., to
-# determine whether or not the system is supported by NadekoBot. Once the system
-# is deemed as supported, the master installer will be downloaded and executed.
+# This script looks at the operating system, architecture, bit type, etc., to determine
+# whether or not the system is supported by NadekoBot. Once the system is deemed as
+# supported, the master installer will be downloaded and executed.
 # 
 ########################################################################################
 #### [ Exported and/or Globally Used Variables ]
@@ -17,7 +17,7 @@ The code below is from an installer project that can be refered to at this link:
 # Refer to the '[ Prepping ]' section of this script for more information.
 current_linuxAIO_revision="10"
 
-# Keeps track of this script's process id, incase it needs to be manually killed.
+# Keeps track of this script's process id, in case it needs to be manually killed.
 export _INSTALLER_PREP_PID=$$
 
 # The '--no-hostname' flag for journalctl only works with systemd 230 and later.
@@ -87,9 +87,10 @@ if [[ $_LINUXAIO_REVISION != "$current_linuxAIO_revision" ]]; then
     # retrieved from github.
     ####
 
-    # Save the value of 'installer_branch' specified in 'linuxAIO.sh', to be set in the
-    # new 'linuxAIO.sh'.
-    installer_branch=$(grep '^installer_branch=".*"' linuxAIO.sh);
+    ## Save the value of $installer_branch and $allow_run_as_root specified in
+    ## 'linuxAIO.sh', to be set in the new 'linuxAIO.sh'.
+    installer_branch=$(grep '^installer_branch=".*"' linuxAIO.sh)
+    allow_run_as_root=$(grep '^allow_run_as_root=.*' linuxAIO.sh)
 
     echo "$_YELLOW'linuxAIO.sh' is not up to date$_NC"
     echo "Downloading latest 'linuxAIO.sh'..."
@@ -99,8 +100,13 @@ if [[ $_LINUXAIO_REVISION != "$current_linuxAIO_revision" ]]; then
     }
 
     echo "Applying set configurations to 'linuxAIO.sh'..."
-    sed -i "s/installer_branch=\".*\"/$installer_branch/" linuxAIO.sh ||      # Sed for linux
-        sed -i '' "s/installer_branch=\".*\"/$installer_branch/" linuxAIO.sh  # Sed for macOS
+    # Sets $installer_branch variable.
+    sed -i "s/^installer_branch=\".*\"/$installer_branch/" linuxAIO.sh ||      # Sed for linux
+        sed -i '' "s/^installer_branch=\".*\"/$installer_branch/" linuxAIO.sh  # Sed for macOS
+    # Sets $allow_run_as_root variable.
+    sed -i "s/^allow_run_as_root=.*/$allow_run_as_root/" linuxAIO.sh ||      # Sed for linux
+        sed -i '' "s/^allow_run_as_root=.*/$allow_run_as_root/" linuxAIO.sh  # Sed for macOS
+
     sudo chmod +x linuxAIO.sh  # Set execution permission
     echo "${_CYAN}Re-execute 'linuxAIO.sh' to continue$_NC"
     # TODO: Figure out a way to get exec to work, instead of exiting script
@@ -134,7 +140,6 @@ detect_sys_info() {
     ## For Linux
     if [[ -f /etc/os-release ]]; then
         . /etc/os-release
-
         pname="$PRETTY_NAME"
         _DISTRO="$ID"
         _VER="$VERSION_ID"  # Version: x.x.x...
@@ -143,7 +148,6 @@ detect_sys_info() {
     ## For macOS
     else
         _DISTRO=$(uname -s)
-
         if [[ $_DISTRO = "Darwin" ]]; then
             _VER=$(sw_vers -productVersion)  # macOS version: x.x.x
             _SVER=${_VER%.*}                 # macOS version: x.x
