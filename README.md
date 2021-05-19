@@ -33,15 +33,15 @@ It's preferred that columns are 88 characters or less. The only reason that the 
 Unless two commands/pieces of code are being placed on the same line, do not use semicolons where they are not needed.
 
 ``` bash
-# Wrong
+## Wrong
 name="dave";
 echo "hello $name";
 
-# Right
+## Right
 name="dave"
 echo "hello $name"
 
-# Right
+# Also right
 name="dave"; echo "hello $name"
 ```
 
@@ -52,12 +52,12 @@ The exception to this rule is outlined in the `Block Statements` section below. 
 Don't use the `function` keyword. Instead, `()` should be appended to the end of the function name. All variables created in a function should be made local unless you plan on calling them from outside of the function they're defined in.
 
 ``` bash
-# Wrong
+## Wrong
 function foo {
     i=foo  # This is now global, wrong depending on intent
 }
 
-# Right
+## Right
 foo() {
     local i=foo  # This is local, preferred
 }
@@ -68,18 +68,18 @@ foo() {
 `then` should be on the same line as `if`, and `do` should be on the same line as `while`.
 
 ``` bash
-# Wrong
+## Wrong
 if true
 then
     ...
 fi
 
-# Also wrong
+## Also wrong
 true && {
     ...
 }
 
-# Right
+## Right
 if true; then
     ...
 fi
@@ -93,7 +93,7 @@ No more than three consecutive newline characters, meaning no more than two blan
 
 #### Generals
 
-In general, the first letter of the first word of a comment, unless referencing a variable, should be capitalized. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
+In general, the first letter of a comment, unless referencing a variable, should be capitalized. Comments should always end with a period. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
 
 ```bash
 var=$(echo "True")  # This prints "True"  (Two spaces between ')' and '#')
@@ -102,42 +102,50 @@ box="Box"           # This is a box       (Aligned with the comment above for be
 
 #### Functions
 
-When commenting a function and describing its purpose, always follow the format below:
+When commenting on a function and describing its purpose, always follow the format below:
 
 ```bash
 func() {
     ####
-    # FUNCTION INFO:
-    # 
-    # Functions description
+    # FUNCTION INFO
+    # -------------
+    # Description of the function and/or its purpose.
     #
-    # *Provide a description of any parameters used*
-    # @param $1 description
-    # @param $2 description
+    # @param $1 Description of the parameter and/or its purpose.
+    # @param $2 Description of the parameter and/or its purpose.
     ####
 
     ...
 }
 ```
 
-#### Block of code
+#### Number of pound signs
 
-When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two of them are used to indicate that you are commenting on a block of code instead of a single line/command. This is also applicable when making a single comment that speaks for several adjacent lines of code. In this case, a blank line should be used to signify that the comment is no longer applicable to the code beyond the line. When commenting on a single line of code, use a single pound sign to signify that you're referring to the following line of code instead of a section of code.
+When a comment refers to a single line of code, a singular pound sign (#) should be used. This includes when describing what the if statement checks for.
 
 ```bash
-array=("a" "b" "c" "d" "e" "f" "g" "h")
-x=true
+# Contains the raw URL link to this 'README.md'.
+export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/master/README.md"
+```
 
-## Prints out all items in $array, if x is true.
-if [[ $x = true ]]; then
-    for i in "${array[@]}"; do
-        echo "$i"
-    done
+```bash
+# Describe what the if statement is looking for.
+if [[ ...code to be commented on... ]]; then
+    ...
+fi
+```
+
+When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two # indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that speaks for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
+
+```bash
+## Describe what the code inside the if statement does.
+if [[ ... ]]; then
+    ...code to be commented on...
 fi
 ```
 
 ```bash
-## Variables the modify output color.
+## Variables that modify output color.
 export _YELLOW=$'\033[1;33m'
 export _GREEN=$'\033[0;32m'
 export _CYAN=$'\033[0;36m'
@@ -145,9 +153,43 @@ export _RED=$'\033[1;31m'
 export _NC=$'\033[0m'
 export _CLRLN=$'\r\033[K'
 export _GREY=$'\033[0;90m'
+```
 
-# Contains the raw url link to this 'README.md'.
-export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/master/README.md"
+In the case of an if statement containing an `elif` or `else`, three pound signs should be used when the comment refers to the entire if statement. If the comment is made for a single section of the if statement, double pound signs should be used instead.
+
+```bash
+### Describe what the entire if statement does.
+if [[ ...code to be commented on... ]]; then
+    ...code to be commented on...
+else
+    ...code to be commented on...
+fi
+```
+
+```bash
+## Describe what the code inside the FIRST section does.
+if [[ ... ]]; then
+    ...code to be commented on...
+## Describe what the code inside the SECOND section does.
+else
+    ...code to be commented on...
+fi
+```
+
+### Tags
+
+Not all comments are the same. Some describe why a piece of code is being used, what the code does, so on and so forth. So it's encouraged to use "tags" to make it clear the purpose of the comment.
+
+```bash
+# REASON: Describes the reason the code below is used.
+...
+
+# NOTE: Let's users know that it's just a quick note about the code
+...
+
+...
+...
+...
 ```
 
 ### File formatting and commenting
@@ -157,46 +199,40 @@ Trying to describe this would take a lot of time and would be hard to explain. S
 ```bash
 #!/bin/bash
 #
-# Script description
+# <= Script description =>
 #
-# Any other information
+# <= Any other information =>
 # 
 ########################################################################################
-#### [ Name of section: Variables ]
-
-
-# Two spaces between the '[ section name ]' comment and the beginning of the section code
-...code here....
-# Two spaces between the last line of code and the 'End of [ section name ]' comment
-
-
-#### End of [ Variables ]
+#### [ <= Section name => ]
+<= Blank line =>
+<= Blank line =>
+<= Code goes between the blank lines =>
+<= Blank line =>
+<= Blank line =>
+#### End of [ <= Section name => ]
 ########################################################################################
-#### [ Functions ]
-#### If information or description about the section or something, it can be placed 
-#### here. 
-
-
-# Two spaces between the '[ section name ]' comment and the beginning of the section code
-...code here....
-# Two spaces between the last line of code and the 'End of [ section name ]' comment
-
-
-#### End of [ Functions ]
+#### [ <= Section name => ]
+#### <= Information or a description of the section can go here =>
+<= Blank line =>
+<= Blank line =>
+<= Code goes between the blank lines =>
+<= Blank line =>
+<= Blank line =>
+#### End of [ <= Section name => ]
 ########################################################################################
-#### [ Main ]
-
-
-# Two spaces between the '[ section name ]' comment and the beginning of the section code
-...code here....
-# Two spaces between the last line of code and the 'End of [ section name ]' comment
-
-
-#### End of [ Main ]
+#### [ <= Section name => ]
+<= Blank line =>
+<= Blank line =>
+<= Code goes between the blank lines =>
+<= Blank line =>
+<= Blank line =>
+#### End of [ <= Section name => ]
 ########################################################################################
+<= Blank line at the end of the file =>
 ```
 
-For a more detailed and example of how this format is used, take a look at the [example scripts](Examples/).
+For a exampls of this format put into practice, look at the [example scripts](Examples/).
 
 ## Bashisms
 
