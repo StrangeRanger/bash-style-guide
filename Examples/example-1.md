@@ -18,9 +18,9 @@ The code below is from an installer project that can be refered to at this link:
 ########
 ######## ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
 ########
-######## NOTE: Whenever the installer retrieves the newest version of 'linuxAIO.sh', all
-########       modified variables, with the exception of $installer_repo, will be
-########       applied to the new version of this script.
+######## Whenever the installer retrieves the newest version of 'linuxAIO.sh', all
+######## modified variables, with the exception of $installer_repo, will be applied to
+######## the new version of this script.
 
 
 # The repository that the installer will use.
@@ -28,18 +28,13 @@ The code below is from an installer project that can be refered to at this link:
 # The only time that this variable should be modified, is if you have created a fork of
 # the repo and plan on making your own modifications to the installer.
 #
-# VARIABLE FORMAT: "[github username]/[repository name]"
-#
-# Default: N/A
+# Format: installer_repo="[github username]/[repository name]"
 installer_repo="StrangeRanger/NadekoBot-BashScript"
 
 # The branch that the installer will use. 
 #
-# NOTE: While you can set the variable to any existing branch at $installer_repo, it's
-#       recommended to choose between the "provided options". 
-#
-# PROVIDED OPTIONS
-# ----------------
+# Options
+# -------
 # master = Production ready code (the latest stable code)
 # dev    = Non-production ready code (has the possibility of breaking something)
 #
@@ -48,8 +43,8 @@ installer_branch="master"
 
 # Determines whether or not the installer can be run as the root user.
 #
-# POSSIBLE OPTIONS
-# ----------------
+# Options
+# -------
 # true  = can be run with root privilege
 # false = cannot be run with root privilege (recommended)
 #
@@ -58,7 +53,7 @@ allow_run_as_root=false
 
 # The branch or tag that the installer will download NadekoBot from.
 #
-# OPTIONS
+# Options
 # -------
 # 1.9   = Latest version (the master/main branch)
 # x.x.x = Any other branch/tag (refer to the NadekoBot repo for available tags and
@@ -109,6 +104,5 @@ sudo chmod +x installer_prep.sh && ./installer_prep.sh
 
 #### End of [ Main ]
 ########################################################################################
-
 
 ```
