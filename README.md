@@ -192,48 +192,6 @@ Not all comments are the same. Some describe why a piece of code is being used, 
 ...
 ```
 
-### File formatting and commenting
-
-Trying to describe this would take a lot of time and would be hard to explain. So below, I tried to create a detailed example with information about the formatting.
-
-```bash
-#!/bin/bash
-#
-# <= Script description =>
-#
-# <= Any other information =>
-# 
-########################################################################################
-#### [ <= Section name => ]
-<= Blank line =>
-<= Blank line =>
-<= Code goes between the blank lines =>
-<= Blank line =>
-<= Blank line =>
-#### End of [ <= Section name => ]
-########################################################################################
-#### [ <= Section name => ]
-#### <= Information or a description of the section can go here =>
-<= Blank line =>
-<= Blank line =>
-<= Code goes between the blank lines =>
-<= Blank line =>
-<= Blank line =>
-#### End of [ <= Section name => ]
-########################################################################################
-#### [ <= Section name => ]
-<= Blank line =>
-<= Blank line =>
-<= Code goes between the blank lines =>
-<= Blank line =>
-<= Blank line =>
-#### End of [ <= Section name => ]
-########################################################################################
-<= Blank line at the end of the file =>
-```
-
-For a exampls of this format put into practice, look at the [example scripts](Examples/).
-
 ## Bashisms
 
 This style guide is for bash. This means when given a choice, always prefer
@@ -263,22 +221,22 @@ Use bash builtins for generating sequences.
 ``` bash
 n=10
 
-# Wrong
+## Wrong
 for f in $(seq 1 5); do
     ...
 done
 
-# Wrong
+## Wrong
 for f in $(seq 1 "$n"); do
     ...
 done
 
-# Right
+## Right
 for f in {1..5}; do
     ...
 done
 
-# Right
+## Right
 for ((i = 0; i < n; i++)); do
     ...
 done
@@ -301,12 +259,12 @@ Use `((...))` and `$((...))`.
 a=5
 b=4
 
-# Wrong
+## Wrong
 if [[ $a -gt $b ]]; then
     ...
 fi
 
-# Right
+## Right
 if ((a > b)); then
     ...
 fi
@@ -321,11 +279,11 @@ Always prefer [parameter expansion](http://mywiki.wooledge.org/BashGuide/Paramet
 ``` bash
 name="bahamas10"
 
-# Wrong
+## Wrong
 prog=$(basename "$0")
 nonumbers=$(echo "$name" | sed -e 's/[0-9]//g')
 
-# Right
+## Right
 prog=${0##*/}
 nonumbers=${name//[0-9]/}
 ```
@@ -335,12 +293,12 @@ nonumbers=${name//[0-9]/}
 Do not [parse ls(1)](http://mywiki.wooledge.org/ParsingLs), instead use bash builtin functions to loop files
 
 ``` bash
-# very wrong, potentially unsafe
+## very wrong, potentially unsafe
 for f in $(ls); do
     ...
 done
 
-# Right
+## Right
 for f in *; do
     ...
 done
@@ -351,13 +309,13 @@ done
 Use bash arrays instead of a string separated by spaces (or newlines, tabs, etc.) whenever possible:
 
 ``` bash
-# Wrong
+## Wrong
 modules="json httpserver jshint"
 for module in $modules; do
     npm install -g "$module"
 done
 
-# Right
+## Right
 modules=(json httpserver jshint)
 for module in "${modules[@]}"; do
     npm install -g "$module"
@@ -418,13 +376,13 @@ Prefer the use of the command-line tools built-in method of reading a file inste
 Use double quotes for strings that require variable expansion, command substitution interpolation, and everything in between.
 
 ``` bash
-# Right
+## Right
 green=$'\033[0;32m'
 foo="Hello World"
 bar="You are $USER"
 bar="You are \$USER"
 
-# Wrong
+## Wrong
 foo='Hello World'
 bar='You are $USER'
 ```
@@ -460,14 +418,14 @@ Unless exported, all variables should be lowercase. If a variable is being expor
 Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function. 
 
 ``` bash
-# Wrong
+## Wrong
 declare -i foo=5
 let foo++
 readonly bar="something"
 FOOBAR=baz
 export food=5
 
-# Right
+## Right
 i=5
 ((i++))
 bar="something"
@@ -490,11 +448,11 @@ Never use `#!/usr/bin/env bash`. This can cause your scripts to behave different
 `cd`, for example, doesn't always work.  Make sure to check for any possible errors for `cd` (or commands like it) and exit or break if they are present.
 
 ``` bash
-# Wrong
+## Wrong
 cd /some/path  # This could fail
 rm file        # If cd fails, where am I? what am I deleting?
 
-# Right
+## Right
 cd /some/path || exit
 rm file
 ```
