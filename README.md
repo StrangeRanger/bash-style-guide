@@ -176,22 +176,6 @@ else
 fi
 ```
 
-### Tags
-
-Not all comments are the same. Some describe why a piece of code is being used, what the code does, so on and so forth. So it's encouraged to use "tags" to make it clear the purpose of the comment.
-
-```bash
-# REASON: Describes the reason the code below is used.
-...
-
-# NOTE: Let's users know that it's just a quick note about the code
-...
-
-...
-...
-...
-```
-
 ## Bashisms
 
 This style guide is for bash. This means when given a choice, always prefer
