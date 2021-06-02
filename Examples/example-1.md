@@ -13,14 +13,14 @@ The code below is from an installer project that can be refered to at this link:
 #### [ Variables ]
 
 ########################################################################################
-######## [[ Configuration Variables ]]
-######## Variables used to modify the behavior of the installer.
-########
-######## ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
-########
-######## Whenever the installer retrieves the newest version of 'linuxAIO.sh', all
-######## modified variables, with the exception of $installer_repo, will be applied to
-######## the new version of this script.
+#### [[ Configuration Variables ]]
+#### Variables used to modify the behavior of the installer.
+####
+#### ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
+####
+#### Whenever the installer retrieves the newest version of 'linuxAIO.sh', all modified
+#### variables, with the exception of $installer_repo, will be applied to the new
+#### version of this script.
 
 
 # The repository that the installer will use.
@@ -63,19 +63,19 @@ allow_run_as_root=false
 export _NADEKO_INSTALL_VERSION="1.9"
 
 
-######## End of [[ Configuration Variables ]]
+#### End of [[ Configuration Variables ]]
 ########################################################################################
-######## [[ General Variables ]]
+#### [[ General Variables ]]
 
 
 # Used to keep track of changes to 'linuxAIO.sh'.
 # Refer to the '[ Prepping ]' section of 'installer_prep.sh' for more information.
-export _LINUXAIO_REVISION="14"
+export _LINUXAIO_REVISION="17"
 # URL to the raw version of a specified script.
 export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_branch"
 
 
-######## End of [[ General Variables ]]
+#### End of [[ General Variables ]]
 ########################################################################################
 
 #### End of [ Variables ]
@@ -93,16 +93,11 @@ if [[ $EUID = 0 && $allow_run_as_root = false ]]; then
 fi
 
 echo "Downloading the latest installer..."
-curl "$_RAW_URL"/installer_prep.sh -o installer_prep.sh || {
-    echo "\033[1;31mFailed to download 'installer_prep.sh'\033[0m" >&2
-    echo -e "\nExiting..."
-    exit 1
-}
-# Set the execution permissions of 'installer_prep.sh', then execute it.
-sudo chmod +x installer_prep.sh && ./installer_prep.sh
+curl -O "$_RAW_URL"/installer_prep.sh
+sudo chmod +x installer_prep.sh
+./installer_prep.sh
 
 
 #### End of [ Main ]
 ########################################################################################
-
 ```
