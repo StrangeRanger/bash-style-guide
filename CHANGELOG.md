@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [2021.6.1] - 2021-6-1
+## [2021.6.1] - 2021-06-01
 
 ### Added
 
@@ -27,7 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - Wording and incorrectly spelt words.
 
-## [2021.5.2] - 2021-5-2
+## [2021.5.2] - 2021-05-02
 
 ### Added
 
@@ -42,7 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Aesthetics -> Comments -> File formatting and commenting
         - Previously refered to as Commenting/File Formatting 
 
-## [2021.3.14] - 2021-3-14
+## [2021.3.14] - 2021-03-14
 
 ### Changed
 
@@ -50,7 +50,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Aesthetics -> Spacing
     - Aesthetics -> Comments -> Commenting/File Formatting
 
-## [2020.12.1] - 2020-12-1
+## [2020.12.1] - 2020-12-01
 
 ### Changed
 
