@@ -397,7 +397,7 @@ Two exceptions:
 
 ### Variable Declaration
 
-Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` appended to the beginning of the variable.
+Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` appended to the beginning of the variable and between each word.
 
 Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function. 
 
@@ -408,13 +408,15 @@ let foo++
 readonly bar="something"
 FOOBAR=baz
 export food=5
+export food_cart=5
 
 ## Right
 i=5
 ((i++))
 bar="something"
 foobar=baz
-export _FOOD=5  # or MY_FOOD
+export _FOOD=5
+export _FOOD_CART=5
 ```
 
 ### shebang
