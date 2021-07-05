@@ -109,12 +109,11 @@ When commenting on a function and describing its purpose, always follow the form
 ```bash
 func() {
     ####
-    # FUNCTION INFO
-    # -------------
-    # Description of the function and/or its purpose.
+    # Function Info: Description of the function and/or its purpose.
     #
-    # @param $1 Description of the parameter and/or its purpose.
-    # @param $2 Description of the parameter and/or its purpose.
+    # Parameters:
+    #   $1 - Description of the parameter and/or its purpose.
+    #   $2 - Description of the parameter and/or its purpose.
     ####
 
     ...
@@ -279,7 +278,7 @@ nonumbers=${name//[0-9]/}
 Do not [parse ls(1)](http://mywiki.wooledge.org/ParsingLs), instead use bash builtin functions to loop files
 
 ``` bash
-## very wrong, potentially unsafe
+## Very wrong and potentially unsafe
 for f in $(ls); do
     ...
 done
@@ -423,13 +422,11 @@ export _FOOD_CART=5
 
 ### shebang
 
-Never use `#!/usr/bin/env bash`. This can cause your scripts to behave differently depending on who runs it. For this reason, use this line instead:
+Never use `#!/usr/bin/env bash` unless you have a very good reason to. This can cause your scripts to behave differently depending on who runs it. For this reason, use this line instead:
 
 ``` bash
 #!/bin/bash
 ```
-
-...unless you have a reason to use something else.
 
 ## Error Checking
 
