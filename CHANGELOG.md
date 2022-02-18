@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## 2022.2.18 - 2022-02-18
+## [Unreleased]
+
+## [2022.2.18] - 2022-02-18
 
 ### Added
 
@@ -14,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Changed
 
 - Updated wording to several sections.
+- Updated `Examples/example-1.md` and `Examples/example-2.md`.
 
 ## [2021.6.1] - 2021-06-01
 
@@ -71,7 +74,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2021.6.1...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2022.2.18...HEAD
+[2022.2.18]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.2.18
 [2021.6.1]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2021.6.1
 [2021.5.2]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2021.5.2
 [2021.3.14]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2021.3.14
