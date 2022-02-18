@@ -6,7 +6,7 @@ This style guide outlines how to write bash scripts with a style that makes them
 
 If anything is not mentioned explicitly in this guide, it defaults to matching whatever is outlined in the wiki.
 
-You can fork this style guide on GitHub: https://github.com/bahamas10/bash-style-guide
+You can fork this style guide on GitHub: https://github.com/StrangeRanger/bash-style-guide
 
 ## Preface
 
