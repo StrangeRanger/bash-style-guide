@@ -4,7 +4,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## 2022.2.18 - 2022-02-18
+
+### Added
+
+- Added a new section:
+    - Aesthetics -> Single line block statements
+
+## Changed
+
+- Updated wording to several sections.
 
 ## [2021.6.1] - 2021-06-01
 
