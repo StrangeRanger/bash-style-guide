@@ -22,7 +22,7 @@ Indents should be four spaces. Don't use tabs.
 var=true
 
 if [[ var = true ]]; then
-    echo "true"
+	echo "true"
 fi
 ```
 
@@ -32,7 +32,7 @@ It's preferred that columns are 88 characters or less. The only reason that the 
 
 ### Semicolons
 
-Unless two commands/pieces of code are being placed on the same line, do not use semicolons where they are not needed.
+Do not use semicolons where they are not needed.
 
 ``` bash
 ## Wrong
@@ -54,7 +54,7 @@ The exception to this rule is outlined in the `Block Statements` section below. 
 Don't use the `function` keyword. Instead, `()` should be appended to the end of the function name. All variables created in a function should be made local unless you plan on calling them from outside of the function they're defined in.
 
 ``` bash
-## Wrong
+## Wrong, if $i isn't used outside of 'foo'.
 function foo {
     i=foo  # This is now global, wrong depending on intent
 }
@@ -87,24 +87,41 @@ if true; then
 fi
 ```
 
+### Single line block statements
+
+Block statements, such as `if`, `for`, and `while` loops, can be placed on a single line, as long as they fit within the preferred character limit, and don't negatively affect readability. It is required, though, that the end of the block statement, like `fi` and `done`, must be placed on a separate line.
+
+```bash
+## Wrong
+if [[ -f $file_name ]]; then echo "$file_name exists!"; fi
+
+## Also wrong
+if [[ -f $file_name ]]; then echo "$file_name exists!"; echo "Done"
+fi
+
+## Right
+if [[ -f $file_name ]]; then echo "$file_name exists!"
+fi
+```
+
 ### Spacing
 
-No more than three consecutive newline characters, meaning no more than two blank lines.
+No more than three consecutive newline characters, meaning, no more than two blank lines.
 
 ### Comments
 
 #### Generals
 
-In general, the first letter of a comment, unless referencing a variable, should be capitalized. Comments should always end with a period. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
+In general, the first letter of a comment, unless referencing a variable, should be capitalized, and end with a period. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
 
 ```bash
-var=$(echo "True")  # This prints "True"  (Two spaces between ')' and '#')
-box="Box"           # This is a box       (Aligned with the comment above for better readability)
+var=$(echo "True")  # This prints "True".  (Two spaces between ')' and '#')
+box="Box"           # This is a box.       (Aligned with the comment above for better readability)
 ```
 
 #### Functions
 
-When commenting on a function and describing its purpose, always follow the format below:
+When commenting a function and describing its purpose, always follow the format below:
 
 ```bash
 func() {
@@ -136,7 +153,7 @@ if [[ ...code to be commented on... ]]; then
 fi
 ```
 
-When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two # indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that speaks for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
+When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two # indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
 
 ```bash
 ## Describe what the code inside the if statement does.
