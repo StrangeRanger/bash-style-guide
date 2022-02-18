@@ -9,6 +9,15 @@ The code below is from an installer project that can be refered to at this link:
 # and 'installer_prep.sh'. To prevent any conflicts with updates to the installer, this
 # script has as little code as deemed necessary.
 #
+# README: Because this script remains on the user's system, any changes to the code that
+#         are pushed to github, are never applied to the version on the user's system.
+#         To get around this, the variable $_LINUXAIO_REVISION contains a revision
+#         number that is updated every time any changes are made to 'linuxAIO.sh'.
+#         Another variable in 'installer_prep.sh' ($current_linuxAIO_revision) gets
+#         updated alongside with $_LINUXAIO_REVISION. Whenever the user executes the
+#         installer, 'installer_prep.sh' will compare the two variables. If they are not
+#         of equal value, the newest version of 'linuxAIO.sh' is retrieved from github.
+#
 ########################################################################################
 #### [ Variables ]
 
@@ -19,11 +28,11 @@ The code below is from an installer project that can be refered to at this link:
 #### ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
 ####
 #### Whenever the installer retrieves the newest version of 'linuxAIO.sh', all modified
-#### variables, with the exception of $installer_repo, will be applied to the new
-#### version of this script.
+#### variables, with the exception of $installer_repo and $_FILES_TO_BACK_UP, will be
+#### applied to the new version of this script.
 
 
-# The repository that the installer will use.
+# The repository containing all of the scripts used by the installer.
 #
 # The only time that this variable should be modified, is if you have created a fork of
 # the repo and plan on making your own modifications to the installer.
@@ -31,36 +40,61 @@ The code below is from an installer project that can be refered to at this link:
 # Format: installer_repo="[github username]/[repository name]"
 installer_repo="StrangeRanger/NadekoBot-BashScript"
 
-# The branch that the installer will use. 
+# The branch of $installer_repo that the installer will download its scripts from.
 #
-# Options
-# -------
-# master = Production ready code (the latest stable code)
-# dev    = Non-production ready code (has the possibility of breaking something)
+# Options:
+#   master = Production ready code (the latest stable code)
+#   dev    = Non-production ready code (has the possibility of breaking something)
 #
-# Default: master
+# Default: "master"
 installer_branch="master"
 
-# Determines whether or not the installer can be run as the root user.
+# The branch/tag, of NadekoBot's official repo, that the installer will download the bot
+# from.
 #
-# Options
-# -------
-# true  = can be run with root privilege
-# false = cannot be run with root privilege (recommended)
+# IMPORTANT: Using a branch/tag containing code older than the one currently on your
+#            system, increases the likelihood of failed builds due to incompatible
+#            changes in the code/files coppied from the current to the newly downloaded
+#            version.
 #
-# Default: false
-allow_run_as_root=false
+# Options:
+#   v3    = Latest version (the master/main branch)
+#   x.x.x = Any other branch/tag (refer to the NadekoBot repo for available tags and
+#           branches)
+#
+# Default: "v3"
+export _NADEKO_INSTALL_VERSION="v3"
 
-# The branch or tag that the installer will download NadekoBot from.
+# A list of files to be backed up when executing option 7.
 #
-# Options
-# -------
-# 1.9   = Latest version (the master/main branch)
-# x.x.x = Any other branch/tag (refer to the NadekoBot repo for available tags and
-#         branches)
+# When adding a new file to the variable below, make sure to follow these rules:
+#   1. The path, starting at the project's parent directory, to the file must always be
+#      included. This means that unless modified by the end-user, the beginning of the
+#      path will start with 'nadekobot/', followed by the rest of the path to the file.
+#   2. Each file must be seperated by a single space or placed on its own line.
+#       - Valid:   "nadekobot/output/creds.yml
+#                   nadekobot/output/data/bot.yml"
+#       - Valid:   "nadekobot/output/creds.yml nadekobot/output/data/bot.yml"
+#       - Invalid: "nadekobot/output/creds.yml, nadekobot/output/data/bot.yml"
+#       - Invalid: "nadekobot/output/creds.yml,nadekobot/output/data/bot.yml"
+#   3. Both the file nor the path to the file can contain a space.
+#      - Valid:   'nadekobot/output/data/NadekoBot.db'
+#      - Invalid: 'nadeko bot/output/data/NadekoBot.db'
 #
-# Default: 1.9
-export _NADEKO_INSTALL_VERSION="1.9"
+# Default: "nadekobot/output/creds.yml
+#   nadekobot/output/data/gambling.yml
+#   nadekobot/output/data/xp.yml
+#   nadekobot/output/data/images.json
+#   nadekobot/output/data/xp_template.json
+#   nadekobot/output/data/bot.yml
+#   nadekobot/output/data/NadekoBot.db"
+export _FILES_TO_BACK_UP="nadekobot/output/creds.yml
+nadekobot/output/data/gambling.yml
+nadekobot/output/data/xp.yml
+nadekobot/output/data/images.json
+nadekobot/output/data/xp_template.json
+nadekobot/output/data/bot.yml
+nadekobot/output/data/NadekoBot.db"
 
 
 #### End of [[ Configuration Variables ]]
@@ -68,10 +102,10 @@ export _NADEKO_INSTALL_VERSION="1.9"
 #### [[ General Variables ]]
 
 
-# Used to keep track of changes to 'linuxAIO.sh'.
-# Refer to the '[ Prepping ]' section of 'installer_prep.sh' for more information.
-export _LINUXAIO_REVISION="17"
-# URL to the raw version of a specified script.
+# Revision number of this script.
+# Refer to the 'README' note at the beginning of this file for more information.
+export _LINUXAIO_REVISION="30"
+# The URL to the raw code of a script that is specified by the other scripts.
 export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_branch"
 
 
@@ -83,19 +117,13 @@ export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_br
 #### [ Main ]
 
 
-# If executed with root privilege and $allow_run_as_root is false...
-if [[ $EUID = 0 && $allow_run_as_root = false ]]; then
-    echo "\033[1;31mPlease run this script without root privilege" >&2
-    echo "\033[0;36mWhile you will be performing specific tasks with root privilege," \
-        "running the installer in it's entirety as root is not recommended\033[0m"
-    echo -e "\nExiting..."
-    exit 1
-fi
-
 echo "Downloading the latest installer..."
 curl -O "$_RAW_URL"/installer_prep.sh
-sudo chmod +x installer_prep.sh
-./installer_prep.sh
+# NOTE: The meaning of the exit codes passed by 'installer_prep.sh' can be found here:
+#       TODO: Add a link to the error code meaning at the wiki
+sudo chmod +x installer_prep.sh \
+    && ./installer_prep.sh \
+    || exit "$?"  # Uses the exit code passed by 'installer_prep.sh'.
 
 
 #### End of [ Main ]
