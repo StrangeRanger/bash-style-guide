@@ -6,8 +6,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-
-
 ## [2022.7.11] - 2022-07-11
 
 ### Changed
@@ -88,7 +86,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2022.2.18...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2022.7.11...HEAD
+[2022.7.11]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.7.11
 [2022.2.18]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.2.18
 [2021.6.1]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2021.6.1
 [2021.5.2]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2021.5.2
