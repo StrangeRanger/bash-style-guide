@@ -35,15 +35,15 @@ It's preferred that columns are 88 characters or less. The only reason that the 
 Do not use semicolons where they are not needed.
 
 ``` bash
-## Wrong
+## Wrong.
 name="dave";
 echo "hello $name";
 
-## Right
+## Right.
 name="dave"
 echo "hello $name"
 
-# Also right
+# Also right.
 name="dave"; echo "hello $name"
 ```
 
@@ -56,12 +56,12 @@ Don't use the `function` keyword. Instead, `()` should be appended to the end of
 ``` bash
 ## Wrong, if $i isn't used outside of 'foo'.
 function foo {
-    i=foo  # This is now global, wrong depending on intent
+    i=foo  # This is now global, wrong depending on intent.
 }
 
-## Right
+## Right.
 foo() {
-    local i=foo  # This is local, preferred
+    local i=foo  # This is local, preferred.
 }
 ```
 
@@ -70,18 +70,18 @@ foo() {
 `then` should be on the same line as `if`, and `do` should be on the same line as `while`.
 
 ``` bash
-## Wrong
+## Wrong.
 if true
 then
     ...
 fi
 
-## Also wrong
+## Also wrong.
 true && {
     ...
 }
 
-## Right
+## Right.
 if true; then
     ...
 fi
@@ -89,17 +89,17 @@ fi
 
 ### Single line block statements
 
-Block statements, such as `if`, `for`, and `while` loops, can be placed on a single line, as long as they fit within the preferred character limit, and don't negatively affect readability. It is required, though, that the end of the block statement, like `fi` and `done`, must be placed on a separate line.
+Block statements, such as `if`, `for`, and `while` loops, can be placed on a single line, as long as they fit within the preferred character limit, and don't negatively affect readability. It is required, though, that the end of the block statement, like `fi` and `done`, are placed on a separate line.
 
 ```bash
-## Wrong
+## Wrong.
 if [[ -f $file_name ]]; then echo "$file_name exists!"; fi
 
-## Also wrong
+## Also wrong.
 if [[ -f $file_name ]]; then echo "$file_name exists!"; echo "Done"
 fi
 
-## Right
+## Right.
 if [[ -f $file_name ]]; then echo "$file_name exists!"
 fi
 ```
@@ -137,13 +137,13 @@ func() {
 }
 ```
 
-#### Number of pound signs
+#### Number of pound signsNumber of pound signs
 
-When a comment refers to a single line of code, a singular pound sign (#) should be used. This includes when describing what the if statement checks for.
+When a comment refers to a single line of code, a singular pound sign (`#`) should be used. This includes when describing what the if statement checks for.
 
 ```bash
 # Contains the raw URL link to this 'README.md'.
-export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/master/README.md"
+export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/main/README.md"
 ```
 
 ```bash
@@ -153,7 +153,7 @@ if [[ ...code to be commented on... ]]; then
 fi
 ```
 
-When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two # indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
+When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two `#` indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
 
 ```bash
 ## Describe what the code inside the if statement does.
@@ -177,7 +177,7 @@ In the case of an if statement containing an `elif` or `else`, three pound signs
 
 ```bash
 ### Describe what the entire if statement does.
-if [[ ...code to be commented on... ]]; then
+if [[ ... ]]; then
     ...code to be commented on...
 else
     ...code to be commented on...
@@ -196,21 +196,20 @@ fi
 
 ## Bashisms
 
-This style guide is for bash. This means when given a choice, always prefer
-bash builtins or keywords instead of external commands or `sh(1)` syntax.
+This style guide is for bash. This means when given a choice, always prefer bash builtins or keywords instead of external commands or `sh(1)` syntax.
 
 ### `test(1)`
 
 Use `[[ ... ]]` for conditional testing, not `[ .. ]` or `test ...`.
 
 ``` bash
-# Wrong
+# Wrong.
 test -d /etc
 
-# Also wrong
+# Also wrong.
 [ -d /etc ]
 
-# Right
+# Right.
 [[ -d /etc ]]
 ```
 
@@ -223,22 +222,22 @@ Use bash builtins for generating sequences.
 ``` bash
 n=10
 
-## Wrong
+## Wrong.
 for f in $(seq 1 5); do
     ...
 done
 
-## Wrong
+## Wrong.
 for f in $(seq 1 "$n"); do
     ...
 done
 
-## Right
+## Right.
 for f in {1..5}; do
     ...
 done
 
-## Right
+## Right.
 for ((i = 0; i < n; i++)); do
     ...
 done
@@ -249,8 +248,8 @@ done
 Use `$(...)` for command substitution.
 
 ``` bash
-foo=`date`   # Wrong
-foo=$(date)  # Right
+foo=`date`   # Wrong.
+foo=$(date)  # Right.
 ```
 
 ### Math / Integer Manipulation
@@ -261,12 +260,12 @@ Use `((...))` and `$((...))`.
 a=5
 b=4
 
-## Wrong
+## Wrong.
 if [[ $a -gt $b ]]; then
     ...
 fi
 
-## Right
+## Right.
 if ((a > b)); then
     ...
 fi
@@ -279,13 +278,13 @@ Do **not** use the `let` command.
 Always prefer [parameter expansion](http://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) over external commands like `echo`, `sed`, `awk`, etc.
 
 ``` bash
-name="bahamas10"
+name="hunter"
 
-## Wrong
+## Wrong.
 prog=$(basename "$0")
 nonumbers=$(echo "$name" | sed -e 's/[0-9]//g')
 
-## Right
+## Right.
 prog=${0##*/}
 nonumbers=${name//[0-9]/}
 ```
@@ -311,13 +310,13 @@ done
 Use bash arrays instead of a string separated by spaces (or newlines, tabs, etc.) whenever possible:
 
 ``` bash
-## Wrong
+## Wrong.
 modules="json httpserver jshint"
 for module in $modules; do
     npm install -g "$module"
 done
 
-## Right
+## Right.
 modules=(json httpserver jshint)
 for module in "${modules[@]}"; do
     npm install -g "$module"
@@ -359,13 +358,13 @@ When writing bash and using all the powerful tools and builtins bash gives you, 
 Don't use `cat(1)` when you don't need it.  If programs support reading from stdin, pass the data in using bash redirection.
 
 ``` bash
-# Wrong
+# Wrong.
 cat file | grep foo
 
-# Right
+# Right.
 grep foo < file
 
-# also right
+# Also right.
 grep foo file
 ```
 
@@ -375,52 +374,49 @@ Prefer the use of the command-line tools built-in method of reading a file inste
 
 ### Quoting
 
-Use double quotes for strings that require variable expansion, command substitution interpolation, and everything in between.
+Use double quotes for strings that require variable expansion, command substitution interpolation, and almost everything in between.
+
+Exceptions:
+
+1. When you don't want ANY form of variable expansion. Many situations where this is necessary or desired, is when using commands such as `sed` or `grep`.
 
 ``` bash
-## Right
+## Right.
 green=$'\033[0;32m'
-foo="Hello World"
+foo='$USER contains your username'
+bar="You are a user"
 bar="You are $USER"
-bar="You are \$USER"
+bar="\$USER = $USER"
 
-## Wrong
+## Wrong.
 foo='Hello World'
-bar='You are $USER'
 ```
+
+All variables should be quoted, whether or not they undergo word-splitting.
 
 Two exceptions:
 
-1. When using commands that by default require/use/recommend using single quotes, such as grep, sed, and trap.
-2. When saving output formatting (text color, etc.) in variables (i.e. `green=$'\033[0;32m'`)
-
-All variables should be quoted, whether or not they undergo word-splitting.
+1. The first exception to this rule is if you call a variable within double brackets, like shown below.
+2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
 
 ``` bash
 foo="hello world"
 
-if [[ -n $foo ]]; then  # No quotes needed
-
-    echo "$foo"         # Quotes needed
+if [[ -n $foo ]]; then  # No quotes needed.
+    echo "$foo"         # Quotes needed.
 fi
 
-bar="$foo"              # Quotes needed
+bar="$foo"              # Quotes needed.
 ```
-
-Two exceptions:
-
-1. The first exception to this rule is if you call a variable within double brackets like shown above.
-2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
-
 
 ### Variable Declaration
 
-Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` appended to the beginning of the variable and between each word.
+Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` placed to the beginning of the variable and between each word.
 
 Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function. 
 
 ``` bash
-## Wrong
+## Wrong.
 declare -i foo=5
 let foo++
 readonly bar="something"
@@ -428,7 +424,7 @@ FOOBAR=baz
 export food=5
 export food_cart=5
 
-## Right
+## Right.
 i=5
 ((i++))
 bar="something"
@@ -439,22 +435,20 @@ export _FOOD_CART=5
 
 ### shebang
 
-Never use `#!/usr/bin/env bash` unless you have a very good reason to. This can cause your scripts to behave differently depending on who runs it. For this reason, use this line instead:
+As a general rule, scripts that are designed to run on anything other than Linux, such as BSD or macOS, should use `#!/usr/bin/env bash`. Otherwise, `#!/bin/bash` should be used instead.
 
-``` bash
-#!/bin/bash
-```
+The reasoning is that bash is located in a different location on BSD. On macOS, users will often install a newer version of bash via homebrew, as the default version is much older. So it's ideal for the shebang to be more flexible. These are neither of the case for Linux, as bash is generally updated when a new version of the distro is released, and is always located in `#!/bin/bash`.
 
 ## Error Checking
 
-`cd`, for example, doesn't always work.  Make sure to check for any possible errors for `cd` (or commands like it) and exit or break if they are present.
+`cd`, for example, doesn't always work.  Make sure to check for any possible errors when using `cd` (or commands like it) and perform the proper action.
 
 ``` bash
-## Wrong
-cd /some/path  # This could fail
-rm file        # If cd fails, where am I? what am I deleting?
+## Wrong.
+cd /some/path  # This could fail.
+rm file        # If cd fails, where am I? What am I deleting?
 
-## Right
+## Right.
 cd /some/path || exit
 rm file
 ```
@@ -474,6 +468,8 @@ http://mywiki.wooledge.org/BashFAQ/105
 ### `eval`
 
 Never.
+
+https://stackoverflow.com/questions/17529220/why-should-eval-be-avoided-in-bash-and-what-should-i-use-instead
 
 ### Redirecting Errors
 
