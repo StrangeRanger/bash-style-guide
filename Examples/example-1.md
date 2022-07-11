@@ -43,11 +43,12 @@ installer_repo="StrangeRanger/NadekoBot-BashScript"
 # The branch of $installer_repo that the installer will download its scripts from.
 #
 # Options:
-#   master = Production ready code (the latest stable code)
-#   dev    = Non-production ready code (has the possibility of breaking something)
+#   main     = Production ready code (the latest stable code)
+#   NadekoV3 = The version of the installer designed for NadekoBot v3
+#   dev      = Non-production ready code (has the possibility of breaking something)
 #
-# Default: "master"
-installer_branch="master"
+# Default: "main"
+installer_branch="main"
 
 # The branch/tag, of NadekoBot's official repo, that the installer will download the bot
 # from.
@@ -55,15 +56,18 @@ installer_branch="master"
 # IMPORTANT: Using a branch/tag containing code older than the one currently on your
 #            system, increases the likelihood of failed builds due to incompatible
 #            changes in the code/files coppied from the current to the newly downloaded
-#            version.
+#            version. For this, and other reasons, it's generally not recommended to
+#            to modify $_NADEKO_INSTALL_VERSION. This is especially true when it comes
+#            to a difference of major version changes, such as v3 and v4.
 #
 # Options:
-#   v3    = Latest version (the master/main branch)
+#   v4    = Latest version (the master/main branch)
+#   v3    = NadekoBot v3
 #   x.x.x = Any other branch/tag (refer to the NadekoBot repo for available tags and
 #           branches)
 #
-# Default: "v3"
-export _NADEKO_INSTALL_VERSION="v3"
+# Default: "v4"
+export _NADEKO_INSTALL_VERSION="v4"
 
 # A list of files to be backed up when executing option 7.
 #
@@ -77,24 +81,26 @@ export _NADEKO_INSTALL_VERSION="v3"
 #       - Valid:   "nadekobot/output/creds.yml nadekobot/output/data/bot.yml"
 #       - Invalid: "nadekobot/output/creds.yml, nadekobot/output/data/bot.yml"
 #       - Invalid: "nadekobot/output/creds.yml,nadekobot/output/data/bot.yml"
-#   3. Both the file nor the path to the file can contain a space.
+#   3. Niether the file nor the path to the file can contain a space.
 #      - Valid:   'nadekobot/output/data/NadekoBot.db'
 #      - Invalid: 'nadeko bot/output/data/NadekoBot.db'
 #
 # Default: "nadekobot/output/creds.yml
-#   nadekobot/output/data/gambling.yml
-#   nadekobot/output/data/xp.yml
-#   nadekobot/output/data/images.json
-#   nadekobot/output/data/xp_template.json
+#   nadekobot/output/data/NadekoBot.db
 #   nadekobot/output/data/bot.yml
-#   nadekobot/output/data/NadekoBot.db"
+#   nadekobot/output/data/gambling.yml
+#   nadekobot/output/data/games.yml
+#   nadekobot/output/data/images.yml
+#   nadekobot/output/data/xp.yml
+#   nadekobot/output/data/xp_template.json"
 export _FILES_TO_BACK_UP="nadekobot/output/creds.yml
-nadekobot/output/data/gambling.yml
-nadekobot/output/data/xp.yml
-nadekobot/output/data/images.json
-nadekobot/output/data/xp_template.json
+nadekobot/output/data/NadekoBot.db
 nadekobot/output/data/bot.yml
-nadekobot/output/data/NadekoBot.db"
+nadekobot/output/data/gambling.yml
+nadekobot/output/data/games.yml
+nadekobot/output/data/images.yml
+nadekobot/output/data/xp.yml
+nadekobot/output/data/xp_template.json"
 
 
 #### End of [[ Configuration Variables ]]
@@ -104,7 +110,7 @@ nadekobot/output/data/NadekoBot.db"
 
 # Revision number of this script.
 # Refer to the 'README' note at the beginning of this file for more information.
-export _LINUXAIO_REVISION="30"
+export _LINUXAIO_REVISION="34"
 # The URL to the raw code of a script that is specified by the other scripts.
 export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_branch"
 
@@ -119,8 +125,6 @@ export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_br
 
 echo "Downloading the latest installer..."
 curl -O "$_RAW_URL"/installer_prep.sh
-# NOTE: The meaning of the exit codes passed by 'installer_prep.sh' can be found here:
-#       TODO: Add a link to the error code meaning at the wiki
 sudo chmod +x installer_prep.sh \
     && ./installer_prep.sh \
     || exit "$?"  # Uses the exit code passed by 'installer_prep.sh'.

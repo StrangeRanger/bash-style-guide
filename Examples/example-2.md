@@ -19,9 +19,9 @@ The code below is from an installer project that can be refered to at this link:
 
 # Revision number of 'linuxAIO.sh'.
 # Refer to the 'README' note at the beginning of 'linuxAIO.sh' for more information.
-current_linuxAIO_revision="30"
+current_linuxAIO_revision="34"
 # Name of the master installer script.
-master_installer="nadeko_master_installer.sh"
+master_installer="nadeko_main_installer.sh"
 
 ## Modify output text color.
 export _YELLOW=$'\033[1;33m'
@@ -48,6 +48,7 @@ export _CLRLN=$'\r\033[K'
 #### [ Functions ]
 
 
+# shellcheck disable=SC1091
 detect_sys_info() {
     ####
     # Function Info: Identify the operating system, version number, architecture, bit
@@ -82,38 +83,53 @@ linuxAIO_update() {
     #                and $current_linuxAIO_revision aren't of equal value.
     ####
 
-    ## Save the values of the current Configuration Variables specified in
-    ## 'linuxAIO.sh', to be set in the new 'linuxAIO.sh'.
-    ## NOTE: Declaration and instantiation is separated at the recommendation by
-    ##       shellcheck.
-    local installer_branch                                       # A.1.
-    local installer_branch_found                                 # A.1.
-    installer_branch=$(grep '^installer_branch=.*' linuxAIO.sh)  # A.1.
-    installer_branch_found="$?"	                                 # A.1.
-    local nadeko_install_version                                                     # A.2.
-    local nadeko_install_version_found                                               # A.2.
-    nadeko_install_version=$(grep '^export _NADEKO_INSTALL_VERSION=.*' linuxAIO.sh)  # A.2.
-    nadeko_install_version_found="$?"                                                # A.2.
-
     echo "${_YELLOW}You are using an older version of 'linuxAIO.sh'$_NC"
     echo "Downloading latest 'linuxAIO.sh'..."
-    curl -O "$_RAW_URL"/linuxAIO.sh \
-        && sudo chmod +x linuxAIO.sh
 
-    echo "Applying existing configurations to the new 'linuxAIO.sh'..."
+    ## Only download the newest version of 'linuxAIO.sh'.
+    ## Reason: Starting with revision 31, the default version of NadekoBot is v4. To
+    ##         ensure there are not errors cropping up due to incompatible installer
+    ##         and NadekoBot version, all variables in 'linuxAIO.sh' are reset to their
+    ##         [new] defaults.
+    if ((_LINUXAIO_REVISION <= 30)); then
+        curl -O "$_RAW_URL"/linuxAIO.sh \
+            && sudo chmod +x linuxAIO.sh
+        echo "${_CYAN}NOT applying existing configurations to the new 'linuxAIO.sh'..."
+        echo "${_GREEN}Successfully downloaded the newest version of 'linuxAIO.sh'.$_NC"
+    ## Download the newest version of 'linuxAIO.sh' and apply existing changes to it.
+    else
+        ## Save the values of the current Configuration Variables specified in
+        ## 'linuxAIO.sh', to be set in the new 'linuxAIO.sh'.
+        ## NOTE: Declaration and instantiation is separated at the recommendation by
+        ##       shellcheck.
+        local installer_branch                                       # A.1.
+        local installer_branch_found                                 # A.1.
+        installer_branch=$(grep '^installer_branch=.*' linuxAIO.sh)  # A.1.
+        installer_branch_found="$?"	                                 # A.1.
+        local nadeko_install_version                                                     # A.2.
+        local nadeko_install_version_found                                               # A.2.
+        nadeko_install_version=$(grep '^export _NADEKO_INSTALL_VERSION=.*' linuxAIO.sh)  # A.2.
+        nadeko_install_version_found="$?"                                                # A.2.
 
-    ## Set $installer_branch inside of the new 'linuxAIO.sh'.
-    if [[ $installer_branch_found = 0 ]]; then
-        sed -i "s/^installer_branch=.*/$installer_branch/" linuxAIO.sh
+        curl -O "$_RAW_URL"/linuxAIO.sh \
+            && sudo chmod +x linuxAIO.sh
+
+        echo "Applying existing configurations to the new 'linuxAIO.sh'..."
+
+        ## Set $installer_branch inside of the new 'linuxAIO.sh'.
+        if [[ $installer_branch_found = 0 ]]; then
+            sed -i "s/^installer_branch=.*/$installer_branch/" linuxAIO.sh
+        fi
+
+        ## Set $nadeko_install_version inside of the new 'linuxAIO.sh'.
+        if [[ $nadeko_install_version_found = 0 ]]; then
+            sed -i "s/^export _NADEKO_INSTALL_VERSION=.*/$nadeko_install_version/" linuxAIO.sh
+        fi
+
+        echo "${_GREEN}Successfully downloaded the newest version of 'linuxAIO.sh'" \
+            "and applied changes to the newest version of 'linuxAIO.sh'$_NC"
     fi
 
-    ## Set $nadeko_install_version inside of the new 'linuxAIO.sh'.
-    if [[ $nadeko_install_version_found = 0 ]]; then
-        sed -i "s/^export _NADEKO_INSTALL_VERSION=.*/$nadeko_install_version/" linuxAIO.sh
-    fi
-
-    echo "${_GREEN}Successfully downloaded the newest version of 'linuxAIO.sh' and" \
-        "applied changes to the newest version of 'linuxAIO.sh'$_NC"
     clean_up "0" "Exiting" "true"
 }
 
@@ -149,9 +165,8 @@ clean_up() {
     ####
 
     # Files to be removed.
-    local installer_files=("credentials_setup.sh" "installer_prep.sh"
-        "prereqs_installer.sh" "nadeko_latest_installer.sh" "nadeko_runner.sh"
-        "nadeko_master_installer.sh" "file_backup.sh")
+    local installer_files=("installer_prep.sh"  "file_backup.sh" "prereqs_installer.sh"
+        "nadeko_latest_installer.sh" "nadeko_runner.sh" "nadeko_main_installer.sh")
 
     if [[ $3 = true ]]; then echo "Cleaning up..."
     else                     echo -e "\nCleaning up..."
@@ -185,7 +200,7 @@ execute_master_installer() {
     ####
 
     _DOWNLOAD_SCRIPT "$master_installer" "true"
-    ./nadeko_master_installer.sh
+    ./nadeko_main_installer.sh
     clean_up "$?" "Exiting"
 }
 
@@ -193,7 +208,6 @@ execute_master_installer() {
 #### [[ Functions To Be Exported ]]
 
 
-# TODO: Add explanation to $2...
 _DOWNLOAD_SCRIPT() {
     ####
     # Function Info: Download the specified script and modify it's execution
@@ -201,7 +215,7 @@ _DOWNLOAD_SCRIPT() {
     #
     # Parameters:
     #   $1 - Name of script to download.
-    #   $2 - ...
+    #   $2 - True if the script shouldn't output text indicating $1 is being downloaded.
     ####
 
     if [[ ! $2 ]]; then echo "Downloading '$1'..."
@@ -221,8 +235,7 @@ _DOWNLOAD_SCRIPT() {
 
 # Execute when the user uses 'Ctrl + Z', 'Ctrl + C', or otherwise forcefully exits the
 # installer.
-trap 'echo -e "\n\nScript forcefully stopped"
-    clean_up "2" "Exiting" "true"' \
+trap 'clean_up "2" "Exiting" "true"' \
     SIGINT SIGTSTP SIGTERM
 
 
@@ -254,7 +267,7 @@ export _INSTALLER_PREP="$_WORKING_DIR/installer_prep.sh"
 #### [ Main ]
 
 
-clear -x  # Clear the screen of any text.
+clear -x
 
 detect_sys_info
 export _DISTRO _SVER _VER _ARCH
@@ -271,30 +284,31 @@ Distro Version: $_VER
 ### Check if the operating system is supported by NadekoBot and installer.
 if [[ $bits = 64 ]]; then
     # Ubuntu:
-    #   16.04
-    #   18.04
+    #   22.04
     #   20.04
+    #   18.04
+    #   16.04
     if [[ $_DISTRO = "ubuntu" ]]; then
         case "$_VER" in
-            16.04|18.04|20.04) execute_master_installer ;;
-            *)                 unsupported ;;
+            16.04|18.04|20.04|22.04) execute_master_installer ;;
+            *)                       unsupported ;;
         esac
     # Debian:
-    #   9
+    #   11
     #   10
+    #   9
     elif [[ $_DISTRO = "debian" ]]; then
         case "$_SVER" in
-            9|10) execute_master_installer ;;
-            *)    unsupported ;;
+            9|10|11) execute_master_installer ;;
+            *)       unsupported ;;
         esac
     # Linux Mint:
-    #   18
-    #   19
     #   20
+    #   19
     elif [[ $_DISTRO = "linuxmint" ]]; then
         case "$_SVER" in
-            18|19|20) execute_master_installer ;;
-            *)        unsupported ;;
+            19|20) execute_master_installer ;;
+            *)     unsupported ;;
         esac
     else
         unsupported
