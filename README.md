@@ -18,11 +18,11 @@ This guide will try to be as objective as possible, providing reasoning for why 
 
 Indents should be four spaces. Don't use tabs.
 
-``` bash
+```bash
 var=true
 
 if [[ var = true ]]; then
-	echo "true"
+    echo "true"
 fi
 ```
 
@@ -34,7 +34,7 @@ It's preferred that columns are 88 characters or less. The only reason that the 
 
 Do not use semicolons where they are not needed.
 
-``` bash
+```bash
 ## Wrong.
 name="dave";
 echo "hello $name";
@@ -53,7 +53,7 @@ The exception to this rule is outlined in the `Block Statements` section below. 
 
 Don't use the `function` keyword. Instead, `()` should be appended to the end of the function name. All variables created in a function should be made local unless you plan on calling them from outside of the function they're defined in.
 
-``` bash
+```bash
 ## Wrong, if $i isn't used outside of 'foo'.
 function foo {
     i=foo  # This is now global, wrong depending on intent.
@@ -69,7 +69,7 @@ foo() {
 
 `then` should be on the same line as `if`, and `do` should be on the same line as `while`.
 
-``` bash
+```bash
 ## Wrong.
 if true
 then
@@ -129,15 +129,17 @@ func() {
     # Function Info: Description of the function and/or its purpose.
     #
     # Parameters:
-    #   $1 - Description of the parameter and/or its purpose.
-    #   $2 - Description of the parameter and/or its purpose.
+    #   $1 - Specify if the parameter is required or optional: required OR optional
+    #       Description of the parameter and/or its purpose.
+    #   $2 - Specify if the parameter is required or optional: required OR optional
+    #       Description of the parameter and/or its purpose.
     ####
 
     ...
 }
 ```
 
-#### Number of pound signsNumber of pound signs
+#### Number of pound signs
 
 When a comment refers to a single line of code, a singular pound sign (`#`) should be used. This includes when describing what the if statement checks for.
 
@@ -153,7 +155,7 @@ if [[ ...code to be commented on... ]]; then
 fi
 ```
 
-When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two `#` indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it. 
+When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two `#` indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it.
 
 ```bash
 ## Describe what the code inside the if statement does.
@@ -164,13 +166,13 @@ fi
 
 ```bash
 ## Variables that modify output color.
-export _YELLOW=$'\033[1;33m'
-export _GREEN=$'\033[0;32m'
-export _CYAN=$'\033[0;36m'
-export _RED=$'\033[1;31m'
-export _NC=$'\033[0m'
-export _CLRLN=$'\r\033[K'
-export _GREY=$'\033[0;90m'
+export _YELLOW="$(printf '\033[1;33m')"
+export _GREEN="$(printf '\033[0;32m')"
+export _CYAN="$(printf '\033[0;36m')"
+export _RED="$(printf '\033[1;31m')"
+export _NC="$(printf '\033[0m')"
+export _GREY="$(printf '\033[0;90m')"
+export _CLRLN="$(printf '\r\033[K')"
 ```
 
 In the case of an if statement containing an `elif` or `else`, three pound signs should be used when the comment refers to the entire if statement. If the comment is made for a single section of the if statement, double pound signs should be used instead.
@@ -202,7 +204,7 @@ This style guide is for bash. This means when given a choice, always prefer bash
 
 Use `[[ ... ]]` for conditional testing, not `[ .. ]` or `test ...`.
 
-``` bash
+```bash
 # Wrong.
 test -d /etc
 
@@ -219,7 +221,7 @@ See http://mywiki.wooledge.org/BashFAQ/031 for more information.
 
 Use bash builtins for generating sequences.
 
-``` bash
+```bash
 n=10
 
 ## Wrong.
@@ -247,7 +249,7 @@ done
 
 Use `$(...)` for command substitution.
 
-``` bash
+```bash
 foo=`date`   # Wrong.
 foo=$(date)  # Right.
 ```
@@ -256,7 +258,7 @@ foo=$(date)  # Right.
 
 Use `((...))` and `$((...))`.
 
-``` bash
+```bash
 a=5
 b=4
 
@@ -277,7 +279,7 @@ Do **not** use the `let` command.
 
 Always prefer [parameter expansion](http://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) over external commands like `echo`, `sed`, `awk`, etc.
 
-``` bash
+```bash
 name="hunter"
 
 ## Wrong.
@@ -293,7 +295,7 @@ nonumbers=${name//[0-9]/}
 
 Do not [parse ls(1)](http://mywiki.wooledge.org/ParsingLs), instead use bash builtin functions to loop files
 
-``` bash
+```bash
 ## Very wrong and potentially unsafe
 for f in $(ls); do
     ...
@@ -309,7 +311,7 @@ done
 
 Use bash arrays instead of a string separated by spaces (or newlines, tabs, etc.) whenever possible:
 
-``` bash
+```bash
 ## Wrong.
 modules="json httpserver jshint"
 for module in $modules; do
@@ -325,7 +327,7 @@ done
 
 Of course, in this example, it may be better expressed as:
 
-``` bash
+```bash
 npm install -g "${modules[@]}"
 ```
 
@@ -337,7 +339,7 @@ Use the bash `read` builtin whenever possible to avoid forking external commands
 
 Example:
 
-``` bash
+```bash
 fqdn="computer1.daveeddy.com"
 
 IFS=. read -r hostname domain tld <<< "$fqdn"
@@ -357,7 +359,7 @@ When writing bash and using all the powerful tools and builtins bash gives you, 
 
 Don't use `cat(1)` when you don't need it.  If programs support reading from stdin, pass the data in using bash redirection.
 
-``` bash
+```bash
 # Wrong.
 cat file | grep foo
 
@@ -378,11 +380,10 @@ Use double quotes for strings that require variable expansion, command substitut
 
 Exceptions:
 
-1. When you don't want ANY form of variable expansion. Many situations where this is necessary or desired, is when using commands such as `sed` or `grep`.
+1. When you don't want ANY form of variable expansion. Many situations where this is necessary or desired, is when using commands such as `sed` or `awk`.
 
-``` bash
+```bash
 ## Right.
-green=$'\033[0;32m'
 foo='$USER contains your username'
 bar="You are a user"
 bar="You are $USER"
@@ -399,7 +400,7 @@ Two exceptions:
 1. The first exception to this rule is if you call a variable within double brackets, like shown below.
 2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
 
-``` bash
+```bash
 foo="hello world"
 
 if [[ -n $foo ]]; then  # No quotes needed.
@@ -413,9 +414,9 @@ bar="$foo"              # Quotes needed.
 
 Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` placed to the beginning of the variable and between each word.
 
-Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function. 
+Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function.
 
-``` bash
+```bash
 ## Wrong.
 declare -i foo=5
 let foo++
@@ -437,13 +438,13 @@ export _FOOD_CART=5
 
 As a general rule, scripts that are designed to run on anything other than Linux, such as BSD or macOS, should use `#!/usr/bin/env bash`. Otherwise, `#!/bin/bash` should be used instead.
 
-The reasoning is that bash is located in a different location on BSD. On macOS, users will often install a newer version of bash via homebrew, as the default version is much older. So it's ideal for the shebang to be more flexible. These are neither of the case for Linux, as bash is generally updated when a new version of the distro is released, and is always located in `#!/bin/bash`.
+The reasoning is that bash is located in a different location on BSD. On macOS, users will often install a newer version of bash via homebrew, as the default version is much older. So it's ideal for the shebang to be more flexible. These are neither of the case for Linux, as bash is generally updated when a new version of the distribution is released, and is always located in `#!/bin/bash`.
 
 ## Error Checking
 
 `cd`, for example, doesn't always work.  Make sure to check for any possible errors when using `cd` (or commands like it) and perform the proper action.
 
-``` bash
+```bash
 ## Wrong.
 cd /some/path  # This could fail.
 rm file        # If cd fails, where am I? What am I deleting?
@@ -475,7 +476,7 @@ https://stackoverflow.com/questions/17529220/why-should-eval-be-avoided-in-bash-
 
 When echoing an error message, always redirect the message to stderr:
 
-``` bash
+```bash
 echo "Failed to execute file" >&2
 ```
 
@@ -485,7 +486,7 @@ echo "Failed to execute file" >&2
 
 Using `${f}` is potentially different than `"$f"` because of how word-splitting is performed.  For example:
 
-``` bash
+```bash
 for f in "1 space" "2  spaces" "3   spaces"; do
     echo ${f}
 done
@@ -501,7 +502,7 @@ yields
 
 Notice that it loses the number of spaces.  This is because the variable is expanded and undergoes word-splitting because it is unquoted.  This loop results in the three following commands being executed:
 
-``` bash
+```bash
 echo 1 space
 echo 2  spaces
 echo 3   spaces
@@ -511,7 +512,7 @@ The extra spaces are effectively ignored here, and only two arguments are passed
 
 If the variable was quoted instead:
 
-``` bash
+```bash
 for f in "1 space" "2  spaces" "3   spaces"; do
     echo "$f"
 done
@@ -529,7 +530,7 @@ The variable `$f` is expanded but doesn't get split by bash, so it is passed as 
 
 Note that, for the most part, `$f` is the same as `${f}`, and `"$f"` is the same as `"${f}"`.  The curly braces should only be used to ensure the variable name is expanded properly.  For example:
 
-``` bash
+```bash
 $ echo "$HOME is $USERs home directory"
 /home/dave is the home directory
 $ echo "$HOME is ${USER}s home directory"
@@ -542,7 +543,7 @@ In this example, the braces were the difference between `$USER` vs. `$USERs` bei
 
 `for` loops are great for iteration over arguments or arrays. Newline separated data is best left to a `while read -r ...` loop.
 
-``` bash
+```bash
 users=$(awk -F: '{print $1}' /etc/passwd)
 for user in $users; do
     echo "user is $user"
@@ -559,7 +560,7 @@ This approach has many issues if used on other files with data that may contain 
 
 To rewrite this:
 
-``` bash
+```bash
 while IFS=: read -r user _; do
     echo "$user is user"
 done < /etc/passwd

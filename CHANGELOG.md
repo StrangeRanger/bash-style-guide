@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Updated sections:
+  - `Aesthetics -> Comments -> Functions`
+  - `Aesthetics -> Comments -> Number of pound signs`
+  - `Style -> Quoting`
+- Modified code fencing format/style.
+
 ## [2022.7.11] - 2022-07-11
 
 ### Changed
