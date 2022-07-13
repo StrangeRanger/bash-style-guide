@@ -110,7 +110,7 @@ nadekobot/output/data/xp_template.json"
 
 # Revision number of this script.
 # Refer to the 'README' note at the beginning of this file for more information.
-export _LINUXAIO_REVISION="34"
+export _LINUXAIO_REVISION=36
 # The URL to the raw code of a script that is specified by the other scripts.
 export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_branch"
 
@@ -125,9 +125,8 @@ export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_br
 
 echo "Downloading the latest installer..."
 curl -O "$_RAW_URL"/installer_prep.sh
-sudo chmod +x installer_prep.sh \
-    && ./installer_prep.sh \
-    || exit "$?"  # Uses the exit code passed by 'installer_prep.sh'.
+sudo chmod +x installer_prep.sh && ./installer_prep.sh
+exit "$?"  # Uses the exit code passed by 'installer_prep.sh'.
 
 
 #### End of [ Main ]
