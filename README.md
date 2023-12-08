@@ -1,6 +1,6 @@
 # Bash Style Guide
 
-[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://randomserver.xyz/project-tracker.html#bash-style-guide)
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
 
 This style guide outlines how to write bash scripts with a style that makes them safe and predictable.  Most of this guide is based on [this wiki](http://mywiki.wooledge.org), specifically this page: http://mywiki.wooledge.org/BashGuide/Practices
 
