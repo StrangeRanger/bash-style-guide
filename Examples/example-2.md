@@ -1,4 +1,4 @@
-The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/installer_prep.sh. As a note, this code is what's executed by the code in the example-1.md file.
+The code below is from an installer project that can be referred to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/installer_prep.sh. As a note, this code is what's executed by the code in the example-1.md file.
 
 ## Example
 
@@ -15,7 +15,7 @@ The code below is from an installer project that can be refered to at this link:
 #   A.2. - Grouping Two
 #
 ########################################################################################
-#### [ Exported and/or Globally Used Variables ]
+####[ Exported and/or Globally Used Variables ]#########################################
 
 
 # Revision number of 'linuxAIO.sh'.
@@ -46,18 +46,14 @@ export _CLRLN="$(printf '\r\033[K')"
 } 2>/dev/null
 
 
-#### End of [ Exported and/or Globally Used Variables ]
-########################################################################################
-#### [ Functions ]
+####[ Functions ]#######################################################################
 
 
+####
+# Identify the operating system, version number, architecture, bit type (32 or 64), etc.
+#
 # shellcheck disable=SC1091
 detect_sys_info() {
-    ####
-    # Function Info: Identify the operating system, version number, architecture, bit
-    #                type (32 or 64), etc.
-    ####
-
     if [[ -f /etc/os-release ]]; then
         . /etc/os-release
         _DISTRO="$ID"
@@ -78,14 +74,13 @@ detect_sys_info() {
     esac
 }
 
+####
+# Download the latest version of 'linuxAIO.sh' if $_LINUXAIO_REVISION and
+# $current_linuxAIO_revision aren't of equal value.
+#
 # TODO: Add error checking to sed... If they fail, print the tracked variables into a
 #       new file.
 linuxAIO_update() {
-    ####
-    # Function Info: Download the latest version of 'linuxAIO.sh' if $_LINUXAIO_REVISION
-    #                and $current_linuxAIO_revision aren't of equal value.
-    ####
-
     echo "${_YELLOW}You are using an older version of 'linuxAIO.sh'${_NC}"
     echo "Downloading latest 'linuxAIO.sh'..."
 
@@ -136,12 +131,10 @@ linuxAIO_update() {
     clean_up "0" "Exiting"
 }
 
+####
+# Provide the end-user with the option to continue, even if their system isn't
+# officially supported.
 unsupported() {
-    ####
-    # Function Info: Provide the end-user with the option to continue, even if their
-    #                system isn't officially supported.
-    ####
-
     echo "${_RED}Your operating system/Linux Distribution is not OFFICIALLY supported" \
         "for the installation, setup, and/or use of NadekoBot" >&2
     echo "${_YELLOW}WARNING: By continuing, you accept that unexpected behaviors" \
@@ -156,26 +149,28 @@ unsupported() {
     esac
 }
 
+####
+# Cleanly exit the installer by removing files that aren't required unless the installer
+# is currently running.
+#
+# Parameters:
+#   - $1: exit_code (Required)
+#       - Description: Exit status code.
+#   - $2: output_text (Required)
+#       - Description: Output text.
+#   - $3: clean_up (Optional)
+#       - Description: True if 'Cleaning up...' should be printed with two new-line.
 clean_up() {
-    ####
-    # Function Info: Cleanly exit the installer by removing files that aren't required
-    #                unless the installer is currently running.
-    #
-    # Parameters:
-    #   $1 - required
-    #       Exit status code.
-    #   $2 - required
-    #       Output text.
-    #   $3 - optional
-    #       True if 'Cleaning up...' should be printed with two new-line symbols.
-    ####
+    local exit_code="$1"
+    local output_text="$2"
+    local clean_up="$3"
 
     # Files to be removed.
     local installer_files=("installer_prep.sh" "file_backup.sh" "prereqs_installer.sh"
         "nadeko_latest_installer.sh" "nadeko_runner.sh" "nadeko_main_installer.sh")
 
-    if [[ $3 = true ]]; then echo -e "\n\nCleaning up..."
-    else                     echo -e "\nCleaning up..."
+    if [[ $clean_up == true ]]; then echo -e "\n\nCleaning up..."
+    else                        echo -e "\nCleaning up..."
     fi
 
     cd "$_WORKING_DIR" || {
@@ -193,63 +188,54 @@ clean_up() {
         fi
     done
 
-    echo "$2..."
-    exit "$1"
+    echo "$output_text..."
+    exit "$exit_code"
 }
 
+####
+# Download and execute $master_installer.
 execute_master_installer() {
-    ####
-    # Function Info: Download and execute $master_installer.
-    ####
-
     _DOWNLOAD_SCRIPT "$master_installer" "true"
     ./nadeko_main_installer.sh
     clean_up "$?" "Exiting"
 }
 
-########################################################################################
-#### [[ Functions To Be Exported ]]
+
+####[[ Functions To Be Exported ]]######################################################
 
 
+####
+# Download the specified script and modify it's execution permissions.
+#
+# Parameters:
+#   - $1: script_name (Required)
+#       - Description: Name of script to download.
+#   - $2: script_quiet (Optional)
+#       - Description: True if the script shouldn't output text indicating $1 is being
+#                      downloaded.
+#       - Default: false
 _DOWNLOAD_SCRIPT() {
-    ####
-    # Function Info: Download the specified script and modify it's execution
-    #                permissions.
-    #
-    # Parameters:
-    #   $1 - required
-    #       Name of script to download.
-    #   $2 - optional
-    #       True if the script shouldn't output text indicating $1 is being downloaded.
-    ####
+    local script_name="$1"
+    local script_quiet="${2:-false}"
 
-    if [[ $2 = true ]]; then printf "Downloading '%s'..." "$1"
+    if [[ $script_quiet == true ]]; then printf "Downloading '%s'..." "$script_name"
     fi
-    curl -O -s "$_RAW_URL"/"$1"
-    sudo chmod +x "$1"
+    curl -O -s "$_RAW_URL"/"$script_name"
+    sudo chmod +x "$script_name"
 }
 
 
-#### End of [[ Functions To Be Exported ]]
-########################################################################################
-
-#### End of [ Functions ]
-########################################################################################
-#### [ Error Traps ]
+####[ Error Traps ]#####################################################################
 
 
-# Execute when the user uses 'Ctrl + Z', 'Ctrl + C', or otherwise forcefully exits the
-# installer.
 trap 'clean_up "130" "Exiting" "true"' SIGINT
 trap 'clean_up "143" "Exiting" "true"' SIGTERM
 
 
-#### End of [ Error Traps ]
-########################################################################################
-#### [ Prepping ]
+####[ Prepping ]########################################################################
 
 
-# If the current 'linuxAIO.sh' revision number is not of equil value of the expected
+# If the current 'linuxAIO.sh' revision number is not of equal value of the expected
 # revision number.
 if [[ $_LINUXAIO_REVISION && $_LINUXAIO_REVISION != "$current_linuxAIO_revision" ]]; then
     linuxAIO_update
@@ -267,9 +253,7 @@ export _WORKING_DIR="$PWD"
 export _INSTALLER_PREP="$_WORKING_DIR/installer_prep.sh"
 
 
-#### End of [ Prepping ]
-########################################################################################
-#### [ Main ]
+####[ Main ]############################################################################
 
 
 clear -x
@@ -321,8 +305,4 @@ if [[ $bits = 64 ]]; then
 else
     unsupported
 fi
-
-
-#### End of [ Main ]
-########################################################################################
 ```

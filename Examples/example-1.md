@@ -1,4 +1,4 @@
-The code below is from an installer project that can be refered to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/linuxAIO.sh
+The code below is from an installer project that can be referred to at this link: https://github.com/StrangeRanger/NadekoBot-BashScript/blob/master/linuxAIO.sh
 
 ## Example
 
@@ -19,17 +19,17 @@ The code below is from an installer project that can be refered to at this link:
 #         of equal value, the newest version of 'linuxAIO.sh' is retrieved from github.
 #
 ########################################################################################
-#### [ Variables ]
+####[ Variables ]#######################################################################
 
-########################################################################################
-#### [[ Configuration Variables ]]
-#### Variables used to modify the behavior of the installer.
-####
-#### ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
-####
-#### Whenever the installer retrieves the newest version of 'linuxAIO.sh', all modified
-#### variables, with the exception of $installer_repo and $_FILES_TO_BACK_UP, will be
-#### applied to the new version of this script.
+
+####[[ Configuration Variables ]]#######################################################
+# Variables used to modify the behavior of the installer.
+#
+# ~~~ THESE VARIABLES CAN BE MODIFIED BY THE END-USER ~~~
+#
+# Whenever the installer retrieves the newest version of 'linuxAIO.sh', all modified
+# variables, with the exception of $installer_repo and $_FILES_TO_BACK_UP, will be
+# applied to the new version of this script.
 
 
 # The repository containing all of the scripts used by the installer.
@@ -103,9 +103,7 @@ nadekobot/output/data/xp.yml
 nadekobot/output/data/xp_template.json"
 
 
-#### End of [[ Configuration Variables ]]
-########################################################################################
-#### [[ General Variables ]]
+####[[ General Variables ]]#############################################################
 
 
 # Revision number of this script.
@@ -115,20 +113,11 @@ export _LINUXAIO_REVISION=36
 export _RAW_URL="https://raw.githubusercontent.com/$installer_repo/$installer_branch"
 
 
-#### End of [[ General Variables ]]
-########################################################################################
-
-#### End of [ Variables ]
-########################################################################################
-#### [ Main ]
+####[ Main ]############################################################################
 
 
 echo "Downloading the latest installer..."
 curl -O "$_RAW_URL"/installer_prep.sh
 sudo chmod +x installer_prep.sh && ./installer_prep.sh
 exit "$?"  # Uses the exit code passed by 'installer_prep.sh'.
-
-
-#### End of [ Main ]
-########################################################################################
 ```
