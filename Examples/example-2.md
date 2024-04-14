@@ -50,7 +50,10 @@ export _CLRLN="$(printf '\r\033[K')"
 
 
 ####
-# Identify the operating system, version number, architecture, bit type (32 or 64), etc.
+# Function name: detect_sys_info
+# Purpose:
+#   Identify the operating system, version number, architecture, bit type (32 or 64),
+#   etc.
 #
 # shellcheck disable=SC1091
 detect_sys_info() {
@@ -75,11 +78,14 @@ detect_sys_info() {
 }
 
 ####
-# Download the latest version of 'linuxAIO.sh' if $_LINUXAIO_REVISION and
-# $current_linuxAIO_revision aren't of equal value.
+# Function name: linuxAIO_update
+# Purpose:
+#   Download the latest version of 'linuxAIO.sh' if $_LINUXAIO_REVISION and
+#   $current_linuxAIO_revision aren't of equal value.
 #
-# TODO: Add error checking to sed... If they fail, print the tracked variables into a
-#       new file.
+# TODO:
+#   Add error checking to sed... If they fail, print the tracked variables into a new
+#   file.
 linuxAIO_update() {
     echo "${_YELLOW}You are using an older version of 'linuxAIO.sh'${_NC}"
     echo "Downloading latest 'linuxAIO.sh'..."
@@ -132,8 +138,10 @@ linuxAIO_update() {
 }
 
 ####
-# Provide the end-user with the option to continue, even if their system isn't
-# officially supported.
+# Function name: unsupported
+# Purpose:
+#   Provide the end-user with the option to continue, even if their system isn't
+#   officially supported.
 unsupported() {
     echo "${_RED}Your operating system/Linux Distribution is not OFFICIALLY supported" \
         "for the installation, setup, and/or use of NadekoBot" >&2
@@ -150,20 +158,24 @@ unsupported() {
 }
 
 ####
-# Cleanly exit the installer by removing files that aren't required unless the installer
-# is currently running.
+# Function name: clean_up
+# Purpose:
+#   Cleanly exit the installer by removing files that aren't required unless the
+#   installer is currently running.
 #
 # Parameters:
-#   - $1: exit_code (Required)
-#       - Description: Exit status code.
-#   - $2: output_text (Required)
-#       - Description: Output text.
-#   - $3: clean_up (Optional)
-#       - Description: True if 'Cleaning up...' should be printed with two new-line.
+#   $1: exit_code (Required)
+#       Description: Exit status code.
+#
+#   $2: output_text (Required)
+#       Description: Output text.
+#
+#   $3: clean_up (Optional, Default: false)
+#       Description: True if 'Cleaning up...' should be printed with two new-line.
 clean_up() {
     local exit_code="$1"
     local output_text="$2"
-    local clean_up="$3"
+    local clean_up="${3:-false}"
 
     # Files to be removed.
     local installer_files=("installer_prep.sh" "file_backup.sh" "prereqs_installer.sh"
@@ -193,7 +205,9 @@ clean_up() {
 }
 
 ####
-# Download and execute $master_installer.
+# Function name: execute_master_installer
+# Purpose:
+#   Download and execute $master_installer.
 execute_master_installer() {
     _DOWNLOAD_SCRIPT "$master_installer" "true"
     ./nadeko_main_installer.sh
