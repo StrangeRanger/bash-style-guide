@@ -2,7 +2,7 @@
 
 [![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
 
-This style guide outlines how to write bash scripts with a style that makes them safe and predictable.  Most of this guide is based on [this wiki](http://mywiki.wooledge.org), specifically this page: http://mywiki.wooledge.org/BashGuide/Practices
+This style guide outlines how to write bash scripts with a style that makes them safe and predictable. Most of this guide is based on [this wiki](http://mywiki.wooledge.org), more specifically, this page: http://mywiki.wooledge.org/BashGuide/Practices
 
 If anything is not mentioned explicitly in this guide, it defaults to matching whatever is outlined in the wiki.
 
@@ -10,414 +10,627 @@ You can fork this style guide on GitHub: https://github.com/StrangeRanger/bash-s
 
 ## Preface
 
-This guide will try to be as objective as possible, providing reasoning for why individual decisions were made.  For choices that are purely aesthetic (and may not be universally agreeable), refer to the `Aesthetics` section below.
+This guide will try to be as objective as possible, providing reasoning for why individual decisions were made. For purely aesthetic choices (and may not be universally agreeable), refer to the `Aesthetics` section below.
 
 ## Aesthetics
 
-### Indents
+### Indentation
 
-Indents should be four spaces. Don't use tabs.
+Consistent indentation is crucial for ensuring the readability and maintainability of code. In Bash scripting, using spaces for indentation is preferred over tabs due to its consistency across various editing environments and platforms.
+
+#### Why Use Spaces?
+
+- **Uniform Appearance**: Spaces ensure that the code looks the same in every editor and environment, avoiding issues where tabs may render differently depending on settings.
+- **Avoid Misalignment**: Tabs can lead to misaligned code blocks when viewed in different text editors or IDEs, as the width of a tab can vary, whereas spaces provide a consistent width.
+
+#### Recommended Practice
+
+- **Indent Size**: Use four spaces per level of indentation. This size is generally considered a good balance between readability and conserving horizontal space.
+- **Consistency**: Stick to one method of indentation throughout the entire script or project to maintain uniformity.
+
+#### Example
 
 ```bash
-var=true
-
+# Correct usage with spaces.
 if [[ var = true ]]; then
     echo "true"
 fi
 ```
 
-### Columns
+### Line Length (COME BACK TO AND EDIT REGARDING NEW LINE IF IS READABLE)
 
-It's preferred that columns are 88 characters or less. The only reason that the character limit should be exceeded is if it would negatively affect readability.
+Maintaining an optimal line length in Bash scripts is essential for readability, maintainability, and compatibility across different environments. A maximum line width of 88 characters is recommended, aligning with modern coding standards that balance readability with practical code editing and viewing.
 
-### Semicolons
+#### Reasons for Limiting Line Length
 
-Do not use semicolons where they are not needed.
+1. **Readability**: Shorter lines reduce the need for horizontal scrolling, making the code easier to read on various devices and screens.
+2. **Maintainability**: It is easier to review and debug code that fits within a standard visual range without navigating back and forth across long lines.
+3. **Compatibility**: Ensures that the code displays well in a wide range of development environments and tools, including code review platforms and integrated development environments (IDEs).
+
+#### Exceptions to the 88-Character Rule
+
+While the 88-character limit is generally a good practice, there are situations where exceptions are necessary to maintain the clarity and functionality of the code:
+
+1. **Long Strings or URLs**: When a line contains a long string, URL, or command that loses clarity or functionality if broken into multiple lines, it is permissible to exceed the standard line length.
+2. **Complex Expressions**: Complex expressions or commands that would have their logical flow disrupted by splitting across multiple lines should be kept intact even if they exceed the standard width.
+3. **Configuration Files**: In scripts dealing with configuration data, sometimes parameters and their values are more understandable when placed on a single line, even if this extends beyond the typical length limit.
+
+#### Example
 
 ```bash
-## Wrong.
+# Within 88 characters.
+if [[ -n $file && -x $script ]]; then
+    echo "File and script are available."
+fi
+
+# Exceeding 88 characters, but is continued on the next line,
+grep -E "pattern1|pattern2|pattern3|pattern4" \
+	      /var/log/very_long_directory_name/filename.log
+
+# Configuration file exception
+config_option="ThisIsAReallyLongConfigurationParameter = 'This is a very long value that makes sense to keep on one line'"
+```
+
+### Semicolons in Bash Commands
+
+Semicolons in Bash serve as command separators, allowing multiple commands to be executed sequentially on a single line. However, when not required for this purpose, their use should be minimized to maintain code cleanliness and prevent syntactic confusion.
+
+#### Why Avoid Unnecessary Semicolons?
+
+- **Code Clarity**: Removing unnecessary semicolons helps keep the script clean and readable. It makes the script easier to follow by reducing visual clutter.
+- **Error Prevention**: Extra semicolons can introduce errors or unexpected behaviors, especially for those new to scripting who might misinterpret their purpose.
+
+#### Example
+
+```bash
+# Incorrect usage with unnecessary semicolons.
 name="dave";
 echo "hello $name";
 
-## Right.
+# Correct usage without semicolons when not needed.
 name="dave"
 echo "hello $name"
-
-# Also right.
-name="dave"; echo "hello $name"
 ```
 
-The exception to this rule is outlined in the `Block Statements` section below. Namely, semicolons should be used for control statements like `if` or `while`.
+### Function Declaration
 
-### Functions
+In Bash scripting, the way functions are declared can significantly affect the readability, maintainability, and scope management of the code. It is recommended to use a consistent syntax for function declarations and to manage variable scope carefully within those functions.
 
-Don't use the `function` keyword. Instead, `()` should be appended to the end of the function name. All variables created in a function should be made local unless you plan on calling them from outside of the function they're defined in.
+#### Preferred Syntax for Function Declarations
+
+- **Simplicity and Consistency**: Declare functions with the name followed by parentheses and curly braces. This approach is widely recognized and aligns with other programming languages, making it easier for developers to understand and use.
+
+#### Why Avoid the `function` Keyword?
+
+- **Portability**: The `function` keyword is not POSIX compliant, which can lead to compatibility issues in environments that strictly adhere to POSIX standards.
+- **Consistency**: Using the simpler `name()` format ensures consistency across different scripts and reduces the complexity of the syntax.
+
+#### Managing Variable Scope
+
+- **Local Variables**: Declare variables within functions as `local` whenever possible. This practice confines the variable's scope to the function, preventing it from affecting the global state or interfering with other parts of the script.
+
+#### Examples:
 
 ```bash
-## Wrong, if $i isn't used outside of 'foo'.
+# Incorrect usage with the `function` keyword and global variable:
 function foo {
-    i=foo  # This is now global, wrong depending on intent.
+    i=foo  # This variable is global, which can lead to unintended side effects.
 }
 
-## Right.
+# Correct usage with preferred syntax and local variable:
 foo() {
-    local i=foo  # This is local, preferred.
+    local i=foo  # This variable is local to 'foo', minimizing side effects.
 }
 ```
 
-### Block Statements
+### Formatting Block Statements
 
-`then` should be on the same line as `if`, and `do` should be on the same line as `while`.
+Proper formatting of control structures such as `if`, `for`, and `while` is crucial for maintaining the readability and clarity of Bash scripts. The placement of `then` and `do` on the same line as their respective control statement and consistently formatting block closures can greatly enhance the understandability of code.
+
+#### Importance of Consistent Block Formatting
+
+- **Readability**: Placing `then` and `do` on the same line as the control statement makes the structure of the code immediately apparent, reducing confusion and increasing readability.
+- **Maintainability**: Consistent block formatting helps other developers understand the logic of the script more easily, facilitating quicker debugging and modifications.
+
+#### Formatting Guidelines
+
+1. **Inline `then` and `do`**: Always place `then` for `if` statements and `do` for `for` or `while` loops on the same line as the opening statement.
+2. **New Line for Closing Keywords**: Always place `fi` for `if` statements and `done` for loops on a new line to clearly indicate the end of the block.
+
+#### Examples:
 
 ```bash
-## Wrong.
+# Incorrect usage:
 if true
 then
-    ...
+    echo "This is hard to trace."
 fi
 
-## Also wrong.
+# Also incorrect:
 true && {
-    ...
+    echo "This syntax is less clear."
 }
 
-## Right.
+# Correct usage:
 if true; then
-    ...
+    echo "This is easy to follow."
 fi
 ```
 
-### Single line block statements
+### Single Line Block Statements
 
-Block statements, such as `if`, `for`, and `while` loops, can be placed on a single line, as long as they fit within the preferred character limit, and don't negatively affect readability. It is required, though, that the end of the block statement, like `fi` and `done`, are placed on a separate line.
+While Bash scripts typically benefit from multi-line formatting for clarity, single-line block statements can be used effectively for simple conditional or loop executions. However, it is crucial to maintain readability and structural integrity by adhering to best practices for closing such statements.
+
+#### Rationale for Careful Use of Single-Line Statements
+
+- **Clarity**: Keeping block statements clear and concise aids in readability, especially for simpler conditional checks or loops.
+- **Maintainability**: Properly formatted single-line statements help maintain the script’s structure, making it easier to understand and modify by others or in future revisions.
+
+#### Best Practices for Single-Line Statements
+
+1. **Closing Keywords on New Line**: Even in single-line statements, place the closing keyword (`fi` for `if` statements, and `done` for `while` and `for` loops) on a new line. This maintains a clean separation between the start and end of the block, aiding in visual clarity and preventing structural errors.
+2. **Character Limit Considerations**: Ensure that single-line statements do not exceed the preferred line length (e.g., 88 characters), to avoid horizontal scrolling in most editors and maintain overall readability.
+
+#### Examples:
 
 ```bash
-## Wrong.
+# Incorrect usage:
 if [[ -f $file_name ]]; then echo "$file_name exists!"; fi
 
-## Also wrong.
+# Also incorrect:
 if [[ -f $file_name ]]; then echo "$file_name exists!"; echo "Done"
 fi
 
-## Right.
+# Correct usage:
 if [[ -f $file_name ]]; then echo "$file_name exists!"
 fi
 ```
 
-### Spacing
+### Vertical Spacing
 
-No more than three consecutive newline characters, meaning, no more than two blank lines.
+Limit the use of consecutive newline characters to no more than three, which translates to allowing no more than two blank lines in a row within your scripts. This spacing rule helps balance separating sections of code for better readability and preventing excessive whitespace that can make the script longer and harder to navigate.
+
+#### Guidelines:
+
+- Use one blank line to separate logical blocks of code or functions for quick visual parsing.
+- Use up to two blank lines sparingly to denote new sections or distinct groups of logic within your script.
+
+#### Examples:
+
+```bash
+# Correct usage:
+echo "Start of the script"
+
+echo "First operation completed"
+
+echo "Second operation completed"
+
+
+echo "End of the script"
+```
 
 ### Comments
 
-#### Generals
+#### General Comment Guidelines
 
-In general, the first letter of a comment, unless referencing a variable, should be capitalized, and end with a period. Allow for two spaces when appending comments to the end of a piece of code. Finally, don't change someone's comments for aesthetic reasons unless you are rewriting or updating them.
+Comments are a vital part of any script, not only for explaining what the script or specific parts of it do, but also for maintaining its usability and readability over time. Good commenting practices can transform a script from being cryptic and hard-to-follow to being easily understandable by new developers or future maintainers.
+
+##### General Commenting Guidelines
+
+- **Capitalization**: Start each comment with a capital letter unless it begins with a variable that is not capitalized.
+- **Punctuation**: End each comment with a period to maintain consistency and readability.
+- **Spacing**: Include two spaces between the end of the code and the start of the inline comment. This helps to visually separate the code from comments.
+
+##### Examples of Good Commenting Practices:
 
 ```bash
+# This line assigns the string "True" to var and demonstrates proper comment format.
 var=$(echo "True")  # This prints "True".  (Two spaces between ')' and '#')
+
+# Simple variable assignment with a clear, aligned comment.
 box="Box"           # This is a box.       (Aligned with the comment above for better readability)
 ```
 
 #### Functions
 
-When commenting a function and describing its purpose, always follow the format below:
+Well-documented functions are crucial for maintaining high code quality and ensuring that scripts are accessible and maintainable. Detailed documentation for each function helps clarify its purpose, usage, and the parameters it accepts, which is essential for both current developers and future maintainers.
+
+##### Guidelines for Documenting Functions
+
+- **Function Name**: Clearly state the function's name at the beginning of the documentation to immediately inform the reader about which function they are reviewing.
+- **Purpose**: Provide a brief description of what the function does. This description should inform the reader of the function's overall purpose and its role within the script.
+- **Parameters**: List each parameter the function expects, specifying whether it is required or optional. For optional parameters, include the default value.
+
+##### Documentation Format
+
+Ensure that the documentation is easy to read and systematically organized. Use a consistent comment block style to define the function's name, purpose, and parameters.
+
+##### Example of Function Documentation:
 
 ```bash
-func() {
-    ####
-    # Function Info: Description of the function and/or its purpose.
-    #
-    # Parameters:
-    #   $1 - Specify if the parameter is required or optional: required OR optional
-    #       Description of the parameter and/or its purpose.
-    #   $2 - Specify if the parameter is required or optional: required OR optional
-    #       Description of the parameter and/or its purpose.
-    ####
+####
+# Function name: process_files
+# Purpose:
+#   This function processes files given as parameters and logs results. It is designed
+#   to handle a variable number of input files and demonstrate proper error handling.
+#
+# Parameters:
+#   $1: input_file (Required)
+#       Description: Path to the file that needs processing.
+#
+#   $2: log_file (Required)
+#       Description: File where the processing logs are stored.
+#
+#   $3: debug_mode (Optional, Default: false)
+#       Description: If set to true, the function will perform debugging operations.
+process_files() {
+    local input_file="$1"
+    local log_file="$2"
+    local debug_mode="${3:-false}"
 
     ...
 }
 ```
 
-#### Number of pound signs
+#### Pound Signs in Comments
 
-When a comment refers to a single line of code, a singular pound sign (`#`) should be used. This includes when describing what the if statement checks for.
+Using a systematic approach to commenting with pound signs (`#`) in Bash scripts enhances readability and maintainability by clearly delineating the scope and intent of comments. This practice helps both the script’s author and others who may work on the script in the future to quickly understand the purpose and functionality of various code sections.
+
+##### Guidelines for Using Pound Signs
+
+- **Single Pound Sign (`#`)**: Use a single pound sign for line-specific comments that explain the purpose of a particular line or command within the script. This is most commonly used for inline comments or brief explanations.
+
+- **Double Pound Signs (`##`)**: Double pound signs are used for block-specific comments. These comments cover several lines of code, describing the functionality of a code block, such as a loop or a conditional sequence.
+
+- **Triple Pound Signs (`###`)**: Reserved for important structural comments that apply to an entire section or complex block of code, such as an entire function or a large conditional structure. These comments should summarize the overall purpose or behavior of the code section.
+
+##### Examples of Comment Usage:
 
 ```bash
+# Single Pound Sign for simple explanations:
 # Contains the raw URL link to this 'README.md'.
 export _RAW_URL="https://raw.githubusercontent.com/StrangeRanger/bash-style-guide/main/README.md"
-```
 
-```bash
-# Describe what the if statement is looking for.
-if [[ ...code to be commented on... ]]; then
-    ...
+# Checks if the file exists.
+if [[ -f $file_path ]]; then
+    echo "File exists."
 fi
-```
 
-When describing, say, what the code inside of an if statement does, always begin the comment with two pound signs instead of one. Two `#` indicate that the comment refers to a block of code instead of a single line/command. This is also applicable when making a single comment that applies for several adjacent lines of code. In this case, a blank line should be used to signify that the comment no longer applies to the code after it.
-
-```bash
-## Describe what the code inside the if statement does.
-if [[ ... ]]; then
-    ...code to be commented on...
-fi
-```
-
-```bash
-## Variables that modify output color.
+## Double Pound Signs for describing a block of operations:
+## Initialize environment variables for color output.
 export _YELLOW="$(printf '\033[1;33m')"
 export _GREEN="$(printf '\033[0;32m')"
 export _CYAN="$(printf '\033[0;36m')"
 export _RED="$(printf '\033[1;31m')"
-export _NC="$(printf '\033[0m')"
-export _GREY="$(printf '\033[0;90m')"
-export _CLRLN="$(printf '\r\033[K')"
-```
 
-In the case of an if statement containing an `elif` or `else`, three pound signs should be used when the comment refers to the entire if statement. If the comment is made for a single section of the if statement, double pound signs should be used instead.
+## Process each file listed.
+for file in *.txt; do
+    echo "Processing $file"
+done
 
-```bash
-### Describe what the entire if statement does.
-if [[ ... ]]; then
-    ...code to be commented on...
+### Triple Pound Signs for major sections:
+### Handle user input and provide feedback.
+if [[ -z $1 ]]; then
+    echo "No argument provided."
+elif [[ -f $1 ]]; then
+    echo "File found."
 else
-    ...code to be commented on...
-fi
-```
-
-```bash
-## Describe what the code inside the FIRST section does.
-if [[ ... ]]; then
-    ...code to be commented on...
-## Describe what the code inside the SECOND section does.
-else
-    ...code to be commented on...
+    echo "Condition not met."
 fi
 ```
 
 ## Bashisms
 
-This style guide is for bash. This means when given a choice, always prefer bash builtins or keywords instead of external commands or `sh(1)` syntax.
+As a reminder, this style guide is for bash. This means when given a choice, always prefer bash builtins or keywords instead of external commands or `sh(1)` syntax.
 
-### `test(1)`
+### Conditional Tests
 
-Use `[[ ... ]]` for conditional testing, not `[ .. ]` or `test ...`.
+In Bash scripting, it is recommended to use the `[[ ... ]]` syntax for conditional tests instead of the older `[ ... ]` or `test` syntax. The `[[ ... ]]` construct offers several advantages, such as more flexible string handling and pattern matching capabilities. It also prevents script errors in cases where variables may be unassigned or contain spaces.
+
+#### Benefits of `[[ ... ]]` Over `[ ... ]` and `test`
+
+- **Enhanced Features**: Supports additional string operations and pattern matching.
+- **Safety**: Does not split variables on spaces, which can lead to more robust scripts.
+- **Flexibility**: Easier to read, especially in complex conditional expressions.
+
+#### Examples:
 
 ```bash
-# Wrong.
+# Incorrect usage with 'test':
 test -d /etc
 
-# Also wrong.
+# Incorrect usage with single brackets:
 [ -d /etc ]
 
-# Right.
+# Correct usage with double brackets:
 [[ -d /etc ]]
 ```
 
-See http://mywiki.wooledge.org/BashFAQ/031 for more information.
+### Sequence Iteration
 
-### Sequences
+For iterating over a sequence of numbers in Bash scripts, it is best to utilize Bash builtins like brace expansion `{1..5}` and the C-style `for` loop `for ((i = 0; i < n; i++))`. These methods are preferred over external commands like `seq`, as they are built directly into Bash and do not require forking a new process, leading to better performance and lower resource usage.
 
-Use bash builtins for generating sequences.
+#### Advantages of Builtins Over `seq`
+
+- **Performance**: Builtins execute faster as they are processed internally by the shell without launching an external process.
+- **Portability**: Builtins work consistently across all platforms that run Bash, whereas `seq` may not be installed by default on some systems.
+- **Simplicity**: Using builtins can reduce the complexity of your scripts, making them easier to read and maintain.
+
+#### Examples:
 
 ```bash
-n=10
-
-## Wrong.
+# Incorrect usage with 'seq':
 for f in $(seq 1 5); do
-    ...
+    echo $f
 done
 
-## Wrong.
+# Incorrect usage with 'seq' for variable limits:
 for f in $(seq 1 "$n"); do
-    ...
+    echo $f
 done
 
-## Right.
+# Correct usage with brace expansion:
 for f in {1..5}; do
-    ...
+    echo $f
 done
 
-## Right.
+# Correct usage with C-style for loop:
 for ((i = 0; i < n; i++)); do
-    ...
+    echo $i
 done
 ```
 
 ### Command Substitution
 
-Use `$(...)` for command substitution.
+In Bash scripting, command substitution allows you to capture the output of a command and store it in a variable. The recommended syntax for command substitution is `$(...)` rather than the older backticks `` `...` ``. The `$(...)` syntax is preferred for several reasons including improved readability, easier nesting, and better compatibility with other shell features.
+
+#### Advantages of `$(...)` Over Backticks
+
+- **Readability**: The `$(...)` syntax is visually clearer, especially in complex commands or scripts.
+- **Nesting**: It simplifies the process of nesting commands within commands, which can be awkward with backticks.
+- **Compatibility**: Interacts better with double quotes and other special characters.
+
+#### Examples:
 
 ```bash
-foo=`date`   # Wrong.
-foo=$(date)  # Right.
+# Incorrect usage with backticks:
+foo=`date`
+
+# Correct usage with $(...):
+foo=$(date)
 ```
 
-### Math / Integer Manipulation
+### Arithmetic Operations
 
-Use `((...))` and `$((...))`.
+In Bash scripts, arithmetic operations should ideally be performed using the `((...))` syntax for conditional expressions and `$((...))` for arithmetic expansion. These built-in mechanisms are preferred over the older `let` command for several reasons, including clarity, simplicity, and reduced error potential.
+
+#### Advantages of `((...))` and `$((...))`
+
+- **Clarity**: Both `((...))` and `$((...))` provide clear visibility of arithmetic operations within the script.
+- **Simplicity**: These constructs integrate seamlessly with Bash, avoiding the verbosity and syntactic complexity of alternatives like `let`.
+- **Safety**: Unlike `let`, which evaluates the expression as a command, `((...))` and `$((...))` treat expressions as arithmetic evaluations, reducing the risk of executing unintended commands.
+
+#### Examples:
 
 ```bash
+# Incorrect usage with 'let':
 a=5
 b=4
-
-## Wrong.
 if [[ $a -gt $b ]]; then
-    ...
+    echo "a is greater than b"
 fi
 
-## Right.
+# Correct usage with arithmetic expansion and evaluation:
+a=5
+b=4
 if ((a > b)); then
-    ...
+    echo "a is greater than b"
 fi
 ```
-
-Do **not** use the `let` command.
 
 ### Parameter Expansion
 
-Always prefer [parameter expansion](http://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) over external commands like `echo`, `sed`, `awk`, etc.
+In Bash scripting, parameter expansion offers a powerful tool for modifying and manipulating string variables directly within the shell, without the need for external commands like `echo`, `sed`, `awk`, etc. This built-in feature provides a more efficient and native way to handle string operations, reducing overhead and improving script performance.
+
+#### Advantages of Parameter Expansion
+
+- **Efficiency**: Executes operations within the shell itself, avoiding the overhead of spawning new processes.
+- **Simplicity**: Simplifies scripts by keeping manipulations inline and shell-native without relying on external tools.
+- **Portability**: Ensures better script portability across different Unix-like systems where external tools might differ in availability or behavior.
+
+#### Examples:
 
 ```bash
+# Incorrect usage with external commands:
 name="hunter"
-
-## Wrong.
 prog=$(basename "$0")
-nonumbers=$(echo "$name" | sed -e 's/[0-9]//g')
+no_numbers=$(echo "$name" | sed -e 's/[0-9]//g')
 
-## Right.
+# Correct usage with parameter expansion:
+name="hunter"
 prog=${0##*/}
-nonumbers=${name//[0-9]/}
+no_numbers=${name//[0-9]/}
 ```
 
-### Listing Files
+### Avoiding Parsing `ls`
 
-Do not [parse ls(1)](http://mywiki.wooledge.org/ParsingLs), instead use bash builtin functions to loop files
+In Bash scripting, directly parsing the output of `ls` to list files can lead to potential issues, especially when filenames contain spaces, newlines, or other special characters. Instead, it is recommended to use Bash's built-in globing feature, which is safer and more robust for looping through files in a directory.
+
+#### Reasons to Avoid Parsing `ls`
+
+- **Reliability**: Parsing `ls` can break in unexpected ways when filenames contain special characters or spaces.
+- **Security**: Using `ls` in scripts can lead to security vulnerabilities, especially when filenames are crafted maliciously.
+- **Simplicity**: Bash globing (`*`) directly provides a simpler and more direct method of accessing filenames.
+
+#### Examples:
 
 ```bash
-## Very wrong and potentially unsafe
+# Incorrect and potentially unsafe usage with `ls`:
 for f in $(ls); do
-    ...
+    echo "Processing $f"
 done
 
-## Right
+# Correct and safe usage with globing:
 for f in *; do
-    ...
+    echo "Processing $f"
 done
 ```
 
-### Arrays and lists
+### Using Arrays Over Space-Separated Strings
 
-Use bash arrays instead of a string separated by spaces (or newlines, tabs, etc.) whenever possible:
+In Bash scripts, using arrays to manage collections of elements is highly recommended over using space-separated strings. Arrays provide a more structured, flexible, and robust method for handling lists of items, especially when elements might contain spaces or special characters.
+
+#### Benefits of Using Arrays:
+
+- **Clarity and Safety**: Arrays prevent errors related to word splitting and globing, which can occur with space-separated strings.
+- **Flexibility**: Arrays allow for easier manipulation and access to individual elements, as well as simpler expansion in commands that accept multiple arguments.
+- **Maintainability**: Code that utilizes arrays is generally easier to read and maintain, especially as script complexity increases.
+
+#### Examples:
 
 ```bash
-## Wrong.
+# Incorrect: Using a space-separated string:
 modules="json httpserver jshint"
 for module in $modules; do
     npm install -g "$module"
 done
 
-## Right.
+# Correct: Using an array:
 modules=(json httpserver jshint)
 for module in "${modules[@]}"; do
     npm install -g "$module"
 done
-```
 
-Of course, in this example, it may be better expressed as:
-
-```bash
+# More efficient usage if command supports multiple arguments:
 npm install -g "${modules[@]}"
 ```
 
-... if the command supports multiple arguments, and you are not interested in catching individual failures.
+### Using `read` for Parsing Strings
 
-### read builtin
+The `read` command in Bash is a powerful builtin that facilitates direct parsing of strings and user input without needing to spawn external processes. This can lead to scripts that are not only faster but also more secure and easier to maintain.
 
-Use the bash `read` builtin whenever possible to avoid forking external commands.
+#### Advantages of Using `read`:
 
-Example:
+- **Efficiency**: Avoids the overhead of launching external commands, which can be slow and resource-intensive.
+- **Security**: Reduces the risk of injection attacks that can occur when improperly handling external command outputs.
+- **Simplicity**: Provides a straightforward syntax for parsing complex data structures directly into Bash variables.
+
+#### Example Usage:
 
 ```bash
+# Here's how to parse a fully qualified domain name (FQDN) using `read`:
 fqdn="computer1.daveeddy.com"
 
+# Using IFS (Internal Field Separator) to split the string by periods:
 IFS=. read -r hostname domain tld <<< "$fqdn"
 echo "$hostname is in $domain.$tld"
-# => "computer1 is in daveeddy.com"
+# Output: "computer1 is in daveeddy.com"
 ```
 
 ## External Commands
 
-### GNU userland tools
+### Portability of Bash Scripts
 
-The whole world doesn't run on GNU or Linux; try to avoid GNU-specific options when forking external commands like `awk`, `sed`, `grep`, etc., to be as portable as possible.
+Bash scripts often rely on external tools such as `awk`, `sed`, and `grep`. However, GNU-specific options for these tools might not be available on all systems, such as on BSD or macOS, which use different versions of these utilities. To ensure maximum portability of your Bash scripts across different environments, avoid using GNU-specific options or features whenever possible.
 
-When writing bash and using all the powerful tools and builtins bash gives you, you'll find it rare that you need to fork external commands to do simple string manipulation.
+#### Best Practices:
 
-### UUOC
+- **Portability**: Use the most basic and widely supported options in commands to ensure your scripts run on any Unix-like system.
+- **Utilizing Builtins**: Bash provides powerful builtins that often negate the need for external commands, especially for tasks like string manipulation or file processing.
 
-Don't use `cat(1)` when you don't need it.  If programs support reading from stdin, pass the data in using bash redirection.
+### Avoiding Unnecessary Use of Cat (UUOC)
+
+A common misuse of external commands is the unnecessary use of `cat` for piping data into filters like `grep`. This practice is colloquially known as "Useless Use of Cat" (UUOC). Instead, use direct redirection or pass filenames directly to commands that support it to streamline command execution and improve script performance.
+
+#### Examples:
 
 ```bash
-# Wrong.
-cat file | grep foo
+# Inefficient use of 'cat':
+cat file | grep foo  # This unnecessarily invokes 'cat'.
 
-# Right.
-grep foo < file
-
-# Also right.
-grep foo file
+# Efficient alternatives:
+grep foo < file      # Redirects file directly into 'grep'.
+grep foo file        # Passes the filename directly to 'grep'.
 ```
-
-Prefer the use of the command-line tools built-in method of reading a file instead of passing in stdin.  This is where we make the inference that if a program says it can read a file passed by name, it's probably more performance to do that.
 
 ## Style
 
-### Quoting
+### Guidelines for Using Quotes in Bash
 
-Use double quotes for strings that require variable expansion, command substitution interpolation, and almost everything in between.
+Quoting in Bash scripting is crucial for controlling how strings and variables are handled. Use double quotes in most cases to ensure that variable values and command substitutions are correctly expanded without being split or misinterpreted by the shell.
 
-Exceptions:
+#### When to Use Double Quotes
 
-1. When you don't want ANY form of variable expansion. Many situations where this is necessary or desired, is when using commands such as `sed` or `awk`.
+- **Variable Expansion**: Double quotes allow for the expansion of variables within the string.
+- **Command Substitution**: Use double quotes when your string includes command substitutions to ensure the output is handled correctly.
+
+##### Examples:
 
 ```bash
-## Right.
-foo='$USER contains your username'
+# Correct:
+foo="$USER contains your username"
 bar="You are a user"
 bar="You are $USER"
 bar="\$USER = $USER"
 
-## Wrong.
-foo='Hello World'
+# Incorrect:
+foo='Hello World'  # Should be in double quotes unless intentional.
 ```
 
-All variables should be quoted, whether or not they undergo word-splitting.
+#### Exceptions to Using Double Quotes
 
-Two exceptions:
+- **No Expansion Desired**: Use single quotes when you want the string to be taken literally, especially with utilities like `sed` or `awk` where the expansion of Bash variables might cause issues.
+- **Empty or Non-existent Variables**: If you want the script to ignore empty or undefined variables rather than leaving an empty string, omit the quotes.
 
-1. The first exception to this rule is if you call a variable within double brackets, like shown below.
-2. The second exception is if you would like the variable to be ignored if it is empty or does not exist. (Empty or non-existent variables that are quoted leave an empty string where called, while an unquoted variable completely ignores the variable)
+##### Examples:
+
+????
+
+#### Handling Variables:
+
+All variables should be quoted to prevent word splitting and globbing, except in the following cases:
+
+- **Within Double Brackets**: Bash handles word splitting automatically in double brackets [[]], so quotes are not necessary.
+- **When Ignoring Empty Variables**: Unquoted variables are ignored if they are empty or undefined, which can be useful in conditional expressions.
+
+##### Example
 
 ```bash
 foo="hello world"
 
-if [[ -n $foo ]]; then  # No quotes needed.
-    echo "$foo"         # Quotes needed.
+# No quotes needed here:
+if [[ -n $foo ]]; then
+    echo "Variable foo is not empty."
 fi
 
-bar="$foo"              # Quotes needed.
+# Quotes needed to prevent word splitting:
+echo "$foo"
 ```
 
-### Variable Declaration
+### Guidelines for Declaring Variables
 
-Unless exported, all variables should be lowercase. If a variable is being exported, it should be completely uppercase with `_` placed to the beginning of the variable and between each word.
+Variable declaration in Bash should follow specific naming conventions and usage rules to ensure scripts are clear, maintainable, and consistent. These rules differentiate between local variables and those intended for export.
 
-Don't use `let` or `readonly` to create variables. `declare` should *only* be used for associative arrays.  `local` should always be used in functions unless the variable is called outside of the function.
+#### Local Variables
+
+- **Naming Conventions**: Use lowercase for local variable names. This helps differentiate them from environment variables which are typically uppercase.
+- **Usage**: Use `local` when declaring variables within functions to limit their scope and prevent conflicts with global variables.
+
+#### Exported Variables
+
+- **Naming Conventions**: Exported variables should be in uppercase, with an underscore `_` prefix and underscores separating words. This convention makes them easily identifiable and distinguishes them from local variables.
+- **Declaration**: Use `export` directly with the variable declaration to clearly indicate that the variable is intended for the environment outside the script.
+
+#### Do Not Use
+
+- **`let`**: Avoid using `let` for arithmetic operations. Instead, use the `((...))` syntax for clarity and consistency.
+- **`readonly`**: Generally, avoid `readonly` unless you need to guarantee that the variable's value cannot be changed.
+- **`declare`**: Reserve `declare` primarily for associative arrays. For standard variables, direct assignment is preferred unless scoping issues require `declare`.
+
+#### Examples:
 
 ```bash
-## Wrong.
+# Incorrect usage:
 declare -i foo=5
 let foo++
 readonly bar="something"
@@ -425,7 +638,7 @@ FOOBAR=baz
 export food=5
 export food_cart=5
 
-## Right.
+# Correct usage:
 i=5
 ((i++))
 bar="something"
@@ -434,139 +647,216 @@ export _FOOD=5
 export _FOOD_CART=5
 ```
 
-### shebang
+### Best Practices for Shebang Lines in Bash Scripts
 
-As a general rule, scripts that are designed to run on anything other than Linux, such as BSD or macOS, should use `#!/usr/bin/env bash`. Otherwise, `#!/bin/bash` should be used instead.
+The shebang line at the start of a Bash script determines which shell executes the script, crucial for ensuring the script runs correctly across different environments. Choosing the correct shebang line depends on the script's intended compatibility and the environments it will run in.
 
-The reasoning is that bash is located in a different location on BSD. On macOS, users will often install a newer version of bash via homebrew, as the default version is much older. So it's ideal for the shebang to be more flexible. These are neither of the case for Linux, as bash is generally updated when a new version of the distribution is released, and is always located in `#!/bin/bash`.
+#### General Guidelines
 
-## Error Checking
+- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts intended to run on multiple operating systems, including BSD, macOS, and Linux. This method searches the user's `PATH` to locate and use the first instance of Bash, which accommodates systems where Bash may be installed in a non-standard location.
+- **Linux-specific Scripts**: Use `#!/bin/bash` for scripts that are specifically designed for Linux environments where Bash's location is consistent at `/bin/bash`.
 
-`cd`, for example, doesn't always work.  Make sure to check for any possible errors when using `cd` (or commands like it) and perform the proper action.
+#### Why the Difference Matters:
+
+- **BSD and macOS**: On systems like BSD and macOS, Bash is not always in the same location as on Linux. macOS, for example, includes an older version of Bash by default, and many users install an updated version via Homebrew, which does not replace the system default in `/bin/bash`.
+- **Path Flexibility**: Using `#!/usr/bin/env bash` provides flexibility, ensuring that scripts use the version of Bash installed in the user's environment, which can be crucial for scripts that rely on features found in newer versions of Bash.
+
+#### Examples:
 
 ```bash
-## Wrong.
-cd /some/path  # This could fail.
-rm file        # If cd fails, where am I? What am I deleting?
+# For universal compatibility:
+#!/usr/bin/env bash
 
-## Right.
+# Specifically for Linux environments:
+#!/bin/bash
+```
+
+## Handling Errors Properly
+
+Error checking is crucial in Bash scripting to ensure that your scripts behave as expected even when encountering runtime errors. Proper error handling techniques can prevent scripts from causing unintended effects.
+
+### Checking Command Success
+
+Use conditional checks to verify that commands have executed successfully before proceeding. This is particularly important for commands like `cd`, where failure to change directories could lead to incorrect script behavior.
+
+#### Example:
+
+```bash
+# Incorrect: Does not handle potential failure:
+cd /some/path
+rm file
+
+# Correct: Checks for failure before proceeding:
 cd /some/path || exit
 rm file
 ```
 
-### `trap`
+### Overview of `trap` in Bash
 
-Trapping is very useful for catching system signals such as SIGTERM, SIGINT, and so on. Make sure to use it where necessary.
+The `trap` command in Bash is a powerful tool used to specify commands that will execute when the shell receives specific signals or when other specific system events occur. This feature is particularly useful for performing cleanup tasks or handling graceful shutdowns in scripts.
 
-### `set -e`
+#### Importance of `trap`
 
-Don't set `errexit`.  Like in C, sometimes you want an error, or you expect something to fail, and that doesn't necessarily mean you want the program to exit.
+- **Resource Management**: Ensures that temporary files, processes, or other system resources are properly cleaned up or released, even if the script exits unexpectedly.
+- **Robustness**: Increases the robustness of scripts by allowing them to respond to interrupts and other signals in a controlled manner.
 
-This is a controversial opinion that I have on the surface, but the link below will show situations where `set -e` can do more harm than good because of its implications.
+#### Common Signals to Trap
 
-http://mywiki.wooledge.org/BashFAQ/105
+- **SIGINT**: This signal is sent to a process by its controlling terminal when a user wishes to interrupt the process. Commonly invoked via Ctrl+C.
+- **SIGTERM**: The default signal sent by the `kill` command, indicating that a process should terminate gracefully.
+- **EXIT**: A pseudo-signal that is not a true system signal, but can be trapped to execute a command when the script exits for any reason, whether normally or due to a signal.
 
-### `eval`
-
-Never.
-
-https://stackoverflow.com/questions/17529220/why-should-eval-be-avoided-in-bash-and-what-should-i-use-instead
-
-### Redirecting Errors
-
-When echoing an error message, always redirect the message to stderr:
+#### Example Usage:
 
 ```bash
+# Setting up a trap for cleanup operations
+trap 'rm -f /tmp/my_temp_file; echo "Cleanup complete."' EXIT
+
+# Example of trapping interruptions
+trap 'echo "Script interrupted."; exit' SIGINT
+
+# More complex trap handling
+trap cleanup SIGINT SIGTERM
+cleanup() {
+    echo "Performing cleanup tasks..."
+    # Insert cleanup commands here
+    exit
+}
+```
+
+### Understanding `set -e` in Bash Scripting
+
+The `set -e` option in Bash scripts causes the script to exit immediately if any command within the script exits with a non-zero status, unless the command that fails is part of an until or while loop, part of an if statement, part of a `&&` or `||` list, or if the command’s return status is being inverted using `!`. This feature is similar to the error handling in programming languages like C, where operations may fail without causing the program to stop, unless explicitly handled.
+
+#### Why Caution with `set -e`?
+
+- **Unintended Exits**: Scripts with `set -e` may exit in places you didn’t anticipate if a command fails, which can be problematic for scripts that handle errors internally or expect possible command failures.
+- **Complex Conditions**: In complex scripts, the exact point of failure might be obscured by `set -e`, making debugging more difficult, especially in multi-part commands or pipelines.
+
+#### Example Situations:
+
+```bash
+# Example where `set -e` might be problematic:
+set -e
+command_that_might_fail || handle_failure
+
+# Without `set -e`, you can handle errors more flexibly:
+command_that_might_fail || {
+    echo "Handling failure explicitly..."
+    # Additional commands to
+```
+
+### The Risks of Using `eval` in Bash
+
+The `eval` command in Bash scripts executes arguments as a Bash command, combining them into a single command before execution. This functionality poses significant security risks, particularly when the content that `eval` executes is derived from user input or untrusted sources. Due to these risks, it is strongly recommended to avoid using `eval` in Bash scripts.
+
+#### Why Avoid `eval`?
+
+- **Security Vulnerabilities**: `eval` can execute arbitrary code, which makes it a potent vector for code injection attacks. If any part of the `eval` statement can be influenced by an external user, it could potentially lead to malicious code execution.
+- **Complexity and Debugging Difficulties**: Scripts using `eval` are often more difficult to read and debug. `eval` can obscure the flow of execution and complicate the tracing of errors because it executes dynamically generated code.
+
+#### Examples of `eval` Usage and Alternatives:
+
+```bash
+# Potentially dangerous use of `eval`:
+command="rm -f $file"
+eval "$command"  # Dangerous if `$file` includes malicious input.
+
+# Safer alternative using direct execution:
+rm -f "$file"
+```
+
+### Redirecting Errors to stderr in Bash
+
+Proper error handling in Bash scripts includes directing error messages to the standard error stream (stderr). This practice helps differentiate normal output from error messages, making it easier for users and other programs to handle outputs correctly.
+
+#### Importance of Redirecting to stderr
+
+- **Clarity**: Keeps error messages separate from standard output, which is crucial for debugging and logging.
+- **Usability**: Allows users to redirect errors independently from standard output, which can be particularly useful in command-line utilities or scripts used in larger pipelines.
+
+#### How to Redirect Errors
+
+To redirect error messages to stderr, use the redirection operator `>&2`. This ensures that the message is sent to the stderr stream, which is typically used for logging errors or diagnostic messages.
+
+#### Example:
+
+```bash
+# Redirecting an error message to stderr:
 echo "Failed to execute file" >&2
 ```
 
 ## Common Mistakes
 
-### Using {} instead of quotes
+### Understanding Quoting and Braces in Bash
 
-Using `${f}` is potentially different than `"$f"` because of how word-splitting is performed.  For example:
+In Bash scripting, how you handle variable expansion can significantly affect the behavior of your scripts, particularly in terms of word-splitting and preserving whitespace. Properly using quotes and braces (`{}`) ensures that variables are expanded as intended without unwanted side effects.
+
+#### Importance of Quoting Variables
+
+- **Preserving Whitespace**: Quotes are crucial for ensuring that all characters within a variable, including whitespace, are treated as a single entity.
+- **Preventing Word-Splitting**: Without quotes, Bash splits the expanded variable into multiple words based on the internal field separator (IFS), which typically includes spaces.
+
+#### Using Curly Braces
+
+- **Disambiguation**: Curly braces are useful for clarifying where a variable's name ends and other characters begin. This can be critical in concatenating strings or appending characters directly after a variable.
+
+#### Examples and Comparisons:
 
 ```bash
+# Demonstrates loss of internal whitespace without quotes:
 for f in "1 space" "2  spaces" "3   spaces"; do
     echo ${f}
 done
-```
+# Output:
+# 1 space
+# 2 spaces
+# 3 spaces
 
-yields
-
-```txt
-1 space
-2 spaces
-3 spaces
-```
-
-Notice that it loses the number of spaces.  This is because the variable is expanded and undergoes word-splitting because it is unquoted.  This loop results in the three following commands being executed:
-
-```bash
-echo 1 space
-echo 2  spaces
-echo 3   spaces
-```
-
-The extra spaces are effectively ignored here, and only two arguments are passed to the `echo` command in all three invocations.
-
-If the variable was quoted instead:
-
-```bash
+# Preserves whitespace with quotes:
 for f in "1 space" "2  spaces" "3   spaces"; do
     echo "$f"
 done
+# Output:
+# 1 space
+# 2  spaces
+# 3   spaces
+
+# Example of using curly braces for disambiguation:
+echo "$HOME is $USERs home directory"  # Incorrect: treats 'USERs' as one variable
+echo "$HOME is ${USER}s home directory"  # Correct: clearly separates '$USER' from 's'
 ```
 
-yields
+### Understanding When to Use For vs. While Loops
 
-```txt
-1 space
-2  spaces
-3   spaces
-```
+In Bash scripting, the choice between `for` and `while` loops is crucial for writing efficient and correct scripts. `For` loops are well-suited for iterating over lists and arrays where the size of the data set is known and manageable. In contrast, `while` loops are more appropriate for processing data streams or files line by line, especially when the data size is large or unknown.
 
-The variable `$f` is expanded but doesn't get split by bash, so it is passed as a single string (with spaces) to the `echo` command in all three invocations.
+#### Limitations of For Loops with Newline Separated Data
 
-Note that, for the most part, `$f` is the same as `${f}`, and `"$f"` is the same as `"${f}"`.  The curly braces should only be used to ensure the variable name is expanded properly.  For example:
+Using `for` loops to process newline-separated data, such as files or command outputs, can lead to several issues:
+
+- **Memory Usage**: `for` loops read all data into memory at once, which can be inefficient with large data sets.
+- **Incorrect Field Splitting**: Data containing spaces or special characters may be split incorrectly, leading to errors in processing.
+- **Reliance on Unquoted Variables**: This can introduce bugs related to word splitting and globbing, which can alter the intended behavior of the script.
+
+#### Recommended Approach with While Loops
+
+`While` loops, particularly with `read`, are better suited for reading data line by line directly from a file or a pipe. This approach is more memory-efficient and avoids issues with field splitting.
+
+#### Example Comparison:
 
 ```bash
-$ echo "$HOME is $USERs home directory"
-/home/dave is the home directory
-$ echo "$HOME is ${USER}s home directory"
-/home/dave is daves home directory
-```
-
-In this example, the braces were the difference between `$USER` vs. `$USERs` being expanded.
-
-### Abusing for-loops when while would work better
-
-`for` loops are great for iteration over arguments or arrays. Newline separated data is best left to a `while read -r ...` loop.
-
-```bash
+# Inefficient and potentially problematic for loop:
 users=$(awk -F: '{print $1}' /etc/passwd)
 for user in $users; do
     echo "user is $user"
 done
-```
 
-This example reads the entire `/etc/passwd` file to extract the usernames into a variable separated by newlines.  The `for` loop is then used to iterate over each entry.
-
-This approach has many issues if used on other files with data that may contain spaces or tabs.
-
-1. This reads *all* usernames into memory instead of processing them in a streaming fashion.
-2. If the first field of that file contained spaces or tabs, the for loop would break on that as well as newlines
-3. These only works *because* `$users` is unquoted in the `for` loop - if variable expansion only works for your purposes while unquoted, this is a good sign that something isn't implemented correctly.
-
-To rewrite this:
-
-```bash
+# Efficient and safe while loop with read:
 while IFS=: read -r user _; do
     echo "$user is user"
 done < /etc/passwd
-```
 
-This will read the file in a streaming fashion, not pulling it all into memory, and will break on colons extracting the first field and discarding (storing as the variable `_`) the rest - using nothing but bash built-in commands.
 
 ## Extra
 
@@ -575,3 +865,4 @@ This will read the file in a streaming fashion, not pulling it all into memory, 
 ## License
 
 MIT License
+```
