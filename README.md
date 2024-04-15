@@ -2,17 +2,17 @@
 
 [![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
 
-This style guide outlines how to write bash scripts with a style that makes them safe and predictable. Most of this guide is based on [this wiki](http://mywiki.wooledge.org), more specifically, this page: http://mywiki.wooledge.org/BashGuide/Practices
+This Bash Style Guide provides detailed recommendations for writing safe and predictable bash scripts. The guidelines are primarily based on [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices), which is an excellent resource for understanding the fundamentals of Bash scripting.
 
-If anything is not mentioned explicitly in this guide, it defaults to matching whatever is outlined in the wiki.
-
-You can fork this style guide on GitHub: https://github.com/StrangeRanger/bash-style-guide
+If any practices are not explicitly mentioned in this guide, they should be considered to align with those outlined on the aforementioned wiki. You are encouraged to [fork this guide on GitHub](https://github.com/StrangeRanger/bash-style-guide) for your own use and to contribute to its improvement.
 
 ## Preface
 
-This guide will try to be as objective as possible, providing reasoning for why individual decisions were made. For purely aesthetic choices (and may not be universally agreeable), refer to the `Aesthetics` section below.
+This guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. It covers both functional and aesthetic scripting choices, although for purely stylistic preferences that may vary, please refer to the `Aesthetics` section discussed below.
 
 ## Aesthetics
+
+<!-- TODO: Maybe add information right here? -->
 
 ### Indentation
 
@@ -29,7 +29,7 @@ Proper indentation is essential for ensuring the readability and maintainability
 
 #### Example
 
-**Correct Usage with Spaces**:
+**Correct Usage with Spaces**
 
 ```bash
 if [[ var = true ]]; then
@@ -37,7 +37,7 @@ if [[ var = true ]]; then
 fi
 ```
 
-**Incorrect Usage with Tabs (Potential Misalignment)**:
+**Incorrect Usage with Tabs (Potential Misalignment)**
 
 ```bash
 if [[ var = true ]]; then
@@ -45,39 +45,134 @@ if [[ var = true ]]; then
 fi
 ```
 
-### Line Length (COME BACK TO AND EDIT REGARDING NEW LINE IF IS READABLE)
+### Line Length
 
-Maintaining an optimal line length in Bash scripts is essential for readability, maintainability, and compatibility across different environments. A maximum line width of 88 characters is recommended, aligning with modern coding standards that balance readability with practical code editing and viewing.
+Maintaining an optimal line length in Bash scripts is crucial for readability, maintainability, and compatibility across different environments. A maximum line width of 88 characters is recommended, which aligns with modern coding standards that balance readability with practical code editing and viewing needs.
 
-#### Reasons for Limiting Line Length
+#### Why Limit Line Length
 
-1. **Readability**: Shorter lines reduce the need for horizontal scrolling, making the code easier to read on various devices and screens.
-2. **Maintainability**: It is easier to review and debug code that fits within a standard visual range without navigating back and forth across long lines.
-3. **Compatibility**: Ensures that the code displays well in a wide range of development environments and tools, including code review platforms and integrated development environments (IDEs).
+- **Readability**: Shorter lines eliminate the need for horizontal scrolling, making the code easier to read across different devices and screen sizes.
+- **Maintainability**: Code that fits within a standard visual range is simpler to review and debug, avoiding the need to scroll horizontally.
+- **Compatibility**: A standard line length ensures code displays well in various development tools, including code review platforms and IDEs.
 
-#### Exceptions to the 88-Character Rule
+#### Guidelines for Line Length
 
-While the 88-character limit is generally a good practice, there are situations where exceptions are necessary to maintain the clarity and functionality of the code:
+- **Adhere to the 88-Character Limit**: As a general rule, strive to keep lines within 88 characters to ensure readability and maintainability.
+- **Evaluate the Need for Exceptions**: Allow exceptions to the line length rule when dealing with long strings, URLs, complex expressions, or configuration lines that require clarity and are more understandable when not broken into multiple lines.
+- **Use Line Continuation Judiciously**: When exceeding the line length is unavoidable, use line continuation techniques thoughtfully to ensure that the extended lines remain clear and maintain logical coherence.
 
-1. **Long Strings or URLs**: When a line contains a long string, URL, or command that loses clarity or functionality if broken into multiple lines, it is permissible to exceed the standard line length.
-2. **Complex Expressions**: Complex expressions or commands that would have their logical flow disrupted by splitting across multiple lines should be kept intact even if they exceed the standard width.
-3. **Configuration Files**: In scripts dealing with configuration data, sometimes parameters and their values are more understandable when placed on a single line, even if this extends beyond the typical length limit.
+#### Examples
 
-#### Example
+**Example Where Exceeding 88 Characters is Necessary**
 
 ```bash
-# Within 88 characters.
-if [[ -n $file && -x $script ]]; then
-    echo "File and script are available."
-fi
-
-# Exceeding 88 characters, but is continued on the next line,
-grep -E "pattern1|pattern2|pattern3|pattern4" \
-	      /var/log/very_long_directory_name/filename.log
-
 # Configuration file exception
 config_option="ThisIsAReallyLongConfigurationParameter = 'This is a very long value that makes sense to keep on one line'"
 ```
+
+**Explanation**: In cases where, for example, a configuration parameter or URL is too long to fit within the 88-character limit, it is acceptable to exceed this limit to maintain the line's readability and logical coherence.
+
+**Example That Breaks on a New Line**
+
+```bash
+# Breaking a command across lines can maintain clarity and enhance readability:
+curl -X POST -H "Content-Type: application/json" \
+     -d '{"username":"admin","password":"secret"}' \
+     http://example.com/api/login
+```
+
+**Explanation**: This `curl` command is split across multiple lines for each option, which maintains clarity by separating different components of the command such as headers and data payload. Each segment is logically distinct, making the overall command easier to understand.
+
+#### Guidelines for Formatting Multiline Commands
+
+Formatting multiline commands in Bash scripting is crucial for enhancing readability and maintainability. Here are some effective guidelines that address alignment, indentation, and the placement of operators like `||` and `&&`:
+
+- **Indentation and Alignment**:
+  - **Standard Indentation**: Use a standard four-space indentation for each continuation line. This helps visually separate the continued lines from other code blocks.
+  - **Align With First Argument**: When breaking a command across multiple lines, align each subsequent line with the command's first argument on the previous line. This alignment creates a clear visual separation between the command and its arguments.
+- **Placement of Operators (`||`, `&&`)**:
+  - **Beginning of New Line**: Place logical operators like `||` and `&&` at the beginning of the new line, not the end of the line. This approach makes it clear that the command continues and is dependent on the logic of the previous line.
+- **Line Breaks**:
+  - **Break Before Operators**: When using pipes (`|`) or redirection (`>`, `<`), place these operators at the beginning of the new line to emphasize the flow of data or commands.
+  - **Logical Grouping**: Organize your breaks around logical groupings of operations. For example, you might group all options related to a single functionality together.
+- **Comments**:
+  - **Inline Comments**: Place comments at the end of a line if they are explaining something on that specific line.
+  - **Above the Line**: If the comment is more general or explains the rationale for the next few lines, place it above the command it describes.
+
+#### Examples of Multiline Command Formatting
+
+##### Indentation and Alignment
+
+**Example: Aligning with the First Argument**
+
+```bash
+# A complex curl command broken into multiple lines:
+curl -X POST \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "secret"}' \
+     http://example.com/api/login
+```
+
+**Explanation**: Each continuation line starts at the same column as the first argument of the command. This maintains a clean vertical alignment that separates the command from its arguments.
+
+##### Placement of Operators (`||`, `&&`)
+
+**Example: Logical Operators at the Beginning of a New Line**
+
+```bash
+# Using logical operators at the start of a new line for clarity:
+cd /some/directory \
+  && echo "Directory change successful." \
+  || echo "Failed to change directories." && exit 1
+```
+
+**Explanation**: Placing `&&` and `||` at the beginning of a new line makes it clear that the execution of subsequent commands depends on the outcome of the previous command.
+
+##### Line Breaks
+
+**Example: Emphasizing Flow with Line Breaks**
+
+```bash
+# Example using pipes and redirection at the beginning of the new line:
+grep "error" log.txt \
+  | sort \
+  | uniq -c \
+  > error_summary.txt
+```
+
+**Explanation**: Pipes and redirection symbols are placed at the start of new lines to visually emphasize the data flow from one command to the next.
+
+##### Logical Grouping
+
+**Example: Grouping Related Options Together**
+
+```bash
+# Example of a command with options grouped logically:
+ffmpeg -i input.mp4 \
+       -codec:v libx264 -codec:a aac \
+       -map 0:v -map 0:a \
+       -profile:v high -level:v 4.0 \
+       output.mp4
+```
+
+**Explanation**: Related options are grouped together in logical blocks (video options, audio options, mapping), which improves readability and makes the command easier to understand.
+
+##### Comments
+
+**Example: Inline and Above-the-Line Comments**
+
+```bash
+# Setting up environment variables for deployment
+export ENV="production"  # This environment variable sets the mode to production
+export DEBUG_MODE="false"  # Debugging is turned off
+
+# Deploying application
+./deploy.sh \
+  --user=admin \
+  --verbose  # Running deployment in verbose mode for detailed logs
+```
+
+**Explanation**: Comments are used both inline to explain specific lines and above command blocks to provide context for what the script or block will do.
 
 ### Semicolons in Bash Commands
 
