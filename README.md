@@ -45,7 +45,9 @@ if [[ var = true ]]; then
 fi
 ```
 
-### Line Length (COME BACK TO)
+### Line Length
+
+<!-- TODO: COME BACK TO AND ADD MORE AND ORGANIZE!!! -->
 
 Maintaining an optimal line length in Bash scripts is essential for readability and maintainability. By adhering to a standard line length, you can enhance code clarity and ensure that scripts display correctly across various platforms and tools.
 
@@ -210,15 +212,15 @@ Properly declaring functions in Bash scripts is essential for maintaining code c
 
 #### Guidelines for Function Declarations
 
-- **Preferred Syntax**: Always declare functions using the name followed by parentheses and curly braces (`name() {}`). This syntax is widely recognized and similar to other programming languages, facilitating easier understanding and usage.
+- **Syntax**: Always declare functions using the name followed by parentheses and curly braces (`name() {}`).
 - **Avoid the `function` Keyword**: The `function` keyword is not POSIX compliant and can lead to compatibility issues. Using `name()` ensures consistency and simplicity across scripts.
-- **Scope Management**: Use `local` variables within functions to limit their scope. This practice helps prevent variables from affecting the global state or interfering with other parts of the script.
+- **Scope Management**: Use `local` variables within functions to limit their scope.
 
 #### Why These Guidelines Matter
 
 - **Uniformity and Clarity**: A consistent declaration style across your scripts makes them easier to read and maintain.
 - **Portability and Simplicity**: Sticking to POSIX-compliant syntax ensures your scripts are more portable and less complex.
-- **Reduced Side Effects**: Managing variable scope with `local` declarations minimizes unintended interactions within the script.
+- **Reduced Side Effects**: Managing variable scope with `local` declarations minimizes the likelihood of variables affecting the global state or interfering with other parts of the script.
 
 #### Examples:
 
@@ -251,7 +253,6 @@ Effective formatting of control structures such as `if`, `for`, and `while` enha
 #### Importance of Consistent Block Formatting
 
 - **Immediate Structure Recognition**: Placing `then` and `do` on the same line as the control statement clarifies the code's structure, making it easier to follow and reducing potential confusion.
-- **Ease of Maintenance**: Uniform block formatting simplifies debugging and code modifications by clarifying the script's logic to other developers.
 
 #### Examples:
 
@@ -280,15 +281,12 @@ fi
 
 While Bash scripts typically benefit from multi-line formatting, single-line block statements can effectively handle simple conditional or loop executions. It's crucial to follow best practices to maintain readability and structural integrity.
 
-#### Why Use Single-Line Statements Carefully
-
-- **Clarity**: Single-line statements can be concise but must remain clear to enhance readability, especially for straightforward conditions or loops.
-- **Maintainability**: Well-formatted single-line statements preserve the script’s logical structure, facilitating easier updates and understanding.
-
 #### Guidelines for Single-Line Statements
 
-- **Distinct Closure**: Always place closing keywords (`fi` for `if` statements and `done` for loops) on a new line in single-line statements to delineate block boundaries clearly.
+- **Clarity and Maintainability**: Single-line statements should be concise and clear to enhance readability, especially for straightforward conditions or loops. Always ensure that single-line statements preserve the script’s logical structure, facilitating easier updates and understanding.
+- **Distinct Closure**: Place closing keywords (`fi` for `if` statements and `done` for loops) on a new line to delineate block boundaries clearly.
 - **Line Length Management**: Keep single-line statements within a reasonable character limit (e.g., 88 characters) to prevent horizontal scrolling in editors and enhance readability.
+- **Avoid Clutter**: Refrain from adding multiple commands or complex logic to single-line statements. This helps maintain clarity and prevent code clutter.
 
 #### Examples:
 
@@ -308,7 +306,7 @@ if [[ -f $file_name ]]; then echo "$file_name exists!"
 fi
 ```
 
-### Vertical Spacing
+### Vertical Spacing (MODIFY EXAMPLE)
 
 Proper vertical spacing is key to making Bash scripts easier to read without adding unnecessary length. Limiting excessive use of blank lines helps to segment the code logically while keeping the script compact.
 
@@ -317,7 +315,7 @@ Proper vertical spacing is key to making Bash scripts easier to read without add
 - **Single Blank Line**: A single blank line separates logical blocks of code or functions, facilitating quick visual parsing.
 - **Double Blank Lines**: Employ up to two blank lines sparingly to highlight new sections or distinct logical groups within the script.
 
-#### Examples (MODIFY EXAMPLE)
+#### Examples
 
 **Recommended Use of Vertical Spacing**
 
@@ -333,6 +331,8 @@ echo "End of the script"
 ```
 
 ### Comments
+
+<!-- TODO: Add something about comments that separate each section!!! -->
 
 #### General Comments
 
@@ -350,19 +350,17 @@ Comments are essential for explaining script functionality and enhancing long-te
 
 ```bash
 # Assigns "True" to var and demonstrates proper comment formatting.
-var=$(echo "True")  # This prints "True".  (Note the two spaces before '#')
+var=$(echo "True")  # This prints "True". (Note the two spaces before '#')
 
 # Simple variable assignment with a clear, aligned comment.
-box="Box"           # This is a box.       (Comments are aligned for improved readability)
+box="Box"           # This is a box.      (Comments are aligned for improved readability)
 ```
 
-#### Functions (MAYBE ADD MORE INFO???)
+#### Functions
 
-Well-documented functions are pivotal for sustaining high code quality and ensuring scripts are accessible and maintainable. Clear documentation elucidates the function's purpose, usage, and parameters, benefiting current developers and future maintainers.
+<!-- TODO: Maybe add more? Describe a specific fashion of commenting like the example. Like it has to look like that? -->
 
-##### Documentation Format
-
-Documentation should be systematically organized and easy to read. Maintain a consistent comment block style that outlines the function's name, purpose, and parameters.
+Functions in Bash scripts should be well-documented to clarify their purpose, parameters, and expected behavior. Properly formatted comments enhance script readability and maintainability, making it easier for developers to understand and modify the code.
 
 ##### Guidelines for Documenting Functions
 
@@ -451,13 +449,13 @@ As a reminder, this style guide is for Bash. When given a choice, always prefer 
 
 ### Conditional Tests
 
-In Bash scripting, it's advisable to use the `[[ ... ]]` syntax for conditional tests, which provides several advantages over the older `[ ... ]` or `test` constructs. This modern approach offers improved string handling and pattern matching capabilities and enhances script safety.
+In Bash scripting, it's advised to use the `[[ ... ]]` syntax for conditional tests, which provides several advantages over the older `[ ... ]` or `test` constructs. This modern approach offers improved string handling and pattern matching capabilities and enhances script safety.
 
 #### Benefits of `[[ ... ]]` Over `[ ... ]` and `test`
 
-- **Enhanced Features**: It supports advanced operations like regex matching and string comparison, which is ideal for complex logical conditions.
-- **Increased Safety**: Eliminates word splitting on variables containing spaces, which helps avoid common scripting errors.
-- **Greater Flexibility**: More readable and manageable syntax, particularly in scripts with intricate conditional logic.
+- **Enhanced Features**: Supports advanced operations like regex matching and string comparison. For example, `[[ $name =~ ^A.+ ]]` checks if a variable starts with 'A', demonstrating more powerful pattern matching. 
+- **Increased Safety**: Eliminates word splitting on variables containing spaces, preventing errors such as unintentional command execution or misinterpreted conditions. 
+- **Greater Flexibility**: Provides a more readable and manageable syntax, particularly in scripts with intricate conditional logic.
 
 #### Guidelines for Conditional Tests
 
@@ -479,7 +477,7 @@ test -d /etc  # Older 'test' syntax.
 [[ -d /etc ]]  # Modern, more robust double brackets.
 ```
 
-### Sequence Iteration
+### Sequence Iteration (CONTINUE FROM HERE)
 
 For iterating over number sequences in Bash scripts, prefer Bash builtins like brace expansion `{1..5}` and the C-style `for` loop `for ((i = 0; i < n; i++))`. These methods offer better performance, lower resource use, and increased script simplicity compared to external commands like `seq`.
 
@@ -1201,6 +1199,7 @@ done
 
 ## Extra
 
+- http://mywiki.wooledge.org/Bashism
 - http://mywiki.wooledge.org/BashPitfalls
 
 ## License
