@@ -16,16 +16,16 @@ This guide aims to be as objective as possible by providing well-founded reasons
 
 ### Indentation
 
-Proper indentation is essential for ensuring the readability and maintainability of your Bash scripts. Using spaces for indentation is recommended due to their consistency across various editors and platforms.
-
-#### Why Spaces?
-
-- **Consistency Across Environments**: Spaces render uniformly in all editors, preventing misalignment issues that can occur with tabs, whose width might vary depending on the editor settings.
+Indentation significantly enhances code readability and maintainability in Bash scripting. It provides a clear structure and improves the logical flow of control structures and functions.
 
 #### Guidelines for Indentation
 
-- **Indent Size**: Use four spaces per indentation level. This balance between readability and space conservation is effective for Bash scripting.
-- **Uniformity**: Maintain consistent indentation methods throughout your scripts to ensure code clarity.
+- **Indent Size**: Use four spaces per indentation level for an optimal balance between readability and space conservation.
+- **Uniformity**: Consistently apply these indentation methods throughout your scripts to maintain code clarity and ease of understanding.
+
+#### Why Spaces Over Tabs?
+
+Spaces are preferred because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making it a safer choice for projects involving multiple contributors.
 
 #### Example
 
@@ -45,9 +45,9 @@ if [[ var = true ]]; then
 fi
 ```
 
-### Line Length
+### Line Length (COME BACK TO)
 
-Maintaining an optimal line length in Bash scripts is crucial for readability, maintainability, and compatibility across different environments. A maximum line width of 88 characters is recommended, which aligns with modern coding standards that balance readability with practical code editing and viewing needs.
+Maintaining an optimal line length in Bash scripts is essential for readability and maintainability. By adhering to a standard line length, you can enhance code clarity and ensure that scripts display correctly across various platforms and tools.
 
 #### Why Limit Line Length
 
@@ -206,7 +206,7 @@ echo "hello $name"
 
 ### Function Declaration
 
-In Bash scripting, the function declaration style impacts readability, maintainability, and variable scope management. For consistency and simplicity, a specific syntax for declaring functions is recommended.
+Properly declaring functions in Bash scripts is essential for maintaining code clarity and structure. Consistent syntax and scope management help ensure that functions are well-defined and easily understood.
 
 #### Guidelines for Function Declarations
 
@@ -241,17 +241,17 @@ foo() {
 
 ### Formatting Block Statements
 
-Effective formatting of control structures such as `if`, `for`, and `while` enhances the readability and clarity of Bash scripts. Proper placement of `then` and `do` alongside consistent block closures improves the code's understandability.
-
-#### Importance of Consistent Block Formatting
-
-- **Immediate Structure Recognition**: Placing `then` and `do` on the same line as the control statement clarifies the code's structure, making it easier to follow and reducing potential confusion.
-- **Ease of Maintenance**: Uniform block formatting simplifies debugging and code modifications by clarifying the script's logic to other developers.
+Effective formatting of control structures such as `if`, `for`, and `while` enhances the readability and clarity of Bash scripts. Proper placement of the `then` and `do` keywords alongside consistent block closures, improves the code's structure and maintainability.
 
 #### Guidelines for Formatting Block Statements
 
 - **Inline Placement**: Position `then` immediately after `if` statements and `do` immediately after `for` or `while` loops on the same line.
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines to distinctly mark block terminations.
+
+#### Importance of Consistent Block Formatting
+
+- **Immediate Structure Recognition**: Placing `then` and `do` on the same line as the control statement clarifies the code's structure, making it easier to follow and reducing potential confusion.
+- **Ease of Maintenance**: Uniform block formatting simplifies debugging and code modifications by clarifying the script's logic to other developers.
 
 #### Examples:
 
