@@ -4,7 +4,7 @@
 
 This Bash Style Guide provides detailed recommendations for writing safe and predictable bash scripts. The guidelines are primarily based on [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices), which is an excellent resource for understanding the fundamentals of Bash scripting.
 
-If any practices are not explicitly mentioned in this guide, they should be considered to align with those outlined on the aforementioned wiki. You are encouraged to [fork this guide on GitHub](https://github.com/StrangeRanger/bash-style-guide) for your own use and to contribute to its improvement.
+If any practices are not explicitly mentioned in this guide, they should be considered to align with those outlined on the aforementioned wiki. You are encouraged to fork this [guide on GitHub](https://github.com/StrangeRanger/bash-style-guide) for your own use and to contribute to its improvement.
 
 ## Preface
 
@@ -12,20 +12,17 @@ This guide aims to be as objective as possible by providing well-founded reasons
 
 ## Aesthetics
 
-<!-- TODO: Maybe add information right here? -->
-
 ### Indentation
 
-Indentation significantly enhances code readability and maintainability in Bash scripting. It provides a clear structure and improves the logical flow of control structures and functions.
+Indentations significantly enhance code readability and maintainability. It provides a clear structure and improves the flow of control structures and functions.
 
 #### Guidelines for Indentation
 
-- **Indent Size**: Use four spaces per indentation level for an optimal balance between readability and space conservation.
-- **Uniformity**: Consistently apply these indentation methods throughout your scripts to maintain code clarity and ease of understanding.
+- **Indent Size**: Use four spaces per indentation level to balance readability and space conservation.
 
 #### Why Spaces Over Tabs?
 
-Spaces are preferred because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making it a safer choice for projects involving multiple contributors.
+Spaces are preferred because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making it safer for projects involving multiple contributors.
 
 #### Example
 
@@ -49,7 +46,7 @@ fi
 
 <!-- TODO: COME BACK TO AND ADD MORE AND ORGANIZE!!! -->
 
-Maintaining an optimal line length in Bash scripts is essential for readability and maintainability. By adhering to a standard line length, you can enhance code clarity and ensure that scripts display correctly across various platforms and tools.
+Keeping a consistent line length in Bash scripts is essential for improving readability and maintainability. Adhering to a standard line length can enhance code clarity and ensure that scripts display correctly across various platforms and tools.
 
 #### Why Limit Line Length
 
@@ -124,8 +121,8 @@ curl -X POST \
 ```bash
 # Using logical operators at the start of a new line for clarity:
 cd /some/directory \
-  && echo "Directory change successful." \
-  || echo "Failed to change directories." && exit 1
+    && echo "Directory change successful." \
+    || echo "Failed to change directories." && exit 1
 ```
 
 **Explanation**: Placing `&&` and `||` at the beginning of a new line makes it clear that the execution of subsequent commands depends on the outcome of the previous command.
@@ -137,9 +134,9 @@ cd /some/directory \
 ```bash
 # Example using pipes and redirection at the beginning of the new line:
 grep "error" log.txt \
-  | sort \
-  | uniq -c \
-  > error_summary.txt
+    | sort \
+    | uniq -c \
+    > error_summary.txt
 ```
 
 **Explanation**: Pipes and redirection symbols are placed at the start of new lines to visually emphasize the data flow from one command to the next.
@@ -178,21 +175,15 @@ export DEBUG_MODE="false"  # Debugging is turned off
 
 ### Semicolons in Bash Commands
 
-Semicolons are command separators in Bash, allowing the execution of multiple commands on a single line. While useful, their unnecessary use should be minimized to enhance script clarity and prevent errors.
-
-#### Why Minimize Semicolons?
-
-- **Enhanced Readability**: Omitting unnecessary semicolons reduces visual clutter, making scripts easier to follow and understand.
-- **Reduced Error Risk**: Unnecessary semicolons can lead to syntactic mistakes and unexpected behavior, complicating the debugging process.
+In Bash, semicolons are used to separate commands, allowing the execution of multiple commands on a single line. While useful, excessive semicolon usage can clutter scripts and reduce readability. Minimizing semicolons to separate only necessary commands can enhance script clarity and maintainability.
 
 #### Guidelines for Using Semicolons
 
 - **Necessity Over Convenience**: Use semicolons only when necessary to separate multiple commands on a single line. Avoid using them after the last command in a series or where line breaks can suffice.
-- **Clarity and Maintenance**: Consider future script maintenance and readability. Scripts that are easier to read are easier to maintain and debug. Avoid semicolons that might obscure the flow of commands.
 
 #### Examples
 
-**Less Optimal: Unnecessary Semicolons**
+**Less Optimal: Excessive Semicolons**
 
 ```bash
 name="dave";
@@ -208,19 +199,19 @@ echo "hello $name"
 
 ### Function Declaration
 
-Properly declaring functions in Bash scripts is essential for maintaining code clarity and structure. Consistent syntax and scope management help ensure that functions are well-defined and easily understood.
+Properly declaring functions using consistent syntax and scope management is essential for maintaining a well-structured script.
 
 #### Guidelines for Function Declarations
 
 - **Syntax**: Always declare functions using the name followed by parentheses and curly braces (`name() {}`).
-- **Avoid the `function` Keyword**: The `function` keyword is not POSIX compliant and can lead to compatibility issues. Using `name()` ensures consistency and simplicity across scripts.
+- **Avoid the `function` Keyword**: Use the `name() {}` syntax instead of `function name {}` for function declarations.
 - **Scope Management**: Use `local` variables within functions to limit their scope.
 
 #### Why These Guidelines Matter
 
-- **Uniformity and Clarity**: A consistent declaration style across your scripts makes them easier to read and maintain.
-- **Portability and Simplicity**: Sticking to POSIX-compliant syntax ensures your scripts are more portable and less complex.
-- **Reduced Side Effects**: Managing variable scope with `local` declarations minimizes the likelihood of variables affecting the global state or interfering with other parts of the script.
+- **Uniformity and Clarity**: Consistent declaration style across your scripts makes them easier to read and maintain.
+- **Simplicity**: Using the recommended syntax simplifies function declarations and aligns with common Bash practices.
+- **Scope Limitation**: Declaring variables as `local` within functions reduces the risk of side effects and enhances script safety.
 
 #### Examples:
 
@@ -243,7 +234,7 @@ foo() {
 
 ### Formatting Block Statements
 
-Effective formatting of control structures such as `if`, `for`, and `while` enhances the readability and clarity of Bash scripts. Proper placement of the `then` and `do` keywords alongside consistent block closures, improves the code's structure and maintainability.
+Properly formatting block statements in Bash scripts is crucial for enhancing readability and maintaining a clear script structure. Consistent formatting practices help distinguish control structures and loops, making the script easier to follow and understand.
 
 #### Guidelines for Formatting Block Statements
 
@@ -306,7 +297,9 @@ if [[ -f $file_name ]]; then echo "$file_name exists!"
 fi
 ```
 
-### Vertical Spacing (MODIFY EXAMPLE)
+### Vertical Spacing
+
+<!-- TODO: Modify examples... -->
 
 Proper vertical spacing is key to making Bash scripts easier to read without adding unnecessary length. Limiting excessive use of blank lines helps to segment the code logically while keeping the script compact.
 
@@ -449,17 +442,17 @@ As a reminder, this style guide is for Bash. When given a choice, always prefer 
 
 ### Conditional Tests
 
-In Bash scripting, it's advised to use the `[[ ... ]]` syntax for conditional tests, which provides several advantages over the older `[ ... ]` or `test` constructs. This modern approach offers improved string handling and pattern matching capabilities and enhances script safety.
+When performing conditional tests, it is essential to use the appropriate syntax to ensure accurate and reliable evaluations. The `[[ ... ]]` construct is the recommended choice for conditional tests due to its enhanced features and improved safety over the older `[ ... ]` or `test` constructs.
 
 #### Benefits of `[[ ... ]]` Over `[ ... ]` and `test`
 
-- **Enhanced Features**: Supports advanced operations like regex matching and string comparison. For example, `[[ $name =~ ^A.+ ]]` checks if a variable starts with 'A', demonstrating more powerful pattern matching. 
-- **Increased Safety**: Eliminates word splitting on variables containing spaces, preventing errors such as unintentional command execution or misinterpreted conditions. 
+- **Enhanced Features**: Supports advanced operations like regex matching and string comparison. For example, `[[ $name =~ ^A.+ ]]` checks if a variable starts with 'A'.
+- **Increased Safety**: Eliminates word splitting on variables containing spaces, preventing errors such as unintentional command execution or misinterpreted conditions.
 - **Greater Flexibility**: Provides a more readable and manageable syntax, particularly in scripts with intricate conditional logic.
 
 #### Guidelines for Conditional Tests
 
-- **Always use `[[ ... ]]` for conditional tests in new scripts** to leverage its enhanced capabilities and avoid common pitfalls associated with older syntax.
+- **Always use `[[ ... ]]` for conditional tests** to leverage its enhanced capabilities and avoid common pitfalls associated with older syntax.
 
 #### Examples
 
@@ -477,20 +470,20 @@ test -d /etc  # Older 'test' syntax.
 [[ -d /etc ]]  # Modern, more robust double brackets.
 ```
 
-### Sequence Iteration (CONTINUE FROM HERE)
+### Sequence Iteration
 
-For iterating over number sequences in Bash scripts, prefer Bash builtins like brace expansion `{1..5}` and the C-style `for` loop `for ((i = 0; i < n; i++))`. These methods offer better performance, lower resource use, and increased script simplicity compared to external commands like `seq`.
+When iterating over number sequences, using builtins like brace expansion (`{1..5}`) and the C-style `for` loop (`for ((i = 0; i < n; i++))`) is recommended. These builtins are more efficient and portable than external commands like `seq`.
 
 #### Advantages of Builtins Over `seq`
 
 - **Enhanced Performance**: Builtins execute faster as they are processed internally by Bash, avoiding the overhead of launching external processes.
-- **Greater Portability**: Builtins are universally supported across Bash platforms, unlike `seq`, which may not be present by default on some systems.
+- **Greater Portability**: Builtins are universally supported across systems running Bash, ensuring consistent behavior and compatibility.
 - **Reduced Complexity**: Scripts become simpler and more readable when using builtins, enhancing both maintainability and readability.
 
 #### Guidelines for Sequence Iteration
 
-- **Prefer Builtins for Known Ranges**: Use brace expansion and C-style loops when the range of numbers is known in advance. This approach is not only more performant but also clearer and more concise.
-- **Avoid `seq` for Portability and Efficiency**: Since `seq` is not a builtin and not universally available, using builtins like `{1..5}` or `for ((i = 0; i < n; i++))` avoids potential compatibility issues and reduces script execution time.
+- **Prefer Builtins for Sequences**: Use brace expansion (`{start..end}`) for fixed ranges and the C-style `for` loop for variable limits to iterate over sequences.
+- **Avoid Using `seq`**: Due to its external nature, avoid using `seq` for sequence iteration.
 
 #### Examples
 
@@ -522,20 +515,20 @@ for ((i = 0; i < n; i++)); do
 done
 ```
 
-### Command Substitution
+### Command Substitution (CONTINUE FROM HERE)
 
-Command substitution in Bash scripting captures the output of a command for use in a variable. The syntax `$(...)` is strongly recommended over the older backticks `` `...` ``, due to its readability, ease of nesting, and compatibility with other shell features.
+Command substitution allows for the capture of a command's output and its subsequent use within a variable or expression. The modern `$(...)` syntax is the preferred method for command substitution in Bash scripts, offering several advantages over the older backticks (`...`) format.
 
 #### Advantages of `$(...)` Over Backticks
 
 - **Improved Readability**: The `$(...)` format is visually clearer, making scripts easier to read and understand, particularly when commands get complex.
 - **Easier Nesting**: Facilitates nesting multiple commands without the syntactic awkwardness associated with backticks.
-- **Enhanced Compatibility**: Works better with double quotes and other shell elements, reducing the likelihood of errors.
+- **Enhanced Safety**: The `$(...)` syntax is more robust and less prone to errors, especially when dealing with complex command substitutions.
 
-#### Guidelines for Command Substitution
+#### Guidelines for Command Substitution (CONTINUE FROM HERE)
 
-- **Consistently Use `$(...)`**: Adopt the `$(...)` syntax in all scripts to maintain a consistent, modern approach across your codebase. This not only enhances readability but also simplifies the maintenance of your scripts.
-- **Avoid Backticks**: Given their limitations and potential for errors, especially in complex scripts, avoid using backticks for command substitution. The modern `$(...)` syntax is more robust and flexible.
+- **Use `$(...)`**: Always prefer the `$(...)` syntax for command substitution to ensure readability, maintainability, and safety in your scripts.
+- **Avoid Backticks**: Due to their potential for ambiguity and readability issues, avoid using backticks for command substitution.
 
 #### Examples
 
@@ -577,7 +570,7 @@ In Bash scripts, arithmetic operations should ideally be conducted using the `((
 a=5
 b=4
 let "result = a > b"
-if [ $result -ne 0 ]; then
+if [[ $result -ne 0 ]]; then
     echo "a is greater than b"
 fi
 ```
@@ -665,7 +658,7 @@ done
 
 ### Using Arrays Over Space-Separated Strings
 
-In Bash scripts, using arrays to manage collections of elements is highly recommended over using space-separated strings. Arrays provide structured, flexible, and robust handling, especially beneficial when elements might contain spaces or special characters.
+In Bash scripts, using arrays to manage collections of elements is highly recommended over using space-separated strings. Arrays provide structured, flexible, and robust handling, especially beneficial when elements contain spaces or special characters.
 
 #### Benefits of Using Arrays
 
@@ -705,11 +698,11 @@ npm install -g "${modules[@]}"
 
 ### Using `read` for Parsing Strings
 
-The `read` command in Bash is a highly effective builtin for directly parsing strings and user input, enhancing script performance and security while simplifying maintenance.
+The `read` command in Bash is a highly effective built-in for directly parsing strings and user input, enhancing script performance and security while simplifying maintenance.
 
 #### Advantages of Using `read`:
 
-- **Efficiency**: `read` operates within the shell, avoiding the need for slower, resource-intensive external commands.
+- **Efficiency**: `read` operates within the shell, avoiding needing slower, resource-intensive external commands.
 - **Security**: By parsing directly into Bash variables, `read` minimizes the risks associated with external command outputs, such as injection attacks.
 - **Simplicity**: Offers an easy-to-understand syntax for directly parsing complex data structures.
 
@@ -769,20 +762,21 @@ grep foo < file
 
 # Passes the filename directly to `grep`:
 grep foo file
-
 ```
 
 ## Style
 
 ### Using Quotes in Bash
 
-Proper quoting is essential in Bash scripting to control string handling and variable manipulation. Double quotes are typically recommended to ensure that variables and command outputs are expanded correctly and safely.
+Proper quoting is essential in Bash scripting to ensure that variables and command outputs are expanded correctly and to prevent security issues related to string handling.
+
+<!-- TODO: Come back to and possibly add reasons/justification for the Guidelines. -->
 
 #### Guidelines for Using Quotes
 
-- **Default to Double Quotes**: Use double quotes for most cases to ensure safe expansion of variables and command outputs. Double quotes prevent word splitting and globbing, preserving the intended input as a single string.
-- **Use Single Quotes for Literal Strings**: When you need the string to remain exactly as written, without any expansion or interpretation, use single quotes. This is particularly important in commands like `sed` or `awk` where you might not want Bash to interpret variables or escape sequences.
-- **Omit Quotes With Caution**: Quotes can be safely omitted in specific scenarios, such as within `[[ ... ]]` for conditional expressions where Bash does not perform word splitting. Also, omit quotes when you want to handle variables that may be undefined or empty differently than if they were quoted.
+- **Default to Double Quotes**: Use double quotes in most cases to safely expand variables and command outputs, preventing word splitting and globbing. For example, `foo="$USER contains your username"` ensures that `$USER` is treated as a single string.
+- **Use Single Quotes for Literal Strings**: When a string should remain exactly as written, with no expansion or interpretation, use single quotes. This is crucial in utilities like `sed` or `awk`, e.g., `grep 'exact string' filename`.
+- **Omit Quotes With Caution**: In specific scenarios, such as within `[[ ... ]]` for conditional expressions, quotes can be safely omitted since Bash does not perform word splitting.
 
 #### Examples
 
@@ -827,20 +821,29 @@ echo "$foo"
 
 ### Declaring Variables
 
-Effective variable declaration in Bash is crucial for clear, maintainable, and consistent scripts. Proper practices distinguish between local variables and those intended for export, following specific naming conventions and usage rules.
+Effective variable declaration in Bash is crucial for clear, maintainable, and consistent scripts. Proper practices help distinguish local variables from those intended for export, following specific naming conventions and usage rules.
 
 #### Guidelines for Declaring Variables
 
 - **Local Variables**:
-  - **Naming Conventions**: Always use lowercase for local variable names, with each word separated by an underscore (`_`). This helps differentiate them from uppercase environment variables, which are typically used for exported variables.
-  - **Scope Management**: Utilize the `local` keyword when declaring variables within functions to limit their scope. This practice prevents potential conflicts with global variables and enhances script modularity and safety.
+  - **Naming Conventions**: Use lowercase for local variable names, separating each word by an underscore (`_`).
+  - **Scope Management**: Using the local keyword to limit their scope within functions prevents conflicts with global variables.
+  - **Reason**: Lowercase with underscores helps visually differentiate local variables from global environment variables, which are conventionally in uppercase. This distinction minimizes confusion, especially in complex scripts with local and global variables.
+- **Constant Local Variables**:
+  - **Naming Conventions**: Use uppercase for constant local variable names, separating each word by an underscore (`_`). These should look similar to what was previously described for exported variables.
+  - **Declaration**: Use `readonly` at the time of assignment. This ensures the variable remains unchanged.
+  - **Reason**: Uppercase naming signals the immutability of these variables, making them easily recognizable as constants within their local contexts.
 - **Exported Variables**:
-  - **Naming Conventions**: Exported variables should always be in uppercase to make them stand out as global environment variables. Use an underscore (`_`) prefix and underscores to separate words, ensuring they are easily identifiable in the script.
-  - **Declaration**: Always use the `export` declaration at the time of variable assignment to clearly indicate that the variable is intended for environmental export.
+  - **Naming Conventions**: Use uppercase with the prefix `E_` before the first underscore for exported variables (e.g., `E_PATH`, `E_CONFIG`). This modification helps distinguish them from constant local variables.
+  - **Declaration**: Use the `export` declaration at the time of assignment to clearly indicate environmental export.
+  - **Reason**: Using an uppercase naming with a specific prefix ensures these variables are distinguishable and understood as part of the global environment. This modification avoids confusion with constant local variables while aligning with common Unix/Linux conventions.
 - **Practices to Avoid**:
-  - **Avoid `let`**: Prefer the `((...))` syntax for arithmetic operations, as it provides clearer and more consistent syntax.
-  - **Minimize Use of `readonly`**: Apply `readonly` only when it is crucial to ensure a variable cannot be modified, to avoid unintended restrictions within your scripts.
+  - **Avoid `let` for Arithmetic**: Use `((...))` for clarity and consistency in arithmetic operations.
+    - **Reason**: The `let` command, while functional, is less intuitive and can lead to errors if the expression is miswritten. Using arithmetic expansion (`$((...))`) or arithmetic evaluation (`((...))`) provides clearer, safer operations.
+  - **Minimize the Use of `readonly`**: Apply `readonly` only when crucial to prevent modifications.
+    - **Reason**: Overusing `readonly` can restrict script flexibility, as these variables cannot be reassigned. Limiting its use to truly immutable needs prevents accidental script rigidity.
   - **Selective Use of `declare`**: Employ `declare` specifically for managing advanced variable properties, such as associative arrays, and stick to direct assignment for standard variable declarations unless scoping or attributes dictate otherwise.
+    - **Reason**: While `declare` is useful for setting advanced variable properties, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
 
 #### Examples of Variable Declaration
 
@@ -1042,8 +1045,8 @@ The `eval` command in Bash scripts reassembles its arguments into a single comma
 #### Guidelines for Handling `eval`
 
 - **Avoid Using `eval` When Possible**: Always look for alternatives to `eval`, such as using Bash built-ins or other command constructs that do not require combining and executing strings as commands.
-- **Sanitize Inputs Rigorously**: If `eval` must be used, ensure that all inputs are rigorously sanitized, and that any variables included in `eval` statements are strictly controlled and escaped appropriately.
-- **Limit Scope and Usage**: Restrict the use of `eval` to areas where it is absolutely necessary and cannot be replaced by safer alternatives. Keep its use isolated to minimize potential damage and ensure that it is easy to review and audit for security vulnerabilities.
+- **Sanitize Inputs Rigorously**: If `eval` must be used, ensure that all inputs are rigorously sanitized and that any variables included in `eval` statements are strictly controlled and escaped appropriately.
+- **Limit Scope and Usage**: Restrict the use of `eval` to areas where it is absolutely necessary and cannot be replaced by safer alternatives. Keep its use isolated to minimize potential damage and ensure it is easy to review and audit for security vulnerabilities.
 
 #### Examples of `eval` Usage and Safer Alternatives
 
