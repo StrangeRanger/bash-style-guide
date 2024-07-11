@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2024.7.xx] - 2024-07-xx
+
+- ...
+
 ## [2022.7.13] - 2022-07-13
 
 ### Changed
@@ -75,7 +79,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - `Aesthetics -> Spacing`
     - `Aesthetics -> Comments`
     - `Aesthetics -> Comments -> File formatting and commenting`
-        - Previously refered to as Commenting/File Formatting 
+        - Previously refered to as Commenting/File Formatting
 
 ## [2021.3.14] - 2021-03-14
 
