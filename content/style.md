@@ -1,6 +1,6 @@
 # Style
 
-As mentioned in the [Aesthetics](/content/aesthetics) section, this section covers style related guidelines that are less subjective and have an effect on functionality.
+As mentioned in the [Aesthetics](/content/aesthetics) section of this Guide, this section covers style related guidelines that are less subjective and have an effect on functionality.
 
 ## Using Quotes
 
@@ -10,7 +10,7 @@ Quotes in bash play a role in how text is interpreted and expanded, affecting wh
     type: tip
 
 - **Double Quotes**: Use double quotes in most cases to safely expand variables and command outputs, preventing word splitting and globing.
-- **Single Quotes**: When a string should remain exactly as written, with no expansion or interpretation, use single quotes. This is crucial in utilities like `sed` or `awk`, e.g., `grep 'exact string' filename`.
+- **Single Quotes**: When a string should remain exactly as written, with no expansion or interpretation, use single quotes. This is crucial in utilities like `sed` or `awk` (e.g., `grep 'exact string' filename`).
 - **Omit Quotes With Caution**: In specific scenarios, such as within `[[ ... ]]` for conditional expressions, quotes can be safely omitted since Bash does not perform word splitting.
 
 ///
@@ -18,7 +18,7 @@ Quotes in bash play a role in how text is interpreted and expanded, affecting wh
 /// details | Examples
 //// tab | Variable Expansion with Spaces
 
-_Without Quotes_
+_Without quotes:_
 
 ```bash
 name="John Doe"
@@ -29,7 +29,7 @@ echo $name
 
 ---
 
-_With Double Quotes_
+_With double quotes:_
 
 ```bash
 name="John Doe"
@@ -41,7 +41,7 @@ echo "$name"
 ////
 //// tab | Preventing Glob Expansion
 
-_Without Quotes_
+_Without quotes:_
 
 ```bash
 files=*.txt
@@ -52,7 +52,7 @@ echo $files
 
 ---
 
-_With Double Quotes_
+_With double quotes:_
 
 ```bash
 files="*.txt"
@@ -64,7 +64,7 @@ echo "$files"
 ////
 //// tab | Using Single Quotes to Preserve Literal Strings
 
-##### With Single Quotes
+_With single quotes:_
 
 ```bash
 grep 'exact string' filename
@@ -75,7 +75,7 @@ grep 'exact string' filename
 ////
 //// tab | Command Substitution
 
-_Without Quotes_
+_Without quotes:_
 
 ```bash
 output=$(ls -l)
@@ -86,7 +86,7 @@ echo $output
 
 ---
 
-_With Double Quotes_
+_With double quotes:_
 
 ```bash
 output=$(ls -l)
@@ -106,64 +106,69 @@ echo "$output"
 
 ## Declaring Variables
 
-Variable declaration in Bash scripts is essential for managing data, ensuring clarity, and preventing conflicts. Properly declaring variables with consistent naming conventions and scoping practices enhances script readability and maintainability.
+Variable declaration in Bash is essential for managing data, ensuring clarity, and preventing conflicts. Properly declaring variables with consistent naming conventions and scoping practices enhances script readability and maintainability.
 
 /// admonition | Guidelines
     type: tip
 
-- **Local Variables**:
-    - **Naming Conventions**: Use lowercase for local variable names, separating each word by an underscore (`_`).
-    - **Scope Management**: Use the `local` keyword to limit their scope within functions, preventing conflicts with global variables.
-    - **Reason**: Lowercase with underscores helps visually differentiate local variables from global environment variables, which are conventionally in uppercase. This distinction minimizes confusion, especially in complex scripts with both local and global variables.
+//// tab | Generic and Local Variables
 
-- **Constant Variables**:
-    - **Naming Conventions**: Use uppercase for constant variable names, separating each word by an underscore (`_`).
-    - **Treatment**: Always treat these variables as immutable, even if `readonly` is not applied.
-    - **Selective Use of `readonly`**: Apply `readonly` at the time of assignment for critical constants where preventing modification is crucial.
-    - **Reason**: Uppercase naming signals the immutability of these variables, making them easily recognizable as constants within their local contexts. While `readonly` can enforce immutability, using it selectively helps maintain flexibility during development and prevents accidental script rigidity.
+- **Naming Conventions**: Use lowercase for local variable names, separating each word by an underscore (`_`).
+- **Scope Management**: Use the `local` keyword to limit their scope within functions, preventing conflicts with global variables.
+- **Reason**: Lowercase with underscores helps visually differentiate local variables from global environment variables, which are conventionally in uppercase. This distinction minimizes confusion, especially in complex scripts with both local and global variables.
 
-- **Exported Variables**:
-    - **Naming Conventions**: Use uppercase with the prefix `E_` before the first underscore for exported variables (e.g., `E_PATH`, `E_CONFIG`). This modification helps distinguish them from constant variables.
-    - **Declaration**: Use the `export` declaration at the time of assignment to clearly indicate environmental export.
-    - **Reason**: Using an uppercase naming with a specific prefix ensures these variables are distinguishable and understood as part of the global environment. This modification avoids confusion with constant variables while aligning with common Unix/Linux conventions.
+///// details | Example
 
-- **Practices to Avoid**:
-    - **Avoid `let` for Arithmetic**: Use `((...))` for clarity and consistency in arithmetic operations.
-        - **Reason**: The `let` command, while functional, is less intuitive and can lead to errors if the expression is miswritten. Using arithmetic expansion (`$((...))`) or arithmetic evaluation (`((...))`) provides clearer, safer operations.
-    - **Minimize the Use of `readonly`**: Apply `readonly` only when crucial to prevent modifications.
-        - **Reason**: Overusing `readonly` can restrict script flexibility, as these variables cannot be reassigned. Limiting its use to truly immutable needs prevents accidental script rigidity.
-    - **Selective Use of `declare`**: Employ `declare` specifically for managing advanced variable properties, such as associative arrays, and stick to direct assignment for standard variable declarations unless scoping or attributes dictate otherwise.
-        - **Reason**: While `declare` is useful for setting advanced variable properties, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
-
-///
-
-/// details | Examples
-//// tab | Local Variables
-
-_Without Scope Management_
+_General variable declaration:_
 
 ```bash
 my_var="local value"
 ```
 
+**Note**: Outside of a function, `local` is not applicable.
+
 ---
 
-_With Scope Management_
+_Without scope management:_
+
+```bash
+my_function() {
+    my_var="local value"
+    echo "$my_var"
+}
+
+my_function
+```
+
+**Possible Issue:** If `my_var` is already defined globally, this assignment could overwrite the global value.
+
+---
+
+_With scope management:_
 
 ```bash
 my_function() {
     local my_var="local value"
     echo "$my_var"
 }
+
 my_function
 ```
 
 **Advantage:** Using `local` confines the variable's scope to the function, preventing conflicts with global variables.
 
+/////
 ////
 //// tab | Constant Variables
 
-_Without `readonly`_
+- **Naming Conventions**: Use uppercase for constant variable names, separating each word by an underscore (`_`).
+- **Treatment**: Always treat these variables as immutable, even if `readonly` is not applied.
+- **Selective Use of `readonly`**: Apply `readonly` at the time of assignment for critical constants where preventing modification is crucial.
+- **Reason**: Uppercase naming signals the immutability of these variables, making them easily recognizable as constants within their local contexts. While `readonly` can enforce immutability, using it selectively helps maintain flexibility during development and prevents accidental script rigidity.
+
+///// details | Example
+
+_Without `readonly`:_
 
 ```bash
 PI=3.14159
@@ -171,7 +176,7 @@ PI=3.14159
 
 ---
 
-_With `readonly`_
+_With `readonly`:_
 
 ```bash
 readonly PI=3.14159
@@ -179,10 +184,17 @@ readonly PI=3.14159
 
 **Advantage:** Using `readonly` ensures the constant cannot be modified, maintaining its immutability.
 
+/////
 ////
 //// tab | Exported Variables
 
-_Without Clear Indication_
+- **Naming Conventions**: Use uppercase with the prefix `E_` before the first underscore for exported variables (e.g., `E_PATH`, `E_CONFIG`). This modification helps distinguish them from constant variables.
+- **Declaration**: Use the `export` declaration at the time of assignment to clearly indicate environmental export.
+- **Reason**: Using an uppercase naming with a specific prefix ensures these variables are distinguishable and understood as part of the global environment. This modification avoids confusion with constant variables while aligning with common Unix/Linux conventions.
+
+///// details | Examples
+
+_Without clear indication:_
 
 ```bash
 export PATH="/usr/local/bin:$PATH"
@@ -190,7 +202,7 @@ export PATH="/usr/local/bin:$PATH"
 
 ---
 
-_With Clear Indication_
+_With clear indication:_
 
 ```bash
 export E_PATH="/usr/local/bin:$PATH"
@@ -198,10 +210,21 @@ export E_PATH="/usr/local/bin:$PATH"
 
 **Advantage:** Using the `E_` prefix distinguishes exported variables from other constants and variables, clarifying their purpose.
 
+/////
 ////
-//// tab | Arithmetic Operations
+///
 
-_Using `let`_
+/// admonition | Practices to Avoid
+    type: warning
+
+//// tab | Avoid `let` for Arithmetic Operations
+
+- **Guideline**: Use `((...))` for clarity and consistency in arithmetic operations.
+- **Reason**: The `let` command, while functional, is less intuitive and can lead to errors if the expression is miswritten. Using arithmetic expansion (`$((...))`) or arithmetic evaluation (`((...))`) provides clearer, safer operations.
+
+///// details | Example
+
+_Using `let`:_
 
 ```bash
 let result=1+2
@@ -210,7 +233,7 @@ echo "Result: $result"
 
 ---
 
-_Using `$((...))`_
+_Using `$((...))`:_
 
 ```bash
 result=$((1 + 2))
@@ -219,10 +242,29 @@ echo "Result: $result"
 
 **Advantage:** `$((...))` provides clearer and safer arithmetic operations.
 
+/////
+
+////
+//// tab | Minimize the Use of `readonly`
+
+- **Guideline**: Apply `readonly` only when crucial to prevent modifications.
+- **Reason**: Overusing `readonly` can restrict script flexibility, as these variables cannot be reassigned. Limiting its use to truly immutable needs prevents accidental script rigidity.
+
+///// details | Example
+
+...
+
+/////
+
 ////
 //// tab | Selective Use of `declare`
 
-_Without `declare`_
+- **Guideline**: Employ `declare` specifically for managing advanced variable properties, such as associative arrays, and stick to direct assignment for standard variable declarations unless scoping or attributes dictate otherwise.
+- **Reason**: While `declare` is useful for setting advanced variable properties, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
+
+///// details | Example
+
+_Without `declare`:_
 
 ```bash
 my_var="value"
@@ -230,7 +272,7 @@ my_var="value"
 
 ---
 
-_With `declare` for Associative Arrays_
+_With `declare` for associative arrays:_
 
 ```bash
 declare -A my_array
@@ -240,6 +282,7 @@ echo "${my_array[foo]}"
 
 **Advantage:** Use `declare` for advanced variable properties, such as associative arrays, to enhance script functionality.
 
+/////
 ////
 ///
 

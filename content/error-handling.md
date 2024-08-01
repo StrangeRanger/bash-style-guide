@@ -1,23 +1,23 @@
 # Handling Errors Properly
 
-Error checking is crucial in Bash scripting to ensure that your scripts behave as expected, even when encountering runtime errors. Proper error-handling techniques can prevent scripts from causing unintended effects.
+Error handling is crucial in Bash scripting to ensure that your scripts behave as expected. Proper error handling can prevent unexpected failures and improve the robustness of your scripts. This section of the guide covers essential practices for error handling in Bash, including checking command success, using `trap` for signal handling, understanding `set -e`, avoiding `eval`, and redirecting errors to stderr.
 
 ## Checking Command Success
 
-It is crucial to verify the success of commands within Bash scripts, particularly for operations where failure could lead to severe consequences. Conditional checks help ensure that scripts only proceed when commands execute successfully.
+It is crucial to verify the success of commands, particularly for operations where failure could lead to severe consequences. Conditional checks help ensure that scripts only proceed when commands execute successfully.
 
 /// admonition | Guidelines
     type: tip
 
-- **Conditional Checks After Critical Commands**: Always follow commands whose potential to fail could cause problems for the rest of the script, like `cd`, with a conditional check.
+- **Check Success of Critical Commands**: **_ALWAYS_** follow commands whose potential to fail could cause problems for the rest of the script, like `cd`, with a conditional check.
 - **Error Messages for Clarity**: When a command fails, provide clear error messages to help indicate what went wrong. This practice is especially useful for diagnosing issues quickly and efficiently.
 
 ///
 
 /// details | Examples
-//// tab | Conditional Checks After Critical Commands
+//// tab | Critical Command Success Check
 
-_Checking `cd` Command_
+_Checking for the successful execution of the `cd` command:_
 
 ```bash
 cd /some/path && rm file
@@ -26,26 +26,15 @@ cd /some/path && rm file
 **Advantage:** Ensures that `rm file` only executes if `cd /some/path` is successful.
 
 ////
-//// tab | Error Messages for Clarity
+//// tab | Error Handling with Feedback
 
-_Providing Clear Error Messages_
+_Providing a clear error message upon failure:_
 
 ```bash
 cd /some/path || { echo "Failed to change directory"; exit 1; }
 ```
 
 **Advantage:** Provides immediate feedback on failure, helping diagnose issues quickly and preventing the script from proceeding further.
-
-////
-//// tab | Checking Command Success with Multiple Commands
-
-_Ensuring Multiple Commands Succeed_
-
-```bash
-mkdir /new/dir && cd /new/dir && touch newfile.txt || { echo "Failed to complete operations"; exit 1; }
-```
-
-**Advantage:** Ensures that each command in the chain succeeds before proceeding, providing a clear error message if any command fails.
 
 ////
 ///
@@ -55,14 +44,14 @@ mkdir /new/dir && cd /new/dir && touch newfile.txt || { echo "Failed to complete
 - **Avoid Missteps**: Operations like `cd` can fail for various reasons, such as permission issues or non-existent directories. Failing to handle these errors can lead to incorrect script operations, potentially modifying or deleting the wrong files.
 - **Script Robustness**: Scripts that check for command success are more robust and reliable, preventing cascading failures that occur when subsequent commands rely on the success of previous ones.
 
-## Overview of `trap` in Bash
+## Overview of `trap`
 
-The `trap` command in Bash scripts defines actions that should be taken when specific signals or events occur. It's invaluable for managing cleanups and ensuring graceful script terminations.
+The `trap` command defines actions that should be taken when specific signals or events occur. It's invaluable for managing cleanups and ensuring graceful script terminations.
 
 /// admonition | Guidelines
     type: tip
 
-- **Implement `trap` for Cleanup and Safety**: Always use `trap` to define cleanup operations or other necessary actions that should occur before a script exits unexpectedly.
+- **Implement `trap` for Cleanup and Safety**: **_Always_** use `trap` to define cleanup operations or other necessary actions that should occur before a script exits unexpectedly.
 - **Respond to Specific Signals Appropriately**: Customize your `trap` statements to handle different signals as needed. For example, use `trap` with `SIGINT` to handle user interruptions gracefully, ensuring that any necessary cleanup is performed even when a script is terminated prematurely by the user.
 - **Use Functions for Complex Trapping Logic**: For more complex signal handling, define a function that performs all necessary actions and then invoke this function in your `trap` command. This approach keeps your trapping logic organized and easier to manage.
 
@@ -71,7 +60,7 @@ The `trap` command in Bash scripts defines actions that should be taken when spe
 /// details | Examples
 //// tab | Basic Cleanup with `trap`
 
-_Defining a Simple Cleanup Action_
+_Defining a simple cleanup action for script exit:_
 
 ```bash
 trap 'rm -f /tmp/mytempfile' EXIT
@@ -84,7 +73,7 @@ echo "Temporary file created."
 ////
 //// tab | Handling SIGINT (Ctrl+C)
 
-_Cleaning Up on User Interrupt_
+_Handling the interruption signal (SIGINT) gracefully:_
 
 ```bash
 trap 'echo "Script interrupted."; rm -f /tmp/mytempfile; exit' SIGINT
@@ -96,12 +85,12 @@ while true; do
 done
 ```
 
-**Advantage:** Provides a graceful cleanup when the user interrupts the script with Ctrl+C.
+**Advantage:** Provides a graceful cleanup when the user interrupts the script with `Ctrl`+`C`.
 
 ////
-//// tab | Using Functions for Complex Cleanup
+//// tab | Functions for Complex Cleanup
 
-_Defining a Cleanup Function_
+_Using a function for cleanup actions:_
 
 ```bash
 cleanup() {
@@ -118,7 +107,7 @@ echo "Temporary file created."
 ////
 //// tab | Handling Multiple Signals
 
-_Trapping SIGINT and SIGTERM_
+_Trapping SIGINT and SIGTERM:_
 
 ```bash
 trap 'echo "Received SIGINT"; cleanup; exit' SIGINT
@@ -168,7 +157,7 @@ The `set -e` option causes the script to exit immediately if any command within 
 /// details | Examples
 //// tab | Basic Use of `set -e`
 
-_Applying `set -e`_
+_Using `set -e` to exit on command failure:_
 
 ```bash
 #!/bin/bash
@@ -185,7 +174,7 @@ echo "Changed directory."
 ////
 //// tab | Combining `set -e` with Explicit Error Handling
 
-_Combining `set -e` with Error Checks_
+_Combining `set -e` with error checks:_
 
 ```bash
 #!/bin/bash
@@ -202,7 +191,7 @@ echo "Changed directory."
 ////
 //// tab | Testing `set -e` Thoroughly
 
-_Testing Script with `set -e`_
+_Testing scripts with `set -e`_
 
 ```bash
 #!/bin/bash
@@ -219,7 +208,7 @@ echo "This will not be printed due to set -e"
 ////
 //// tab | Handling Complex Conditions with `set -e`
 
-_Handling Complex Conditions_
+_Managing complex operations with `set -e` and explicit error handling:_
 
 ```bash
 #!/bin/bash
@@ -241,7 +230,7 @@ echo "Complex operation succeeded."
 
 ## The Risks of Using `eval`
 
-The `eval` command in Bash scripts reassembles its arguments into a single command and executes them, presenting significant security risks, especially when the executed content is derived from user input or untrusted sources. Due to these risks, using `eval` is highly discouraged.
+The `eval` command in Bash reassembles its arguments into a single command and executes them, presenting significant security risks, especially when the executed content is derived from user input or untrusted sources. Due to these risks, using `eval` is highly discouraged.
 
 /// admonition | Guidelines
     type: tip
@@ -255,7 +244,7 @@ The `eval` command in Bash scripts reassembles its arguments into a single comma
 /// details | Examples
 //// tab | Avoiding `eval`
 
-_Using `eval` (Not Recommended)_
+_Using `eval` (not recommended):_
 
 ```bash
 user_input='ls -l'
@@ -264,7 +253,9 @@ eval $user_input
 
 **Risk:** This script can execute arbitrary commands if `user_input` is manipulated, posing a severe security risk.
 
-_Safer Alternative Using Command Substitution_
+---
+
+_Safer alternative using command substitution:_
 
 ```bash
 user_command='ls -l'
@@ -277,7 +268,7 @@ echo "$output"
 ////
 //// tab | Sanitizing Inputs
 
-_Using `eval` with Sanitization (Caution)_
+_Using `eval` with sanitization (use with caution):_
 
 ```bash
 user_input='ls -l'
@@ -290,7 +281,7 @@ eval "$sanitized_input"
 ////
 //// tab | Limiting Scope and Usage
 
-_Restricting `eval` to Controlled Scenarios_
+_Restricting `eval` to controlled scenarios:_
 
 ```bash
 execute_command() {
@@ -317,12 +308,12 @@ execute_command 'ls -l'
 
 ## Redirecting Errors to stderr in Bash
 
-Proper error handling in Bash scripts involves directing error messages to the standard error stream (stderr).
+Proper error handling in Bash involves directing error messages to the standard error stream (stderr).
 
 /// admonition | Guidelines
     type: tip
 
-- **Consistently Direct Errors to stderr**: Always use `>&2` to redirect error messages to stderr. This standard practice helps ensure that errors are logged appropriately and do not interfere with the output expected by users or other applications.
+- **Consistently Direct Errors to stderr**: ***Always*** use `>&2` to redirect error messages to stderr. This standard practice helps ensure that errors are logged appropriately and do not interfere with the output expected by users or other applications.
 - **Use Explicit Error Messaging**: Combine error redirection with clear, descriptive messages that explain what went wrong and possibly how to resolve it. This approach enhances the script's usability and aids in troubleshooting.
 - **Integrate Error Handling in All Scripts**: Make it a standard practice to handle errors and direct them to stderr in all scripts, especially those intended for production use or distribution. Consistent error handling improves the reliability and maintainability of your scripts.
 
@@ -331,7 +322,7 @@ Proper error handling in Bash scripts involves directing error messages to the s
 /// details | Examples
 //// tab | Basic Redirection to stderr
 
-_Redirecting an Error Message_
+_Redirecting an error message:_
 
 ```bash
 cd /some/nonexistent/path || {
@@ -345,7 +336,7 @@ cd /some/nonexistent/path || {
 ////
 //// tab | Using stderr in Functions
 
-_Function with Error Handling_
+_Function with error handling:_
 
 ```bash
 change_directory() {
@@ -364,7 +355,7 @@ change_directory "/some/nonexistent/path"
 ////
 //// tab | Combining stderr with Clear Messages
 
-_Descriptive Error Messages_
+_Descriptive error messages:_
 
 ```bash
 file="/some/file"
@@ -375,30 +366,6 @@ fi
 ```
 
 **Advantage:** Provides a clear and descriptive error message, aiding in troubleshooting and resolution.
-
-////
-//// tab | Integrating stderr in All Scripts
-
-_Consistent Error Handling_
-
-```bash
-#!/bin/bash
-set -e
-
-handle_error() {
-    echo "An error occurred on line $1" >&2
-}
-
-trap 'handle_error $LINENO' ERR
-
-# Example command that may fail
-mkdir /some/directory || {
-    echo "Error: Failed to create directory /some/directory" >&2
-    exit 1
-}
-```
-
-**Advantage:** Ensures that all errors are handled consistently, improving the script's robustness and maintainability.
 
 ////
 ///

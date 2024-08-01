@@ -8,7 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2024.7.xx] - 2024-07-xx
 
-- ...
+- Complete rewrite of the style guide.
+- Convert standard markdown of guide to MkDocs + Material for MkDocs.
 
 ## [2022.7.13] - 2022-07-13
 
