@@ -1,39 +1,39 @@
 # Aesthetics
 
-As mentioned in the [Preface](/#preface), this guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
+As mentioned in the [Preface](/#preface), this guide strives to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
 
-This section addresses these aesthetic choices and provides guidelines for maintaining a consistent and visually appealing script style. Where applicable, the guidelines are accompanied by explanations of their benefits over alternative practices. For style guidelines that are less subjective and have a more significant impact on script functionality, refer to the [Style](/content/style/) section.
+This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines include explanations of their advantages over alternative practices. For style guidelines that are less subjective and have a greater impact on the script's functionality, please refer to the [Style](/content/style/) section of this guide.
 
 ## Indentations
 
-Indentations come in two primary forms: tabs and spaces. While both can be used to indent code, spaces are generally preferred over tabs.
+Indentations primarily come in two forms: tabs and spaces. While both can be used to indent code, spaces are generally preferred.
 
 /// admonition | Guidelines
     type: tip
 
-- **Indent Size**: Use four spaces for each indentation level to balance readability and space efficiency.
+- **Indent Size**: Use four spaces per indentation level to balance readability and space efficiency.
 
 ///
 
 ### Why Spaces Over Tabs?
 
-Spaces are preferred over tabs because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making it safer for projects involving multiple contributors.
+Spaces are favored over tabs because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making them a safer choice for projects with multiple contributors.
 
 ## Column Length
 
-The column length is the number of characters in a single line of code. Limiting the column length can help significantly maintain the readability of your code.
+The column length refers to the number of characters in a single line of code. Limiting column length significantly enhances the readability of your code.
 
 /// admonition | General Guidelines
     type: tip
 
 - **88-Character Limit**: Keep lines within 88 characters.
-- **Exceptions**: Allow exceptions when dealing with long strings or complex expressions that require clarity and are more understandable when not broken into multiple lines.
+- **Exceptions**: Allow exceptions for long strings or complex expressions that require clarity and are more understandable when not broken into multiple lines.
 
 ///
 
 ### Formatting Multi-lined Commands
 
-When breaking a command exceeding the 88-character limit into multiple lines, it is essential to ensure that it remains readable and easy to follow. Below are some effective guidelines for aligning, indenting, and placing operators (such as `||` and `&&`).
+When breaking a command that exceeds the 88-character limit into multiple lines, ensure that it remains readable and easy to follow. Below are effective guidelines for aligning, indenting, and placing operators (such as `||` and `&&`).
 
 /// admonition | Guidelines
     type: tip
@@ -44,7 +44,7 @@ When breaking a command exceeding the 88-character limit into multiple lines, it
 
 ///// admonition | Example
 
-_Two separate commands whose continuation lines are indented by four spaces:_
+_Two separate commands with continuation lines indented by four spaces:_
 
 ```bash
 tar -czvf /backup/archive-$(date +%F).tar.gz /home/user/documents \
@@ -61,7 +61,7 @@ curl -X POST \
 //// tab | Logical Operators
 
 - **Placement**: When multiple commands are connected by logical operators (`&&`, `||`), place these operators at the beginning of a new line with a four-space indent.
-- **Reason**: This formatting ensures that the logical operators are clearly visible and distinguishable from the commands they connect.
+- **Reason**: This formatting ensures that the start of a new command is clearly visible, distinguishing it from the previous command.
 
 ///// admonition | Example
 
@@ -78,7 +78,7 @@ cd /some/directory/in/a/universe/far/far/away \
 //// tab | Redirect and I/O Operators
 
 - **Placement**: When breaking up a long command that includes redirect or I/O operators (such as `>`, `>>`, `<`, `|`), place these operators at the beginning of a new line with a four-space indent.
-- **Reason**: This formatting ensures that the operators are clearly visible and distinguishable from the commands they affect.
+- **Reason**: This formatting ensures that the redirection or I/O operation is clearly visible, distinguishing it from the previous command.
 
 ///// admonition | Example
 
@@ -96,21 +96,21 @@ grep "some very long pattern" /a/very/long/path/to/some/file/on/the/system \
 
 ### Why Limit Line Length
 
-- **Readability**: Shorter lines eliminate the need for horizontal scrolling, making the code easier to read across different devices and screen sizes.
+- **Readability**: Shorter lines enhance the code's legibility, eliminating the need for horizontal scrolling and making it easier to read on various devices and screen sizes.
 - **Compatibility**: A standard line length ensures code displays well in various development tools, including code review platforms and IDEs.
 
 ## Function Declaration
 
-While not greatly impacting script readability or functionality, there is a commonly preferred syntax for declaring functions in Bash.
+While not significantly impacting script readability or functionality, there is a commonly preferred syntax for declaring functions in Bash.
 
 /// admonition | Guidelines
     type: tip
 
-- **Syntax**: ***Always*** declare functions using the name followed by parentheses and curly braces (`name() {}`), rather than the `function` keyword.
+- **Syntax**: ***Always*** declare functions using their name followed by parentheses and curly braces (`name() {}`) rather than using the `function` keyword.
 
 ///
 
-/// details | Examples
+/// details | Example
 
 _Using the `function` keyword:_
 
@@ -134,19 +134,19 @@ foo() {
 
 ### Why Avoid the `function` Keyword
 
-- **Convention**: The recommended syntax is a more widely accepted and conventional way of declaring functions in Bash, aligning with common Bash practices and community standards.
+- **Convention**: The recommended syntax is more widely accepted and aligns with common Bash practices and community standards.
 
-## Formatting Block Statements (CONTINUE FROM HERE)
+## Formatting Block Statements
 
-Formatting block statements is a simple way of enhancing the readability of your code. With that said, there are a few guidelines to follow under specific circumstances.
+Formatting block statements is a straightforward way to enhance the readability of your code. However, there are a few guidelines to follow under specific circumstances.
 
 /// admonition | Guidelines
     type: tip
 
 //// tab | Standard Block Statement
 
-- **Inline Placement**: Position `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
-- **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines to distinctly mark block terminations.
+- **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
+- **New Line for Block Endings**: To clearly mark block terminations, end `if` statements with `fi` and loops with `done` on their own lines.
 
 ///// details | Example
 
@@ -174,8 +174,8 @@ done
 ////
 //// tab | Single Line Block Statement
 
-- **Clarity and Maintainability**: Single-line statements should be concise and clear to enhance readability, especially for straightforward conditions or loops. Always ensure that single-line statements preserve the script’s logical structure, facilitating easier updates and understanding.
-- **Avoid Clutter**: Refrain from adding multiple commands or complex logic to single-line statements, including else statements. This helps maintain clarity and prevent code clutter.
+- **Clarity and Maintainability**: Single-line statements should be clear and concise. Always preserve the script’s logical structure to facilitate easier updates and understanding.
+- **Avoid Clutter**: Avoid adding multiple commands or complex logic to single-line statements. This helps maintain clarity and prevents code clutter.
 
 ///// details | Example
 
@@ -195,16 +195,15 @@ _Single line block statement without else clause:_
 if [[ -f "$file" ]]; then echo "File exists."; fi
 ```
 
-**Advantage**: Single-line block statements are concise and effective for simple conditions or loops.
+**Advantage**: Single-line block statements are concise and practical for simple conditions or loops.
 
 /////
 ////
 ///
 
-### Why Format Block Statements
+### Why Follow These Guidelines
 
-- **Convention**: This style aligns with common coding conventions and practices in the Bash scripting community, which can help ensure that your code is consistent with widely accepted standards.
-- **Readability**: Placing `then` on the same line as the `if` statement clearly indicates that the subsequent block is conditional on the `if` statement, making the code easier to read and understand at a glance.
+- **Convention**: Adhering to standard formatting practices ensures your code aligns with widely accepted Bash scripting conventions, making it easier for others in the community to understand and collaborate on your work.
 
 ## Vertical Spacing Guidelines
 
@@ -213,12 +212,13 @@ Vertical spacing is just as important as horizontal spacing in maintaining a cle
 /// admonition | Guidelines
     type: tip
 
-- **Single Blank Line**: A single blank line separates logical blocks of code or functions, facilitating quick visual parsing.
-- **Double Blank Lines**: Employ up to two blank lines sparingly to highlight new sections or distinct logical groups within the script.
+- **Single Blank Line**: Use a single blank line to separate logical blocks of code or functions, facilitating quick visual parsing.
+- **Double Blank Lines**: Use double blank lines sparingly to highlight new sections or distinct logical groups within the script.
+    - **Reason**: Double blank lines help visually separate sections of the script that differ significantly in purpose or functionality from the surrounding code.
 
 ///
 
-/// details | Examples
+/// details | Example
 
 ```bash
 ### Variable Section
@@ -240,22 +240,22 @@ function_name() {
 
 ### Why Vertical Spacing Matters
 
-- **Readability**: Too many blank lines can make the script harder to read, while too few can make it appear cluttered. Proper vertical spacing helps maintain a balance between readability and visual organization. Requiring a single blank line between logical blocks or functions ensures that the script is easy to navigate and understand.
+- **Readability**: Too many blank lines can make the script harder to read, while too few can make it appear cluttered. Proper vertical spacing strikes a balance between readability and visual organization.
 
 ## Comments
 
-Comments are essential for explaining script functionality and enhancing long-term usability and readability. Effective commenting practices ensure scripts are accessible and easily understood by new developers or future maintainers. Though similar to the previous guidelines, comments have a few additional considerations depending on their context.
+Comments are essential for explaining script functionality and enhancing long-term usability and readability. Effective commenting practices ensure scripts are accessible and easily understood by new developers or future maintainers. While similar to previous guidelines, comments have a few additional considerations depending on their context.
 
 /// admonition | General Guidelines
     type: tip
 
-- **Capitalization**: Begin each comment with a capital letter, except when referring to code elements like variables or functions.
-- **Punctuation**: Conclude comments with a period to indicate completion and maintain consistency.
-- **Spacing**: For inline comments, maintain two spaces between the code and and the comment.
+- **Capitalization**: Begin each comment with a capital letter, except for code elements like variables or functions.
+- **Punctuation**: Conclude comments with a period to indicate completion.
+- **Spacing**: For inline comments, maintain two spaces between the code and the comment.
 
 ///
 
-/// details | Examples
+/// details | Example
 
 ```bash
 # Assigns "True" to var and demonstrates proper comment formatting.
@@ -269,23 +269,23 @@ box="Box"  # This is a box.
 
 ### Function Comments
 
-Functions in bash differ in a few ways from those in other programming languages, especially in terms of argument handling. Due to these differences, functions should be thoroughly documented to clarify their purpose, parameters, and expected behavior.
+Functions in Bash differ in some ways from those in other programming languages, especially regarding argument handling. Due to these differences, functions should be thoroughly documented to clarify their purpose, parameters, and expected behavior.
 
 /// admonition | Guidelines
     type: tip
 
-- **Purpose**: Offer a concise description of the function's role and its operational context within the script.
-- **Parameters**: Detail each parameter the function accepts, noting required versus optional parameters and any default values. Though not required, it's **_highly_** recommended assign parameter values to local variables for clarity.
+- **Purpose**: Offer a concise description of the function's role and operational context within the script.
+- **Parameters**: Detail each parameter the function accepts, noting required versus optional parameters and any default values. Though not required, assigning parameter values to local variables is ***highly*** recommended for clarity.
 - **Return Values**: Specify the function's output or return values, if applicable.
 
 ///
 
-/// details | Examples
+/// details | Example
 
 ```bash
 ####
 # This function processes files given as parameters and logs results. It is designed to
-# handle a variable number of input files and demonstrate proper ERROR handling.
+# handle a variable number of input files and demonstrate proper error handling.
 #
 # Parameters:
 #   - $1: input_file (Required)
@@ -307,14 +307,14 @@ process_files() {
 
 ### Pound Signs in Comments
 
-Traditionally, a single pound sign (`#`) is used to denote comments in Bash scripts. However, the number of pound signs should be used to help differentiate the purpose and scope of the comments.
+Traditionally, a single pound sign (`#`) is used to denote a comment in Bash scripts. However, using a different number of pound signs can help differentiate the comments' purpose and scope.
 
 /// admonition | Guidelines
     type: tip
 
 //// tab | Single Pound Sign (`#`)
 
-- **Usage**: Employ a single pound sign for line-specific comments to explain the purpose of a line or command.
+- **Usage**: Employ a single pound sign for line-specific comments to explain the purpose of a command or a line of code.
 
 ///// details | Example
 
@@ -330,7 +330,7 @@ rsync -av --delete "$src_dir" "$dest_dir"
 ////
 //// tab | Double Pound Signs (`##`)
 
-- **Usage**: Utilize double pound signs for comments that describe the functionality of a code block, such as a loop, conditional sequence, or a list a variables. Once a blank line is placed between the code between the commented code block and the comment, the comment should be considered a new block.
+- **Usage**: Utilize double-pound signs for comments that describe the functionality of a block of code, such as a loop, conditional sequence, or a list of variables. Once a blank line is placed between the block of code and its corresponding comment, the comment no longer applies to the code afterward.
 
 ///// details | Example
 
@@ -358,14 +358,14 @@ fi
 
 - **Usage**: Quadruple pound signs are used to section off entire parts of the script.
 
-_Please refer to the [Quadruple Pound Signs](#quadruple-pound-signs) section for more details._
+_Please refer to the [Quadruple Pound Signs](#quadruple-pound-signs) section below for more details._
 
 ////
 //// tab | Triple Pound Signs (`###`)
 
-- **Usage**: Triple pound signs are a mix between double and quadruple pound signs. They are not limited to a single block of code separated by a blank line, but do not represent an entirely new section. Triple pound signs should be use sparingly and only when necessary, as they don't make it clear when a new "section" is starting or ending. Ideally, you should use double or quadruple pound signs instead.
+- **Usage**: Triple pound signs are a mix between double and quadruple pound signs. They are not limited to a single block of code separated by a blank line, but they do not represent an entirely new section. Triple pound signs should be used very sparingly and only when necessary, as they don't make it clear when a new "section" is starting or ending. Ideally, you should use double or quadruple pound signs instead.
 
-**NOTE**: The below example is a possible situation in which triple pound signs could be used. Note I'll be using quadruple pound signs, which need a more in depth explanation, which is done in the next section.
+**NOTE**: The below example is a possible situation in which triple pound signs could be used. Note that I'll be using quadruple pound signs, which need a more in-depth explanation, detailed in the next subsection.
 
 ///// details | Example
 
@@ -413,7 +413,7 @@ fi
 
 #### Quadruple Pound Signs
 
-Quadruple pound signs are used to section off entire parts of the script. This can be used to separate functions, variables, or main script logic. Quadruple pound signs can also be used to represent subsections within a section. Quadruple pound signs should be used sparingly and only there is a need to visually separate one section of code from another.
+As mentioned in the previous section, quadruple pound signs are used to section off entire parts of the script.
 
 /// admonition | Guidelines
     type: tip
@@ -421,7 +421,8 @@ Quadruple pound signs are used to section off entire parts of the script. This c
 - **Sectioning**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variables, or the main script logic.
 - **Subsections**: Quadruple pound signs can also be used to represent subsections within a section, providing a clear visual separation between different parts of the script.
 - **Sparingly**: Quadruple pound signs should be used sparingly and only when necessary to visually separate one section of code from another.
-- **Formatting**: While not required, there is a recommended way to ensure that they stand out from the rest of the comments. After the quadruple pound signs, `[ Section Name ]` should be appended. Next, enter any number of `#` characters the span the total 88 character limit of a single ling. Finally, above and below this line, there must be two blank lines, unless a subsection is created below, to which two blank lines should be used under the subsection.
+- **Formatting**: While not required, there is a recommended format to ensure that they stand out from the rest of the comments. After the quadruple pound signs, append `[ Section Name ]` followed by enough `#` characters to reach the 88-character limit of a single line. Finally, above and below this line, include two blank lines unless a subsection is created below, in which case two blank lines should be used under the subsection.
+  - **Subsection Format**: Subsections should be formatted similarly, with the exception that the number of brackets (`[]`) match/represent the depth of the subsection.
 
 ///
 
