@@ -9,3 +9,4 @@
 - [ ] Add a section explaining some reasoning behind [declaration vairables](/content/style/#declaring-variables)?
 - [ ] Figure out if the example blocks should be closed or open by default.
 - [ ] Figure out if the example blocks should be inside the guidelines block or not.
+- [ ] Add a section in the readme telling people how to create issues if they want and update, clarification, etc.
