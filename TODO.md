@@ -1,6 +1,6 @@
 # TODO
 
-- [ ] Add a few more common signals to [error handling](/content/error-handling/#common-signals-to-trap).
+- [x] Add a few more common signals to [error handling](/content/error-handling/#common-signals-to-trap).
 - [ ] Reduce duplicate or repeated information.
 - [ ] Improve wording and grammar.
 - [ ] Clean up code examples and text within example blocks.

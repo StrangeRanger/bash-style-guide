@@ -136,9 +136,19 @@ done
 
 ### Common Signals to Trap
 
+- **SIGHUP**: Hangup signal, sent when a terminal controlling a process is closed; often used to reload configurations.
 - **SIGINT**: Interrupt signal, typically sent from the keyboard (Ctrl+C), indicating that a process should cease operation.
+- **SIGQUIT**: Quit signal, often triggered by (Ctrl+\), causing a process to terminate and create a core dump.
+- **SIGKILL**: Kill signal, used to forcefully terminate a process immediately; cannot be caught or ignored.
 - **SIGTERM**: Termination signal, commonly sent by the `kill` command to request a graceful shutdown.
-- **EXIT**: A pseudo-signal used to execute commands upon script exit, regardless of the exit's nature.
+- **SIGSTOP**: Stop signal, halts a process and cannot be caught or ignored; used to pause execution.
+- **SIGCONT**: Continue signal, used to resume a process that was previously stopped.
+- **SIGTSTP**: Terminal stop signal, typically sent by (Ctrl+Z), pausing a process for later resumption.
+- **SIGCHLD**: Child signal, sent to a parent process when a child process terminates or stops.
+- **SIGALRM**: Alarm signal, sent when a timer set by the `alarm` system call expires; used for timeouts.
+- **SIGUSR1**: User-defined signal, available for custom handling within a process.
+- **SIGUSR2**: Another user-defined signal, also available for custom handling.
+- **SIGPIPE**: Pipe signal, sent when a process writes to a pipe without a reader, typically causing termination.
 
 ## Understanding `set -e`
 
