@@ -9,3 +9,7 @@ If any practices are not explicitly mentioned in this guide, they should be cons
 ## Preface
 
 This guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. It covers both functional and aesthetic scripting choices, although for purely stylistic preferences that may vary, please refer to the [Aesthetics](/content/aesthetics) section.
+
+## Report Issues
+
+If you find any issues with this guide, whether it be a typo, a broken link, request for clarification, or a disagreement with a recommendation, please [open an issue]() on the GitHub repository.
