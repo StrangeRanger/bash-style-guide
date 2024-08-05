@@ -1,15 +1,15 @@
 # Bashisms
 
-As a reminder, this style guide is intended for Bash. When given a choice, always use Bash builtins or keywords instead of external commands or `sh(1)` syntax.
+As a reminder, this style guide is intended for Bash. When given a choice, always prefer Bash builtins or keywords over external commands or `sh(1)` syntax.
 
 ## Conditional Test
 
-Conditional tests are a fundamental aspect of Bash scripting, allowing you to make decisions based on the evaluation of expressions. Bash provides multiple constructs for conditional tests, with `[[ ... ]]` being the most modern and robust option.
+Conditional tests are a fundamental aspect of Bash scripting, allowing you to make decisions based on evaluating expressions. Bash provides multiple constructs for conditional tests, with `[[ ... ]]` being the most modern and robust option.
 
 /// admonition | Guidelines
     type: tip
 
-- **Use `[[ ... ]]`:** Use the `[[ ... ]]` construct for conditional tests, over `[ ... ]` or the `test` command.
+- **Use `[[ ... ]]`:** Prefer the `[[ ... ]]` construct for conditional tests over `[ ... ]` or the `test` command.
 
 ///
 
@@ -47,7 +47,7 @@ if echo "$name" | grep -q "^A"; then
 fi
 ```
 
-**Disadvantage**: Using external commands like `grep` can be slower and less efficient. Additionally, it may introduce unnecessary complexity and dependencies.
+**Disadvantage**: Using external commands like `grep` can be slower and less efficient. It may also introduce unnecessary complexity and dependencies.
 
 ---
 
@@ -95,7 +95,7 @@ fi
 - **Increased Safety**: Eliminates word splitting on variables containing spaces, preventing errors such as unintentional command execution or misinterpreted conditions.
 - **Greater Flexibility**: Provides a more readable and manageable syntax, particularly in scripts with intricate conditional logic.
 
-## Sequence Iteration
+## Sequence Iteration (CONTINUE FROM HERE)
 
 Iterating over sequences is a common task in Bash scripting, allowing you to process elements in a range or list. Bash provides built-in mechanisms for sequence iteration, such as brace expansion and C-style `for` loops.
 
@@ -103,7 +103,7 @@ Iterating over sequences is a common task in Bash scripting, allowing you to pro
     type: tip
 
 - **Prefer Builtins**: Use brace expansion (`{start..end}`) for fixed ranges and the C-style `for` loop for variable limits to iterate over sequences.
-- **Avoid Using `seq`:** Due to its external nature, avoid using `seq` for sequence iteration.
+- **Avoid Using `seq`:** Avoid using `seq` for sequence iteration due to its external nature.
 
 ///
 
@@ -191,7 +191,7 @@ done
 
 ## Command Substitution
 
-Command substitution allows for the capturing of command outputs and use it as part of another command or assignment. Bash provides two syntaxes for command substitution: `$(...)` and backticks (`` `...` ``).
+Command substitution allows for capturing the output of commands and using them as part of another command or assignment. Bash provides two syntaxes for command substitution: `$(...)` and backticks (`` `...` ``).
 
 /// admonition | Guidelines
     type: tip
@@ -328,7 +328,7 @@ Parameter expansion is a powerful feature in Bash that allows you to manipulate 
 /// admonition | Guidelines
     type: tip
 
-- **Prefer Parameter Expansion for String Manipulation**: Utilize parameter expansion to handle string manipulations whenever possible. This approach is not only more efficient but also reduces script complexity and dependencies.
+- **Prefer Parameter Expansion for String Manipulation**: Utilize parameter expansion to handle string manipulations whenever possible. This approach is more efficient and reduces script complexity and dependencies.
 - **Avoid External String Manipulation Tools When Unnecessary**: External tools like `sed` and `awk` are powerful but often overkill for simple string manipulations that can be efficiently handled by parameter expansion.
 
 ///
