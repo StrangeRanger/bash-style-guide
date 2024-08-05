@@ -1,16 +1,20 @@
 # Handling Errors Properly
 
-Error handling is crucial in Bash scripting to ensure that your scripts behave as expected. Proper error handling can prevent unexpected failures and improve the robustness of your scripts. This section of the guide covers essential practices for error handling in Bash, including checking command success, using `trap` for signal handling, understanding `set -e`, avoiding `eval`, and redirecting errors to stderr.
+Error handling is crucial in Bash scripting to ensure that your scripts behave as expected. Proper error handling can prevent unexpected failures and improve the robustness of your scripts.
+
+This section of the guide covers essential practices for error handling in Bash, including checking command success, using `trap` for signal handling, understanding `set -e`, avoiding `eval`, and redirecting errors to stderr.
 
 ## Checking Command Success
 
-It is crucial to verify the success of commands, particularly for operations where failure could lead to severe consequences. Conditional checks help ensure that scripts only proceed when commands execute successfully.
+It is crucial to verify the success of commands, particularly for operations where failure could lead to severe consequences.
 
 /// admonition | Guidelines
     type: tip
 
-- **Check Success of Critical Commands**: **_ALWAYS_** follow commands whose potential to fail could cause problems for the rest of the script, like `cd`, with a conditional check.
-- **Error Messages for Clarity**: When a command fails, provide clear error messages to help indicate what went wrong. This practice is especially useful for diagnosing issues quickly and efficiently.
+- **Check Success of Critical Commands**: <mark>**_ALWAYS_**</mark> follow commands whose potential to fail could cause problems for the rest of the script, like `cd`, with a conditional check.
+    - **Reason**: This practice prevents the script from continuing if a critical command fails, reducing the risk of unintended consequences.
+- **Error Messages for Clarity**: When a command fails, provide clear error messages to help indicate what went wrong.
+    - **Reason**: Descriptive error messages make it easier to identify and resolve issues quickly.
 
 ///
 
@@ -39,10 +43,12 @@ cd /some/path || { echo "Failed to change directory"; exit 1; }
 ////
 ///
 
+<!--
 ### Why Check Command Success
 
 - **Avoid Missteps**: Operations like `cd` can fail for various reasons, such as permission issues or non-existent directories. Failing to handle these errors can lead to incorrect script operations, potentially modifying or deleting the wrong files.
 - **Script Robustness**: Scripts that check for command success are more robust and reliable, preventing cascading failures that occur when subsequent commands rely on the success of previous ones.
+-->
 
 ## Overview of `trap`
 
