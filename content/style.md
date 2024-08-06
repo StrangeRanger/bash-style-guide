@@ -7,7 +7,7 @@ As mentioned in the [Aesthetics](/content/aesthetics) section of this Guide, thi
 Quotes in Bash play a crucial role in how text is interpreted and expanded, affecting whitespace preservation, word splitting, and variable expansion.
 
 /// admonition | Guidelines
-    type: tip
+    type: info
 
 - **Double Quotes**: Use double as the default method for quoting strings in Bash.
     - **Reason**: They prevent word splitting and globbing, while still allowing variables and commands to be expanded within the string.
@@ -19,6 +19,7 @@ Quotes in Bash play a crucial role in how text is interpreted and expanded, affe
 ///
 
 /// details | Examples
+    type: example
 //// tab | Preventing Word Splitting
 
 _Without quotes:_
@@ -117,7 +118,7 @@ echo "$output"
 Variable declaration in Bash is essential for managing data, ensuring clarity, and preventing conflicts. Properly declaring variables with consistent naming conventions and scoping practices enhances script readability and maintainability.
 
 /// admonition | Guidelines
-    type: tip
+    type: info
 //// tab | Global and Local Variables
 
 - **Naming Conventions**: Use lowercase letters, separating each word with an underscore (`_`).
@@ -126,6 +127,7 @@ Variable declaration in Bash is essential for managing data, ensuring clarity, a
     - **Reason**: Defining local variables within functions prevents conflicts with global variables.
 
 ///// details | Example
+    type: example
 
 _General variable declaration:_
 
@@ -190,6 +192,7 @@ my_function
     - **Reason**: Consistently treating constant variables as immutable ensures script reliability and maintainability.
 
 ///// details | Example
+    type: example
 
 _Without `readonly`:_
 
@@ -219,6 +222,7 @@ readonly PI=3.14159
     - **Reason**: Explicitly exporting variables ensures they are immediately available to child processes and scripts.
 
 ///// details | Examples
+    type: example
 
 _Without clear indication:_
 
@@ -248,6 +252,7 @@ export E_PATH="/usr/local/bin:$PATH"
 - **Reason**: The `let` command, while functional, is less intuitive and can lead to errors if the expression is miswritten. Using arithmetic expansion (`$((...))`) or arithmetic evaluation (`((...))`) provides clearer, safer operations.
 
 ///// details | Example
+    type: example
 
 _Using `let`:_
 
@@ -276,6 +281,7 @@ echo "Result: $result"
 - **Reason**: While `declare` is useful for setting advanced variable properties, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
 
 ///// details | Example
+    type: example
 
 _Without `declare`:_
 
@@ -304,7 +310,7 @@ echo "${my_array[foo]}"
 The shebang line, also known as the hashbang or interpreter directive, is a crucial component of Bash scripts. It specifies the interpreter that should execute the script, ensuring compatibility and consistent behavior across different environments.†
 
 /// admonition | Guidelines
-    type: tip
+    type: info
 
 - **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that need to run on various operating systems, including BSD, macOS, and Linux. This shebang is particularly useful because it searches the user’s `PATH` to find and use the first instance of Bash, which helps accommodate non-standard Bash installations.
 - **Linux-Specific Scripts**: Opt for `#!/bin/bash` when creating scripts solely for Linux environments. In these cases, Bash is typically located at `/bin/bash`, and this shebang ensures direct and predictable script execution.
@@ -312,6 +318,7 @@ The shebang line, also known as the hashbang or interpreter directive, is a cruc
 ///
 
 /// details | Examples
+    type: example
 //// tab | Universal Compatibility
 
 _Using `#!/usr/bin/env bash`_
