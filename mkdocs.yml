@@ -49,6 +49,7 @@ theme:
     # button, which allows to deep link to the current search query and result.
     - search.share
   icon:
+    annotation: material/plus-circle
     repo: fontawesome/brands/github
 
 extra_css:
@@ -70,6 +71,10 @@ markdown_extensions:
   # This configuration enables Markdown table support, which should normally be enabled
   # by default, but to be sure, it's added here.
   - tables
+  # TODO: Provide description of the below extension.
+  - attr_list
+  # TODO: Provide description of the below extension.
+  - md_in_html
   # The BetterEm extension improves the detection of Markup to emphasize text in
   # Markdown using special characters, i.e. for **bold** and _italic_ formatting.
   - pymdownx.betterem:
