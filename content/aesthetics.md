@@ -396,10 +396,10 @@ As mentioned in the previous section, quadruple pound signs are used to section 
 - **Subsections**: Quadruple pound signs can also be used to represent subsections within a section, providing a clear visual separation between different parts of the script.
 - **Sparingly**: Quadruple pound signs should be used sparingly and only when necessary to visually separate one section of code from another. For example, you can omit them if the script is short and does not require extensive sectioning.
 - **Formatting**: While not required, there is a recommended format to ensure that they stand out from the rest of the comments.
-  - **Section Naming**: After the quadruple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose
-  - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
-  - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the quadruple pound signs, prefixed with four `#` characters.
-  - **Subsection Format**: Subsections should be formatted exactly the same, with the exception of the number of brackets (`[]`) and the section name. In each subsection, the number of brackets should match the subsection's depth within the script.
+    - **Section Naming**: After the quadruple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose
+    - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
+    - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the quadruple pound signs, prefixed with four `#` characters.
+    - **Subsection Format**: Subsections should be formatted exactly the same, with the exception of the number of brackets (`[]`) and the section name. In each subsection, the number of brackets should match the subsection's depth within the script.
 
 ///
 
