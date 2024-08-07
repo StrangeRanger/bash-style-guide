@@ -66,6 +66,12 @@ plugins:
       fallback_to_build_date: true
       enabled: true
   - table-reader
+  - exclude:
+      glob:
+        - "TODO.md"
+        - "sss.md"
+        - "Examples/*"
+        - "content/common-mistakes.md"
 
 markdown_extensions:
   # This configuration enables Markdown table support, which should normally be enabled
