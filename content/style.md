@@ -1,17 +1,17 @@
 # Style
 
-As mentioned in the [Aesthetics](/content/aesthetics) section of this Guide, this section covers style related guidelines that are less subjective and have an effect on functionality. This includes things like how to declare variables, when to use quotes, and how to write shebang lines.
+As mentioned in the [Aesthetics](aesthetics.md) section of this Guide, this section covers style related guidelines that are less subjective and have an effect on functionality. This includes things like how to declare variables, when to use quotes, and how to write shebang lines.
 
 ## Using Quotes
 
-Quotes in Bash play a crucial role in how text is interpreted and expanded, affecting whitespace preservation, word splitting, and variable expansion.
+Similar to some programming languages, the type of quotes used in Bash scripting can significantly impact the behavior of strings and variables. Understanding when to use single quotes, double quotes, or no quotes is essential for preventing word splitting, globbing, and variable expansion issues.
 
 /// admonition | Guidelines
     type: info
 
-- **Double Quotes**: Use double as the default method for quoting strings in Bash.
-    - **Reason**: They prevent word splitting and globbing, while still allowing variables and commands to be expanded within the string.
-- **Single Quotes**: Use single quote when you want to preserve string literals exactly as written.
+- **Double Quotes**: Use double quotes as the default method for quoting strings in Bash.
+    - **Reason**: Double quotes are often seen as the safest and most versatile quoting method, because they offer more flexibility with variable expansions, while still preventing word splitting and globbing.
+- **Single Quotes**: Use single quotes when you want to preserve string literals exactly as written.
     - **Reason**: Single quotes prevent all expansions, treating the enclosed text as a literal string.
 - **Omitting Quotes**: In situations where quotes are not necessary, such as within `[[ ... ]]` tests, or when the affects of word splitting and globbing are desired, omitting quotes is acceptable.
 - **Recommendation**: Ensure your IDE or text editor has syntax highlighting. This can help identify special characters in strings that perform expansions, and other potential issues.
@@ -113,9 +113,9 @@ echo "$output"
 ////
 ///
 
-## Declaring Variables
+## Declaring and Naming Variables
 
-Variable declaration in Bash is essential for managing data, ensuring clarity, and preventing conflicts. Properly declaring variables with consistent naming conventions and scoping practices enhances script readability and maintainability.
+Bash provides several methods for declaring variables, each with its own implications for scope, immutability, and readability. Understanding the best practices for naming and declaring global, local, constant, and exported variables is essential for maintaining script consistency and preventing unintended side effects.
 
 /// admonition | Guidelines
     type: info
@@ -305,9 +305,9 @@ echo "${my_array[foo]}"
 ////
 ///
 
-## Shebang Lines in Bash Scripts
+## Shebang in Bash Scripts
 
-The shebang line, also known as the hashbang or interpreter directive, is a crucial component of Bash scripts. It specifies the interpreter that should execute the script, ensuring compatibility and consistent behavior across different environments.†
+On Unix-like systems, the shebang (`#!`) line at the beginning of a script specifies the interpreter that should execute the script. In Bash scripts, the choice of shebang can impact script portability and compatibility across different operating systems. Understanding the differences between `#!/bin/bash` and `#!/usr/bin/env bash` is crucial for ensuring scripts run as intended.
 
 /// admonition | Guidelines
     type: info
