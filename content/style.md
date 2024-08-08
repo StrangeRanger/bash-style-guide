@@ -1,20 +1,20 @@
 # Style
 
-As mentioned in the [Aesthetics](aesthetics.md) section of this Guide, this section covers style related guidelines that are less subjective and have an effect on functionality. This includes things like how to declare variables, when to use quotes, and how to write shebang lines.
+As mentioned in the [Aesthetics](aesthetics.md) section of this Guide, this section covers style-related guidelines that are less subjective and affect functionality. This includes things like how to use quotes, declare variables, and write shebang lines.
 
 ## Using Quotes
 
-Similar to some programming languages, the type of quotes used in Bash scripting can significantly impact the behavior of strings and variables. Understanding when to use single quotes, double quotes, or no quotes is essential for preventing word splitting, globbing, and variable expansion issues.
+The type of quotes used in Bash can significantly impact the behavior of strings and variables. Understanding when to use single, double, or no quotes is essential for preventing word splitting, globbing, and variable expansion issues.
 
 /// admonition | Guidelines
     type: info
 
 - **Double Quotes**: Use double quotes as the default method for quoting strings in Bash.
-    - **Reason**: Double quotes are often seen as the safest and most versatile quoting method, because they offer more flexibility with variable expansions, while still preventing word splitting and globbing.
+    - **Reason**: Double quotes are often considered the safest and most versatile method because they offer more flexibility with variable expansion while preventing word splitting and globbing.
 - **Single Quotes**: Use single quotes when you want to preserve string literals exactly as written.
     - **Reason**: Single quotes prevent all expansions, treating the enclosed text as a literal string.
-- **Omitting Quotes**: In situations where quotes are not necessary, such as within `[[ ... ]]` tests, or when the affects of word splitting and globbing are desired, omitting quotes is acceptable.
-- **Recommendation**: Ensure your IDE or text editor has syntax highlighting. This can help identify special characters in strings that perform expansions, and other potential issues.
+- **Omitting Quotes**: In situations where quotes are not necessary, such as within `[[ ... ]]` tests, or when the effects of word splitting and globbing are desired, omitting quotes is acceptable.
+- **Recommendation**: Ensure your IDE or text editor has syntax highlighting. Syntax highlighting can help identify special characters in strings that perform expansions and other potential issues.
 
 ///
 
@@ -183,12 +183,12 @@ my_function
             - **Example**: API keys, passwords, or encryption keys.
             - **Note**: Storing sensitive information in scripts is **_highly_** discouraged; use secure methods like environment variables or external configuration files.
         - **Constants Shared Across Functions**: For values accessed by multiple functions, ensuring stable references and reducing the risk of bugs.
-- **Omitting `readonly`**: <mark>**_Consider_**</mark> omitting `readonly` even for intended constants in specific situations where flexibility or simplicity is prioritized.
+- **Omitting `readonly`**: <mark>**_CONSIDER_**</mark> omitting `readonly` even for intended constants in specific situations where flexibility or simplicity is prioritized.
     - **Reason**: Overusing `readonly` can restrict script flexibility, so reserve it for truly immutable values.
     - **When to omit**:
         - **Development and Debugging Phases**: When you need to modify constants temporarily for testing, delaying `readonly` can aid in faster iteration.
         - **Readability and Simplicity**: In simple or short scripts, omitting `readonly` can keep the script easy to read and maintain, without unnecessary complexity.
-- **Treatment**: <mark>**_Consider_**</mark> treating these variables as immutable, even if `readonly` is not applied.
+- **Treatment**: <mark>**_CONSIDER_**</mark> treating these variables as immutable, even if `readonly` is not applied.
     - **Reason**: Consistently treating constant variables as immutable ensures script reliability and maintainability.
 
 ///// details | Example
@@ -214,7 +214,7 @@ readonly PI=3.14159
 ////
 //// tab | Exported Variables
 
-- **Naming Conventions**: Use uppercase letters prefixed with `E_`, separating each word with an underscore (e.g., `E_PATH`, `E_CONFIG`).
+- **Naming Conventions**: Use uppercase letters prefixed with `E_`, separating each word with an underscore (`_`).
     - **Reason 1**: Uppercase naming with a specific prefix distinguishes these variables as an exported/environment variable, avoiding confusion with constant variables.
     - **Reason 2**: The `E_` prefix helps prevent accidental overwriting of existing environment variables or other constants.
     - **Exception**: If the intention is to modify or overwrite an existing environment variable, follow the standard naming convention.
@@ -242,43 +242,10 @@ export E_PATH="/usr/local/bin:$PATH"
 
 /////
 ////
-///
-
-/// admonition | Practices to Avoid
-    type: warning
-//// tab | Avoid `let` for Arithmetic Operations
-
-- **Guideline**: Use `((...))` or `$((...))` when performing arithmetic operations.
-- **Reason**: The `let` command, while functional, is less intuitive and can lead to errors if the expression is miswritten. Using arithmetic expansion (`$((...))`) or arithmetic evaluation (`((...))`) provides clearer, safer operations.
-
-///// details | Example
-    type: example
-
-_Using `let`:_
-
-```bash
-let result=1+2
-echo "Result: $result"
-```
-
----
-
-_Using `$((...))`:_
-
-```bash
-result=$((1 + 2))
-echo "Result: $result"
-```
-
-**Advantage:** `$((...))` provides clearer and safer arithmetic operations.
-
-/////
-
-////
 //// tab | Selective Use of `declare`
 
-- **Guideline**: Employ `declare` specifically for managing advanced variable properties, such as associative arrays, and stick to direct assignment for standard variable declarations unless scoping or attributes dictate otherwise.
-- **Reason**: While `declare` is useful for setting advanced variable properties, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
+- **Guideline**: Employ `declare` specifically for managing advanced variable attributes, such as associative arrays, and stick to direct assignment for standard variable declarations unless scoping or attributes dictate otherwise.
+- **Reason**: While `declare` is useful for setting variables, it's often more than needed for simple assignments. Using direct assignment reduces complexity and enhances script clarity.
 
 ///// details | Example
     type: example
@@ -305,6 +272,7 @@ echo "${my_array[foo]}"
 ////
 ///
 
+
 ## Shebang in Bash Scripts
 
 On Unix-like systems, the shebang (`#!`) line at the beginning of a script specifies the interpreter that should execute the script. In Bash scripts, the choice of shebang can impact script portability and compatibility across different operating systems. Understanding the differences between `#!/bin/bash` and `#!/usr/bin/env bash` is crucial for ensuring scripts run as intended.
@@ -312,8 +280,11 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
 /// admonition | Guidelines
     type: info
 
-- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that need to run on various operating systems, including BSD, macOS, and Linux. This shebang is particularly useful because it searches the user’s `PATH` to find and use the first instance of Bash, which helps accommodate non-standard Bash installations.
-- **Linux-Specific Scripts**: Opt for `#!/bin/bash` when creating scripts solely for Linux environments. In these cases, Bash is typically located at `/bin/bash`, and this shebang ensures direct and predictable script execution.
+- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that need to run on various operating systems, including BSD, macOS, and Linux.
+    - **Reason**: This shebang searches the user’s `PATH` to locate the Bash executable, ensuring compatibility across different systems.
+- **Linux-Specific Scripts**: Opt for `#!/bin/bash` when creating scripts solely for Linux environments.
+    - **Reason**: Linux systems typically have Bash installed at `/bin/bash`, making this shebang suitable for Linux-specific scripts.
+- **Other Considerations**: When writing scripts for specific environments, ensure the shebang reflects the intended interpreter location to avoid compatibility issues.
 
 ///
 
@@ -347,5 +318,5 @@ echo "This script uses the Bash located at /bin/bash."
 
 ### Why the Choice of Shebang Matters
 
-- **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash might not be located in the same path, or the installed version might be older. Many macOS users, for example, upgrade Bash through [Homebrew](https://brew.sh/), which does not alter the system-installed version located at `/bin/bash`. On BSD, Bash is often located at `/usr/local/bin/bash`, rather than `/bin/bash`.
-- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility, enabling the script to utilize the Bash version installed in the user’s environment, which is crucial for accessing features available in newer Bash versions.
+- **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash might not be located in the same path, or the installed version might be older. Many macOS users, for example, upgrade Bash through [Homebrew](https://brew.sh/), which does not alter the system-installed version located at `/bin/bash`. On BSD, Bash is often located at `/usr/local/bin/bash` rather than `/bin/bash`.
+- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to utilize the Bash version installed in the user’s environment, which is crucial for accessing features available in newer Bash versions.
