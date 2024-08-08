@@ -8,8 +8,12 @@ If any practices are not explicitly mentioned in this guide, they should be cons
 
 ## Preface
 
-This guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. It covers both functional and aesthetic scripting choices, although for purely stylistic preferences that may vary, please refer to the [Aesthetics](/content/aesthetics) section.
+This guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. It covers both functional and aesthetic scripting choices, although for purely stylistic preferences that may vary, please refer to the [Aesthetics](content/aesthetics.md) section.
 
 ## Report Issues
 
-If you find any issues with this guide, whether it be a typo, a broken link, request for clarification, or a disagreement with a recommendation, please [open an issue]() on the GitHub repository.
+If you find any issues with this guide, whether it be a typo, a broken link, or a suggestion for improvement, please create an issue on [GitHub](https://github.com/StrangeRanger/bash-style-guide/issues).
+
+## Notice
+
+If you view this document on GitHub or as a standard markdown file, you will not be able to see many of the interactive elements, such as the details and tabs. To view the document in its entirety, please visit the [website](https://bsg.hthompson.dev).
