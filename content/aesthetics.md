@@ -151,9 +151,8 @@ Blocks statements in Bash, such as `if` statements and loops, can be formatted i
 //// tab | Standard Block Statement
 
 - **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
-    - **Reason**: Inline placement of block keywords enhances readability and reduces visual clutter, by cutting down on unnecessary line breaks.
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
-    - **Reason**: Ending blocks on new lines helps distinguish block statements from the surrounding code and clearly marks the of a control statement.
+- **Reason**: These guidelines follow standard Bash practices and enhance script readability.
 
 ///// details | Example
     type: example
