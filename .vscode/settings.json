@@ -3,6 +3,13 @@
         "Bashism",
         "Bashisms",
         "elif",
-        "globbing"
+        "globbing",
+        "SIGALRM",
+        "SIGCHLD",
+        "SIGCONT",
+        "SIGPIPE",
+        "SIGSTOP",
+        "SIGUSR",
+        "subshells"
     ]
 }
