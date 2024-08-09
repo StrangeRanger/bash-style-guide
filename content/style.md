@@ -125,6 +125,9 @@ Bash provides several methods for declaring variables, each with its own implica
     - **Reason**: Using lowercase letters helps distinguish between constant and exported/environment variables, which are conventionally in uppercase.
 - **Scope Management**: Use the `local` keyword to limit the scope of a variable within a function.
     - **Reason**: Defining local variables within functions prevents conflicts with global variables.
+- **Global Variable Declaration**: Declare global variables at the beginning of the script or in a separate configuration file.
+    - **Reason**: Centralizing global variable declarations enhances script organization and readability, making it easier to manage and update values.
+    - **Exception**: If a global variable's value is determined later in the script, declare it where the value is set.
 
 ///// details | Example
     type: example
@@ -175,7 +178,7 @@ my_function
     - **Reason 1**: Uppercase naming with the `C_` prefix signals the immutability of these variables, making them easier to distinguish as constants.
     - **Reason 2**: The `C_` prefix prevents accidental overwriting of environment variables or other constants.
     - **Exception**: If the intention is to modify or overwrite an existing environment variable, follow the standard naming convention.
-- **Selective Use of `readonly`**: Apply `readonly` at or directly after assignment for constants where preventing modification is crucial.
+- **Selective Use of `readonly`**: Apply `readonly` at or directly after assignment for constants where preventing modification is <mark>**_CRITICAL_**</mark>.
     - **Reason**: Enforces immutability, ensuring that critical values remain unchanged throughout the script.
     - **When to use**:
         - **Global Constants**: For values that must remain unchanged throughout the script to ensure consistency and prevent accidental overwrites.
@@ -188,6 +191,9 @@ my_function
     - **When to omit**:
         - **Development and Debugging Phases**: When you need to modify constants temporarily for testing, delaying `readonly` can aid in faster iteration.
         - **Readability and Simplicity**: In simple or short scripts, omitting `readonly` can keep the script easy to read and maintain, without unnecessary complexity.
+- **Global Constants**: Declare global constants at the beginning of the script or in a separate configuration file for easy reference and modification.
+    - **Reason**: Centralizing constant declarations enhances script organization and readability, making it easier to manage and update values.
+    - **`readonly` Assignment**: If the initial assignment at the beginning of the script is not the final value, use `readonly` only after the true value is determined and set.
 - **Treatment**: <mark>**_CONSIDER_**</mark> treating these variables as immutable, even if `readonly` is not applied.
     - **Reason**: Consistently treating constant variables as immutable ensures script reliability and maintainability.
 

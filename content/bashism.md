@@ -6,7 +6,7 @@ This section covers common Bashisms, which are idiomatic practices and features 
 
 ## Conditional Tests
 
-Conditional tests are a fundamental part of Bash scripting, enabling decision-making based on evaluating expressions. Bash provides several constructs for these tests, with `[[ ... ]]` being the most modern and robust option.
+Conditional tests are fundamental to any programming language, enabling decision-making based on evaluating expressions. Bash provides several constructs for these tests, including `[ ... ]`, `[[ ... ]]`, and the `test` command.
 
 /// admonition | Guidelines
     type: info
@@ -20,75 +20,99 @@ Conditional tests are a fundamental part of Bash scripting, enabling decision-ma
     type: example
 //// tab | Basic String Comparison
 
-_Using `[ ... ]`_
+_Using `[ ... ]`:_
 
 ```bash
-if [ "$string" = "hello" ]; then
-  echo "String is hello"
+var="value with spaces"
+
+# $var must be quoted to be treated as a single argument.
+if [ "$var" = "value with spaces" ]; then
+    echo "The variable matches the value."
+else
+    echo "This will output because $var is treated as multiple arguments."
 fi
 ```
 
 ---
 
-_Using `[[ ... ]]`_
+_Using `[[ ... ]]`:_
 
 ```bash
-if [[ $string == "hello" ]]; then
-  echo "String is hello"
+var="value with spaces"
+
+# $var doesn't need to be quoted.
+if [[ $var = "value with spaces" ]]; then
+    echo "The variable matches the value."
+else
+    echo "This will output because $var is treated as multiple arguments."
 fi
 ```
-
-**Advantage**: `[[ ... ]]` is more readable and consistent in handling string comparisons.
 
 ////
 //// tab | Regex Matching
 
-_Using `test`_
+_Using `grep` for regex matching:_
 
 ```bash
-if echo "$name" | grep -q "^A"; then
-  echo "Name starts with A"
+email="hunter@guide.com"
+
+if echo "$email" | grep -qE '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'; then
+    echo "Valid email address."
+else
+    echo "Invalid email address."
 fi
 ```
 
-**Disadvantage**: Using external commands like `grep` can be slower and less efficient. It may also introduce unnecessary complexity and dependencies.
+**NOTE**: This can additionally go wrong depending on the supported version of grep and the regex syntax.
 
 ---
 
-_Using `[[ ... ]]`_
+_Using `[[ ... ]]` for regex matching:_
 
 ```bash
-if [[ $name =~ ^A ]]; then
-  echo "Name starts with A"
+email="hunter@guide.com"
+
+if [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+    echo "Valid email address."
+else
+    echo "Invalid email address."
 fi
 ```
-
-**Advantage**: `[[ ... ]]` supports regex directly, simplifying the syntax and improving readability.
 
 ////
 //// tab | Compound Conditions
 
-_Using `[ ... ]`_
+_Using `[ ... ]` for compound conditions:_
 
 ```bash
-if [ "$var1" = "value1" ] && [ "$var2" = "value2" ]; then
-  echo "Both conditions are true"
+file="example.txt"
+
+touch "$file" && chmod 700 "$file"
+
+# Each test must be placed in separate brackets.
+if [ -f "$file" ] && [ -r "$file" ] || [ -w "$file" ]; then
+    echo "File exists and is readable and writable."
+else
+    echo "File is either missing, unreadable, or unwritable."
 fi
 ```
-
-**Disadvantage**: `[ ... ]` requires separate test commands for each condition, leading to more verbose and less readable code.
 
 ---
 
-_Using `[[ ... ]]`_
+_Using `[[ ... ]]` for compound conditions:_
 
 ```bash
-if [[ $var1 == "value1" && $var2 == "value2" ]]; then
-  echo "Both conditions are true"
+file="example.txt"
+
+touch "$file" && chmod 700 "$file"
+
+# Each test can be placed within the same brackets.
+if [[ -f $file && -r $file || -w $file ]]; then
+    echo "File exists and is readable and writable."
+else
+    echo "File is either missing, unreadable, or unwritable."
 fi
 ```
-
-**Advantage**: `[[ ... ]]` provides a more readable and concise syntax for compound conditions.
 
 ////
 ///
@@ -116,75 +140,71 @@ Iterating over sequences is a common task in Bash, allowing you to process eleme
     type: example
 //// tab | A Fixed Range
 
-_Using `seq`_
+_Using `seq`:_
 
 ```bash
 for i in $(seq 1 5); do
-  echo "Number: $i"
+    echo "Number: $i"
 done
 ```
 
 ---
 
-_Using Brace Expansion_
+_Using brace expansion:_
 
 ```bash
 for i in {1..5}; do
-  echo "Number: $i"
+    echo "Number: $i"
 done
 ```
-
-**Advantage**: Brace expansion is built into Bash, making it faster and more efficient.
 
 ////
 //// tab | Variable Range Iteration
 
-_Using `seq`_
+_Using `seq`:_
 
 ```bash
 start=1
 end=5
+
 for i in $(seq $start $end); do
-  echo "Number: $i"
+    echo "Number: $i"
 done
 ```
 
 ---
 
-_Using C-style `for` Loop_
+_Using C-style `for` loop:_
 
 ```bash
 start=1
 end=5
-for ((i=start; i<=end; i++)); do
-  echo "Number: $i"
+
+for (( i=start; i<=end; i++ )); do
+    echo "Number: $i"
 done
 ```
-
-**Advantage**: The C-style `for` loop is more flexible and doesn't require external commands.
 
 ////
 //// tab | Step Values
 
-_Using `seq`_
+_Using `seq`:_
 
 ```bash
-for i in $(seq 1 2 10); do
-  echo "Number: $i"
+for i in $(seq 0 2 100); do
+    echo "Number: $i"
 done
 ```
 
 ---
 
-_Using C-style `for` Loop_
+_Using C-style `for` loop:_
 
 ```bash
-for ((i=1; i<=10; i+=2)); do
-  echo "Number: $i"
+for ((i=0; i<=100; i+=2)); do
+    echo "Number: $i"
 done
 ```
-
-**Advantage**: The C-style `for` loop allows for easy manipulation of step values directly within Bash.
 
 ////
 ///
@@ -210,7 +230,7 @@ Command substitution allows for capturing the output of commands and using them 
     type: example
 //// tab | Basic Command Substitution
 
-_Using backticks_
+_Using backticks:_
 
 ```bash
 output=`ls -l`
@@ -226,12 +246,10 @@ output=$(ls -l)
 echo "The output is: $output"
 ```
 
-**Advantage**: The `$(...)` syntax is visually clearer and more readable.
-
 ////
 //// tab | Nesting Command Substitution
 
-_Using backticks_
+_Using backticks:_
 
 ```bash
 date_and_users=`echo "Date: \`date\` - Users: \`who | wc -l\`"`
@@ -240,14 +258,12 @@ echo $date_and_users
 
 ---
 
-_Using `$(...)`_
+_Using `$(...)`:_
 
 ```bash
 date_and_users=$(echo "Date: $(date) - Users: $(who | wc -l)")
 echo $date_and_users
 ```
-
-**Advantage**: Nesting is more straightforward with `$(...)`, avoiding the awkwardness and readability issues of using multiple backticks.
 
 ////
 ///
@@ -287,11 +303,9 @@ echo "Result: $result"
 _Using `$((...))`:_
 
 ```bash
-result=$((1 + 2))
+result=$(( 1 + 2 ))
 echo "Result: $result"
 ```
-
-**Advantage**: `$((...))` is more intuitive and clearly indicates arithmetic operation.
 
 ////
 //// tab | Conditional Arithmetic Expressions
@@ -301,6 +315,7 @@ _Using `let`:_
 ```bash
 let "a = 5"
 let "b = 10"
+
 if let "a < b"; then
   echo "a is less than b"
 fi
@@ -313,12 +328,11 @@ _Using `((...))`:_
 ```bash
 a=5
 b=10
+
 if (( a < b )); then
   echo "a is less than b"
 fi
 ```
-
-**Advantage**: `((...))` offers a cleaner and more readable way to handle conditional arithmetic expressions.
 
 ////
 ///
@@ -350,8 +364,9 @@ _Using `sed`_
 
 ```bash
 string="Hello, World!"
-substring=$(echo $string | sed 's/Hello,//')
-echo $substring
+substring=$(echo "$string" | sed 's/Hello,//')
+
+echo "$substring"
 ```
 
 ---
@@ -361,10 +376,9 @@ _Using Parameter Expansion_
 ```bash
 string="Hello, World!"
 substring=${string/Hello,/}
-echo $substring
-```
 
-**Advantage**: Parameter expansion is more efficient and avoids the overhead of invoking `sed`.
+echo "$substring"
+```
 
 ////
 //// tab | Removing a Suffix
@@ -374,6 +388,7 @@ _Using `awk`_
 ```bash
 filename="document.txt"
 basename=$(echo $filename | awk -F. '{print $1}')
+
 echo $basename
 ```
 

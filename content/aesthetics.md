@@ -20,7 +20,8 @@ Indentations primarily come in two forms: tabs and spaces. While both can be use
 
 ### Why Spaces Over Tabs?
 
-Spaces are favored over tabs because they render uniformly across all editing environments, reducing misalignment issues. Additionally, using spaces can help minimize merge conflicts in version control systems, making them a safer choice for projects with multiple contributors.
+- **Consistency**: Spaces render uniformly across different editors and environments, preventing misalignment issues.
+- **Merge Conflicts**: Spaces help minimize merge conflicts in version control systems, making them a safer choice for collaborative projects.
 
 ## Column Length
 
@@ -29,7 +30,7 @@ The column length refers to the number of characters in a single line of code. L
 /// admonition | General Guidelines
     type: info
 
-- **88-Character Limit**: Keep lines within 88 characters. This means breaking long lines into multiple lines when necessary.
+- **88-Character Limit**: Keep lines within 88 characters. This means breaking lines exceeding the limit into multiple lines when necessary.
     - **Reason**: An 88-character limit ensures that code remains readable on various screen sizes and devices, including terminals, text editors, and code review tools.
 - **Exceptions**: Allow exceptions for long strings or complex expressions that require clarity and are more understandable when not broken into multiple lines.
 
@@ -37,7 +38,7 @@ The column length refers to the number of characters in a single line of code. L
 
 ### Formatting Multi-lined Commands
 
-When breaking a command that exceeds the 88-character limit into multiple lines, ensuring that it remains readable and easy to follow is crucial. Below are effective guidelines for aligning, indenting, and placing operators (such as `||` and `&&`) in multi-lined commands.
+When breaking a command that exceeds the 88-character limit into multiple lines, it is crucial to ensure that it remains readable and easy to follow. Below are practical guidelines for aligning, indenting, and placing operators, such as `||` and `&&`, in multi-lined commands.
 
 /// admonition | Guidelines
     type: info
@@ -48,16 +49,14 @@ When breaking a command that exceeds the 88-character limit into multiple lines,
 ///// admonition | Example
     type: example
 
-_Two separate commands with continuation lines indented by four spaces:_
+_Two commands with indentation applied for continuation lines:_
 
 ```bash
-tar -czvf /backup/archive-$(date +%F).tar.gz /home/user/documents \
-    /home/user/photos /home/user/videos
+rsync -avz /source/directory/with/a/very/long/path/ \
+    /destination/directory/with/another/long/path/
 
-curl -X POST \
-    -H "Content-Type: application/json" \
-    -d '{"username": "admin", "password": "secret"}' \
-    http://example.com/api/login
+find /some/very/long/path/to/search -name "*.log" -mtime -7 \
+    -exec gzip {} \;
 ```
 
 /////
@@ -70,30 +69,30 @@ curl -X POST \
 ///// admonition | Example
     type: example
 
-_Using logical operators with proper indentation:_
+_Command with logical operators broken up for readability:_
 
 ```bash
-cd /some/directory/in/a/universe/far/far/away \
-    && echo "Directory change successful." \
-    || echo "Failed to change directories."
+mkdir -p /some/very/long/path/to/directory \
+    && cd /some/very/long/path/to/directory \
+    && touch example_file.txt \
+    || echo "Failed to create directory or file."
 ```
 
 /////
 ////
 //// tab | Redirect and I/O Operators
 
-- **Placement**: When breaking up a long command that includes redirect or I/O operators (such as `>`, `>>`, `<`, `|`), place these operators at the beginning of a new continuation line.
+- **Placement**: When breaking up a long command that includes redirect or I/O operators (`>`, `>>`, `<`, `|`), place these operators at the beginning of a new continuation line.
 - **Reason**: This formatting ensures that the redirection or I/O operation is clearly visible, distinguishing it from the previous command.
 
 ///// admonition | Example
     type: example
 
-_Using pipes and redirection operators with proper indentation:_
+_Command with redirection and I/O operators clearly separated:_
 
 ```bash
-grep "some very long pattern" /a/very/long/path/to/some/file/on/the/system \
-    | sort \
-    | uniq -c > error_summary.txt
+ps aux | grep "some pattern" | grep -v "grep" \
+    | awk '{print $2}' > process_ids.txt
 ```
 
 /////
@@ -114,29 +113,32 @@ While not significantly impacting script readability or functionality, there is 
 
 - **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (`name() {}`).
 - **Avoid `function`**: Avoid using the `function` keyword to declare functions.
-- **Reason**: The recommended syntax is more widely accepted and aligns with common Bash practices and community standards.
 
 ///
 
 /// details | Example
     type: example
 
-_Using the `function` keyword:_
+_Correct way to declare a function:_
 
 ```bash
-function foo {
-    local i=foo
+greet() {
+    echo "Hello, $1!"
 }
+
+greet "World"
 ```
 
 ---
 
-_Using the recommended syntax:_
+_Avoid using `function` keyword:_
 
 ```bash
-foo() {
-    local i=foo
+function greet() {
+    echo "Hello, $1!"
 }
+
+greet "World"
 ```
 
 ///
@@ -147,34 +149,47 @@ Blocks statements in Bash, such as `if` statements and loops, can be formatted i
 
 /// admonition | Guidelines
     type: info
-
 //// tab | Standard Block Statement
 
-- **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.git p
+- **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
 - **Reason**: These guidelines follow standard Bash practices and enhance script readability.
 
 ///// details | Example
     type: example
 
-_Standard block statement formatting for if statements:_
+_Example of a standard block statement:_
 
 ```bash
-if [[ -f $file ]]; then
-    echo "File exists."
+if [[ $1 -eq 1 ]]; then
+    echo "You entered one."
 else
-    echo "File does not exist."
+    echo "You entered something else."
 fi
+
+for file in *.txt; do
+    echo "Processing $file"
+done
 ```
 
----
+/////
+////
+//// tab | Continuation Lines
 
-_Standard block statement formatting in for loops:_
+- **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of the block statement.
+- **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between them. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
+
+///// details | Example
+    type: example
 
 ```bash
-for i in {1..5}; do
-    echo "Number: $i"
-done
+if [[ $exit_code == "1" && $display_message == "true" ]]; then
+    echo "${C_RED}==>${C_NC} A fatal error occurred."
+elif [[ ($exit_code == "130" ||  $exit_code == "143") \
+        && $display_message == "true" ]]; then
+    echo ""
+    echo "${C_YELLOW}==>${C_NC} User interruption detected."
+fi
 ```
 
 /////
@@ -188,23 +203,13 @@ done
 ///// details | Example
     type: example
 
-_Single line block statement with else clause:_
+_Example of a single-line block statement:_
 
 ```bash
-if [[ -f "$file" ]]; then echo "File exists."; else echo "File does not exist."; fi
+[[ $1 -eq 1 ]] && echo "You entered one."
+
+for file in *.txt; do echo "Processing $file"; done
 ```
-
-**Disadvantage**: Single-line block statements can become cluttered and less readable when handling complex logic or multiple commands.
-
----
-
-_Single line block statement without else clause:_
-
-```bash
-if [[ -f "$file" ]]; then echo "File exists."; fi
-```
-
-**Advantage**: Single-line block statements are concise and practical for simple conditions or loops.
 
 /////
 ////
@@ -226,20 +231,24 @@ Vertical spacing is just as important as horizontal spacing in maintaining a cle
 /// details | Example
     type: example
 
+_Example of vertical spacing in a script:_
+
 ```bash
-### Variable Section
-variable="value"
-variable2="value2"
+add() {
+    local sum=$(( $1 + $2 ))
+    echo "Sum: $sum"
+}
 
-
-### Function Section
-function_name() {
-    # Function code here.
+subtract() {
+    local difference=$(( $1 - $2 ))
+    echo "Difference: $difference"
 }
 
 
-### Main Script Section
-# Main script code here.
+echo "Starting the script..."
+add 5 3
+subtract 10 4
+echo "Script finished."
 ```
 
 ///
@@ -266,11 +275,8 @@ Comments are essential for explaining script functionality and enhancing long-te
     type: example
 
 ```bash
-# Assigns "True" to var and demonstrates proper comment formatting.
-var=$(echo "True")  # This prints "True".
-
-# Simple variable assignment with a clear, aligned comment.
-box="Box"  # This is a box.
+# This is a comment explaining the next line of code.
+variable="value"  # Inline comment with two spaces before it.
 ```
 
 ///
@@ -312,7 +318,11 @@ process_files() {
     local log_file="$2"
     local debug_mode="${3:-false}"
 
-    # Function code here.
+    if [ "$debug_mode" = true ]; then
+        echo "Debug mode enabled. Processing $input_file..."
+    fi
+
+    echo "Processing completed for $input_file" >> "$log_file"
 }
 ```
 
@@ -333,11 +343,8 @@ Traditionally, a single pound sign (`#`) is used to denote a comment in Bash scr
     type: example
 
 ```bash
-src_dir="/path/to/source"  # Source directory to back up.
-dest_dir="/path/to/destination"  # Destination directory for the backup.
-
-# Create a backup using rsync.
-rsync -av --delete "$src_dir" "$dest_dir"
+# This command lists all files in the directory.
+ls -la
 ```
 
 /////
@@ -350,59 +357,29 @@ rsync -av --delete "$src_dir" "$dest_dir"
     type: example
 
 ```bash
-## Set source and destination directories.
-src_dir="/path/to/source"
-dest_dir="/path/to/destination"
-
-## Check if source directory exists, exit if not.
-if [[ ! -d $src_dir ]]; then
-  echo "Source directory does not exist!"
-  exit 1
-fi
-
-## Check if destination directory exists, create if not.
-if [[ ! -d $dest_dir ]]; then
-  echo "Destination directory does not exist. Creating now."
-  mkdir -p "$dest_dir"
-fi
+## Loop through all .txt files in the directory.
+for file in *.txt; do
+    # Process each file.
+    echo "Processing $file"
+done
 ```
 
 /////
 ////
-//// tab | Triple Pound Signs (`###`)
-
-- **Usage**: Triple pound signs, within the context of this guide, do not have a specific use case. You may choose to use them for a specific purpose in your scripts, but they are not part of the standard commenting practices recommended here.
-
-////
 //// tab | Quadruple Pound Signs (`####`)
 
-- **Usage**: Quadruple pound signs are used to section off entire parts of the script.
-
-_Please refer to the [Quadruple Pound Signs](#quadruple-pound-signs) section below for more details._
-
-////
-///
-
-
-#### Quadruple Pound Signs
-
-As mentioned in the previous section, quadruple pound signs are used to section off entire parts of the script.
-
-/// admonition | Guidelines
-    type: info
-
-- **Sectioning**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variables, or the main script logic.
+- **Usage**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variables, or the main script logic.
 - **Subsections**: Quadruple pound signs can also be used to represent subsections within a section, providing a clear visual separation between different parts of the script.
 - **Sparingly**: Quadruple pound signs should be used sparingly and only when necessary to visually separate one section of code from another. For example, you can omit them if the script is short and does not require extensive sectioning.
-- **Formatting**: While not required, there is a recommended format to ensure that they stand out from the rest of the comments.
-    - **Section Naming**: After the quadruple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose
+- **Formatting**: Quadruple pound signs should be should be formatted in a way that it stands out from the rest of the comments. Below are the suggested formatting guidelines:
+    - **Section Naming**: After the quadruple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose.
     - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
     - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the quadruple pound signs, prefixed with four `#` characters.
+    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), ensure that there are two blank lines before and after the quadruple pound signs to provide additional visual separation between the sections.
     - **Subsection Format**: Subsections should be formatted exactly the same, with the exception of the number of brackets (`[]`) and the section name. In each subsection, the number of brackets should match the subsection's depth within the script.
 
-///
-
-/// details | Example
+///// details | Example
+    type: example
 
 In the example, note the usage of two blank lines before and after the quadruple pound signs to provide additional visual separation between the sections. This aligns with the [vertical spacing guidelines](#vertical-spacing-guidelines) discussed earlier.
 
@@ -422,11 +399,10 @@ general_var="value"
 
 ####[ Functions ]#######################################################################
 
-
 ####
-# Function description here...
-function_name() {
-  # Function code here.
+# Function description...
+process_files() {
+    # Function logic here...
 }
 
 
@@ -434,10 +410,65 @@ function_name() {
 #### Main code description here, if necessary...
 
 
-# Main code here.
+# Main execution starts here.
+echo "Starting script execution..."
+
+# Call a function to process files.
+process_files "input.txt" "log.txt"
+```
+/////
+////
+//// tab | Triple Pound Signs (`###`)
+
+- **Description**: Tipple pound signs can be thought of as a middle ground between double and quadruple pound signs. While they aren't limited to a single block of code seperated by a blank line, they do not represent an entirely new section of the script.
+- **Usage**: Use triple pound signs were blocks or lines of code are different enough or require some kind of distinction, but do not require a completely new section.
+- **Formatting**: Similar to quadruple pound signs, triple pound signs should be formatted in a way that makes them stand out from the rest of the comments. Below are the suggested formatting guidelines:
+    - **Section Naming**: After the triple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose
+    - **Filler Characters**: Directly above and below the section name, There should exist 3 `#` characters to provide a clear visual separation between the sections.
+    - **Spacing**: Above and below the filler characters, there should be a single blank line that separates the previous command, triple pounds sign comments, and the next command.
+    - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the triple pound signs, prefixed with three `#` characters.
+
+///// details | Example
+    type: example
+
+```bash
+####[ Global Variables ]################################################################
+
+
+background_jobs=()
+
+###
+###[ Configurable Variables ]
+### The following variables can be modified to suit your needs.
+###
+
+# The maximum number of concurrent pings to run.
+C_MAX_CONCURRENT_PINGS=255
+
+###
+###[ Constants ]
+###
+
+## Variables to colorize the outpuut.
+C_YELLOW="$(printf '\033[1;33m')"
+C_GREEN="$(printf '\033[0;32m')"
+C_BLUE="$(printf '\033[0;34m')"
+C_CYAN="$(printf '\033[0;36m')"
+C_RED="$(printf '\033[1;31m')"
+C_NC="$(printf '\033[0m')"
+C_CLRLN="$(printf '\r\033[K')"
+readonly C_YELLOW C_GREEN C_BLUE C_CYAN C_RED C_NC C_CLRLN
+
+
+####[ Functions ]#######################################################################
+
+........
 ```
 
+/////
+////
 ///
+
 
 #### Why the Number of Pound Signs Matters
 
