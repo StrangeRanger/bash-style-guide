@@ -182,7 +182,9 @@ greet "World"
 
 ## Formatting Block Statements
 
-Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key.
+<!-- TODO: Edit the wording of this section and the examples. -->
+
+Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key. In addition, continuation lines are slightly different for block statements compared to regular commands.
 
 /// admonition | Guidelines
     type: info
@@ -266,8 +268,6 @@ Vertical spacing is just as important as horizontal spacing in maintaining a cle
 /// details | Example
     type: example
 
-_Example of vertical spacing in a script:_
-
 ```bash
 add() {
     local sum=$(( $1 + $2 ))
@@ -300,13 +300,13 @@ Comments are essential for explaining script functionality and enhancing long-te
     type: info
 
 - **Capitalization**: Begin each comment with a capital letter, except for code elements like variables or functions.
-- **Punctuation**: Conclude comments with a period to indicate completion.
+- **Punctuation**: Conclude comments with a period to indicate a complete thought.
 - **Spacing**: For inline comments, maintain two spaces between the code and the comment.
     - **Reason**: While single spaces are sufficient, two spaces provide a clearer visual separation between the code and the comment.
 
 ///
 
-/// details | Example
+/// admonition | Example
     type: example
 
 ```bash
@@ -323,8 +323,8 @@ Functions in Bash differ in a few ways from those in other programming languages
 /// admonition | Guidelines
     type: info
 
-- **Purpose**: Offer a concise description of the function's role and operational context within the script.
-- **Parameters**: Detail each parameter the function accepts, noting required versus optional parameters and any default values.
+- **Purpose**: Describe the function's role and purpose within the script.
+- **Parameters**: Detail each parameter the function accepts, noting required and optional parameters and any default values.
     - **Value Assignment**: <mark>**_CONSIDER_**</mark> assigning parameter values to local variables.
 - **Return Values**: Specify the function's output or return values, if applicable.
 
@@ -346,15 +346,15 @@ Functions in Bash differ in a few ways from those in other programming languages
 #   - $3: debug_mode (Optional, Default: false)
 #       - If set to true, the function will perform debugging operations.
 #
-# Returns:
-#   - Doesn't directly output information to the console, but rather to a log file...
+# Output:
+#   - Logs the processing results to the specified log file.
 process_files() {
     local input_file="$1"
     local log_file="$2"
     local debug_mode="${3:-false}"
 
     if [ "$debug_mode" = true ]; then
-        echo "Debug mode enabled. Processing $input_file..."
+        echo "Debug mode enabled. Processing $input_file..." >> "$log_file"
     fi
 
     echo "Processing completed for $input_file" >> "$log_file"
@@ -386,7 +386,9 @@ ls -la
 ////
 //// tab | Double Pound Signs (`##`)
 
-- **Usage**: Use double-pound signs (`##`) for comments that describe the functionality of a block of code, such as a loop, conditional sequence, or a list of variables. Ensure that these comments are directly above the relevant code block. If you place a blank line between the comment and the block of code it refers to, the comment is considered to no longer apply to that code, allowing for clear separation between different sections or concepts.
+<!-- TODO: Potentially reword the following guidelines. -->
+
+- **Usage**: Use double-pound signs for comments that describe the functionality of a block of code, such as a loop, conditional sequence, or a list of variables. Ensure that these comments are directly above the relevant code block. If you place a blank line between the comment and the block of code it refers to, the comment is considered to no longer apply to that code, allowing for clear separation between different sections or concepts.
 
 ///// details | Example
     type: example
@@ -403,20 +405,20 @@ done
 ////
 //// tab | Quadruple Pound Signs (`####`)
 
+<!-- TODO: Potentially reword the following guidelines. -->
+
 - **Usage**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variables, or the main script logic.
-- **Subsections**: Quadruple pound signs can also be used to represent subsections within a section, providing a clear visual separation between different parts of the script.
+- **Subsections**: Quadruple pound signs can also represent subsections within a section of the script.
 - **Sparingly**: Quadruple pound signs should be used sparingly and only when necessary to visually separate one section of code from another. For example, you can omit them if the script is short and does not require extensive sectioning.
-- **Formatting**: Quadruple pound signs should be should be formatted in a way that it stands out from the rest of the comments. Below are the suggested formatting guidelines:
-    - **Section Naming**: After the quadruple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose.
+- **Formatting**: Quadruple pound signs should be formatted to make it stand out from the rest of the comments. Below are the suggested formatting guidelines:
+    - **Section Naming**: Append `[ Section Name ]` after the quadruple pound signs. Within the brackets (`[]`), include the name that describes the section's content or purpose.
     - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
-    - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the quadruple pound signs, prefixed with four `#` characters.
-    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), ensure that there are two blank lines before and after the quadruple pound signs to provide additional visual separation between the sections.
-    - **Subsection Format**: Subsections should be formatted exactly the same, with the exception of the number of brackets (`[]`) and the section name. In each subsection, the number of brackets should match the subsection's depth within the script.
+    - **Section Comments**: If necessary, add comments describing the section's content or purpose by starting the comment below the quadruple pound signs, prefixed with four `#` characters.
+    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), two blank lines before and after the quadruple pound signs should be provided to provide additional visual separation between the sections.
+    - **Subsection Format**: Subsections should be formatted the same, except for the number of brackets (`[]`) and the section name. The number of brackets in each subsection should match the subsection's depth within the script.
 
 ///// details | Example
     type: example
-
-In the example, note the usage of two blank lines before and after the quadruple pound signs to provide additional visual separation between the sections. This aligns with the [vertical spacing guidelines](#vertical-spacing-guidelines) discussed earlier.
 
 ```bash
 ####[ Variables ]#######################################################################
@@ -433,6 +435,7 @@ general_var="value"
 
 
 ####[ Functions ]#######################################################################
+
 
 ####
 # Function description...
