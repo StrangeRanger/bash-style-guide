@@ -127,7 +127,9 @@ Bash provides several methods for declaring variables, each with its own implica
     - **Reason**: Defining local variables within functions prevents conflicts with global variables.
 - **Global Variable Declaration**: Declare global variables at the beginning of the script or in a separate configuration file.
     - **Reason**: Centralizing global variable declarations enhances script organization and readability, making it easier to manage and update values.
-    - **Exception**: If a global variable's value is determined later in the script, declare it where the value is set.
+    - **Exception**: If a global variable's value is determined later in the script, there are two options:
+        - **Options 1 (Preferred)**: Declare the variable at the beginning of the script, assigning a placeholder value. Update the value later in the script. Ensure that you comment the placeholder value to avoid confusion.
+        - **Option 2**: Declare and assign the variable when the value is determined. This method is acceptable but can make it harder to keep track of global variables.
 
 ///// details | Example
     type: example
@@ -191,9 +193,15 @@ my_function
     - **When to omit**:
         - **Development and Debugging Phases**: When you need to modify constants temporarily for testing, delaying `readonly` can aid in faster iteration.
         - **Readability and Simplicity**: In simple or short scripts, omitting `readonly` can keep the script easy to read and maintain, without unnecessary complexity.
+        - **Function-Dependent Initialization**: In situations where the value of a constant is determined by a function or complex operation, it may be ideal to omit `readonly`.
+            - **Reason**: Unless checks are in place to prevent the execution of the function multiple times, executing the function again would most likely result in an error if the constant, that is assigned a value, is declared as `readonly`.
 - **Global Constants**: Declare global constants at the beginning of the script or in a separate configuration file for easy reference and modification.
     - **Reason**: Centralizing constant declarations enhances script organization and readability, making it easier to manage and update values.
     - **`readonly` Assignment**: If the initial assignment at the beginning of the script is not the final value, use `readonly` only after the true value is determined and set.
+    - **Exception**: If the constant's value is determined later in the script, there are two options:
+        - **Options 1 (Preferred)**: Declare the variable at the beginning of the script, assigning a placeholder value. Update the value later in the script, assigning `readonly` if applicable. Ensure that you comment the placeholder value to avoid confusion.
+        - **Option 2**: Declare and assign the variable when the value is determined, assigning `readonly` if applicable. This method is acceptable but can make it harder to keep track of global constants.
+        - **NOTE**: Whichever option you choose, ensure that the constant's value is set before it is used in the script.
 - **Treatment**: <mark>**_CONSIDER_**</mark> treating these variables as immutable, even if `readonly` is not applied.
     - **Reason**: Consistently treating constant variables as immutable ensures script reliability and maintainability.
 

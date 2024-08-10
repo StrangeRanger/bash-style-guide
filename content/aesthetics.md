@@ -2,13 +2,13 @@
 
 As mentioned in the [Preface](../README.md#preface), this guide strives to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
 
-This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines include explanations of their advantages over alternative practices.
+This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
 
-For style guidelines that are less subjective and have a greater impact on the script's functionality, please refer to the [Style](style.md) section of this guide.
+For guidelines that are less subjective and have a greater impact on the script's functionality, please refer to this guide's [Style](style.md) section.
 
 ## Indentations
 
-Indentations primarily come in two forms: tabs and spaces. While both can be used to indent code, spaces are generally preferred.
+Indentations primarily come in two forms: tabs and spaces. While both can be used to indent code, spaces are generally preferred over tabs.
 
 /// admonition | Guidelines
     type: info
@@ -25,14 +25,14 @@ Indentations primarily come in two forms: tabs and spaces. While both can be use
 
 ## Column Length
 
-The column length refers to the number of characters in a single line of code. Limiting column length significantly enhances the readability of your code.
+The column length refers to the number of characters in a single line of code. Limiting the column length can significantly enhance the readability of your code.
 
 /// admonition | General Guidelines
     type: info
 
-- **88-Character Limit**: Keep lines within 88 characters. This means breaking lines exceeding the limit into multiple lines when necessary.
+- **88-Character Limit**: Keep the column length within 88 characters. This means breaking lines exceeding the limit into multiple lines when necessary.
     - **Reason**: An 88-character limit ensures that code remains readable on various screen sizes and devices, including terminals, text editors, and code review tools.
-- **Exceptions**: Allow exceptions for long strings or complex expressions that require clarity and are more understandable when not broken into multiple lines.
+- **Exceptions**: Allow exceptions for long strings or complex expressions that are more understandable when not broken into multiple lines.
 
 ///
 
@@ -49,14 +49,9 @@ When breaking a command that exceeds the 88-character limit into multiple lines,
 ///// admonition | Example
     type: example
 
-_Two commands with indentation applied for continuation lines:_
-
 ```bash
 rsync -avz /source/directory/with/a/very/long/path/ \
     /destination/directory/with/another/long/path/
-
-find /some/very/long/path/to/search -name "*.log" -mtime -7 \
-    -exec gzip {} \;
 ```
 
 /////
@@ -69,13 +64,25 @@ find /some/very/long/path/to/search -name "*.log" -mtime -7 \
 ///// admonition | Example
     type: example
 
-_Command with logical operators broken up for readability:_
+**NOTE**: Either of the following examples are valid, thought the second one is generally preferred for its readability and ease to follow.
+
+---
+
+_Example 1:_
 
 ```bash
-mkdir -p /some/very/long/path/to/directory \
-    && cd /some/very/long/path/to/directory \
-    && touch example_file.txt \
-    || echo "Failed to create directory or file."
+mkdir /path/to/backup && rsync -av --delete /path/to/source/ /path/to/backup/ \
+    || echo "Backup failed" >> error.log
+```
+
+---
+
+_Example 2:_
+
+```bash
+mkdir /path/to/backup \
+    && rsync -av --delete /path/to/source/ /path/to/backup/ \
+    || echo "Backup failed" >> error.log
 ```
 
 /////
@@ -85,14 +92,43 @@ mkdir -p /some/very/long/path/to/directory \
 - **Placement**: When breaking up a long command that includes redirect or I/O operators (`>`, `>>`, `<`, `|`), place these operators at the beginning of a new continuation line.
 - **Reason**: This formatting ensures that the redirection or I/O operation is clearly visible, distinguishing it from the previous command.
 
-///// admonition | Example
+///// admonition | Examples
     type: example
 
-_Command with redirection and I/O operators clearly separated:_
+**NOTE**: Either of the following examples are valid, though the second or third ones generally preferred for their readability and ease to follow.
+
+---
+
+_Example 1:_
 
 ```bash
-ps aux | grep "some pattern" | grep -v "grep" \
-    | awk '{print $2}' > process_ids.txt
+grep -r "TODO" /path/to/project | grep -v "DONE" | awk '{print $1, ":", $2}' | sort \
+    | uniq > todo_list.txt
+```
+
+---
+
+_Example 2:_
+
+```bash
+grep -r "TODO" /path/to/project \
+    | grep -v "DONE" \
+    | awk '{print $1, ":", $2}' \
+    | sort \
+    | uniq \
+    > todo_list.txt
+```
+
+---
+
+_Example 3:_
+
+```bash
+grep -r "TODO" /path/to/project \
+    | grep -v "DONE" \
+    | awk '{print $1, ":", $2}' \
+    | sort \
+    | uniq > todo_list.txt
 ```
 
 /////
@@ -111,15 +147,16 @@ While not significantly impacting script readability or functionality, there is 
 /// admonition | Guidelines
     type: info
 
-- **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (`name() {}`).
+- **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (i.e., `name() {}`).
 - **Avoid `function`**: Avoid using the `function` keyword to declare functions.
+- **Reason**: The recommended syntax is more widely accepted and aligns with standard Bash practices.
 
 ///
 
 /// details | Example
     type: example
 
-_Correct way to declare a function:_
+_Preferred syntax for declaring functions:_
 
 ```bash
 greet() {
@@ -131,7 +168,7 @@ greet "World"
 
 ---
 
-_Avoid using `function` keyword:_
+_Using the `function` keyword:_
 
 ```bash
 function greet() {
@@ -145,7 +182,7 @@ greet "World"
 
 ## Formatting Block Statements
 
-Blocks statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key.
+Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key.
 
 /// admonition | Guidelines
     type: info
@@ -155,10 +192,8 @@ Blocks statements in Bash, such as `if` statements and loops, can be formatted i
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
 - **Reason**: These guidelines follow standard Bash practices and enhance script readability.
 
-///// details | Example
+///// admonition | Example
     type: example
-
-_Example of a standard block statement:_
 
 ```bash
 if [[ $1 -eq 1 ]]; then
@@ -179,7 +214,7 @@ done
 - **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of the block statement.
 - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between them. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
 
-///// details | Example
+///// admonition | Example
     type: example
 
 ```bash
@@ -200,7 +235,7 @@ fi
 - **Avoid Clutter**: Avoid adding multiple commands or complex logic to single-line statements.
     - **Reason**: Single-line block statements are best suited for simple conditions or loops that can be expressed succinctly. Complex logic or multiple commands can make single-line statements less readable.
 
-///// details | Example
+///// admonition | Example
     type: example
 
 _Example of a single-line block statement:_
@@ -438,7 +473,7 @@ process_files "input.txt" "log.txt"
 background_jobs=()
 
 ###
-###[ Configurable Variables ]
+### [ Configurable Variables ]
 ### The following variables can be modified to suit your needs.
 ###
 
@@ -446,10 +481,10 @@ background_jobs=()
 C_MAX_CONCURRENT_PINGS=255
 
 ###
-###[ Constants ]
+### [ Constants ]
 ###
 
-## Variables to colorize the outpuut.
+## Variables to colorize the output.
 C_YELLOW="$(printf '\033[1;33m')"
 C_GREEN="$(printf '\033[0;32m')"
 C_BLUE="$(printf '\033[0;34m')"
