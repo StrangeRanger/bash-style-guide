@@ -16,6 +16,16 @@ Conditional tests are fundamental to any programming language, enabling decision
 
 ///
 
+/// admonition | Advantages of `[[ ... ]]`
+    type: tip
+
+- **Regex Support**: Enables direct regex matching within conditional expressions, eliminating the need for external tools like `grep`.
+- **String Comparison**: Offers a more consistent and reliable approach to string comparison, especially when dealing with variables containing spaces.
+- **Compound Conditions**: Allows combining multiple conditions within a single `[[ ... ]]` block.
+- **Safety**: Prevents word splitting and globbing on variables, reducing the risk of unexpected behavior or security vulnerabilities.
+
+///
+
 /// details | Examples
     type: example
 //// tab | Basic String Comparison
@@ -25,13 +35,14 @@ _Using `[ ... ]`:_
 ```bash
 var="value with spaces"
 
-# $var must be quoted to be treated as a single argument.
-if [ "$var" = "value with spaces" ]; then
+if [ $var = "value with spaces" ]; then
     echo "The variable matches the value."
 else
-    echo "This will output because $var is treated as multiple arguments."
-fi
+    echo "This will output because '$var' is treated as multiple arguments."
+fis
 ```
+
+**Potential Issues**: If `$var` is not quoted, it will be subject to word splitting, potentially leading to unexpected behavior.
 
 ---
 
@@ -40,13 +51,14 @@ _Using `[[ ... ]]`:_
 ```bash
 var="value with spaces"
 
-# $var doesn't need to be quoted.
-if [[ $var = "value with spaces" ]]; then
+if [[ $var == "value with spaces" ]]; then
     echo "The variable matches the value."
 else
     echo "This will output because $var is treated as multiple arguments."
 fi
 ```
+
+**Advantage**: `[[ ... ]]` safely handles variables with spaces, whether or not they are quoted.
 
 ////
 //// tab | Regex Matching
@@ -63,7 +75,7 @@ else
 fi
 ```
 
-**NOTE**: This can additionally go wrong depending on the supported version of grep and the regex syntax.
+**Disadvantage**: Since `grep` is an external command, the potential for errors and performance issues increases due to different implementations across systems.
 
 ---
 
@@ -79,6 +91,8 @@ else
 fi
 ```
 
+**Advantage**: `[[ ... ]]` directly supports regex matching, eliminating the need for external commands and enhancing script portability.
+
 ////
 //// tab | Compound Conditions
 
@@ -89,7 +103,6 @@ file="example.txt"
 
 touch "$file" && chmod 700 "$file"
 
-# Each test must be placed in separate brackets.
 if [ -f "$file" ] && [ -r "$file" ] || [ -w "$file" ]; then
     echo "File exists and is readable and writable."
 else
@@ -117,13 +130,6 @@ fi
 ////
 ///
 
-### Benefits of `[[ ... ]]`
-
-- **Regex Support**: Enables direct regex matching within conditional expressions, eliminating the need for external tools like `grep`.
-- **String Comparison**: Offers a more consistent and readable syntax for string comparisons, enhancing script clarity.
-- **Compound Conditions**: Allows combining multiple conditions within a single `[[ ... ]]` block, simplifying complex logic.
-- **Safety**: Prevents word splitting and globbing on variables, reducing the risk of unexpected behavior or security vulnerabilities.
-
 ## Sequence Iteration
 
 Iterating over sequences is a common task in Bash, allowing you to process elements in a range or list. Bash provides built-in mechanisms for sequence iteration, such as brace expansion and C-style `for` loops.
@@ -133,6 +139,14 @@ Iterating over sequences is a common task in Bash, allowing you to process eleme
 
 - **Bash Built-ins**: Use brace expansion (`{start..end}`) for fixed ranges and the C-style `for` loop for variable limits to iterate over sequences.
 - **Avoid Using `seq`:** Avoid using `seq` for sequence iteration due to its external nature.
+
+///
+
+/// admonition | Advantages of Builtins
+    type: tip
+
+- **Greater Portability**: Builtins are universally supported across systems running Bash, ensuring consistent behavior and compatibility.
+- **Reduced Complexity**: Scripts become simpler and more readable when using builtins, enhancing both maintainability and readability.
 
 ///
 
@@ -209,11 +223,6 @@ done
 ////
 ///
 
-### Advantages of Builtins
-
-- **Greater Portability**: Builtins are universally supported across systems running Bash, ensuring consistent behavior and compatibility.
-- **Reduced Complexity**: Scripts become simpler and more readable when using builtins, enhancing both maintainability and readability.
-
 ## Command Substitution
 
 Command substitution allows for capturing the output of commands and using them as part of another command or assignment. Bash provides two syntaxes for command substitution: `$(...)` and backticks (`` `...` ``).
@@ -223,6 +232,15 @@ Command substitution allows for capturing the output of commands and using them 
 
 - **Use `$(...)`:** <mark>**_ALWAYS_**</mark> use the `$(...)` syntax for command substitution over backticks.
 - **Avoid Backticks**: Avoid using backticks for command substitution.
+
+///
+
+/// admonition | Advantages of `$(...)`
+    type: tip
+
+- **Improved Readability**: The `$(...)` format is visually clearer, making scripts easier to read and understand, particularly when commands get complex.
+- **Easier Nesting**: Facilitates nesting multiple commands without the syntactic awkwardness associated with backticks.
+- **Enhanced Safety**: The `$(...)` syntax is more robust and less prone to errors, especially when dealing with complex command substitutions.
 
 ///
 
@@ -268,12 +286,6 @@ echo $date_and_users
 ////
 ///
 
-### Advantages of `$(...)` Over Backticks
-
-- **Improved Readability**: The `$(...)` format is visually clearer, making scripts easier to read and understand, particularly when commands get complex.
-- **Easier Nesting**: Facilitates nesting multiple commands without the syntactic awkwardness associated with backticks.
-- **Enhanced Safety**: The `$(...)` syntax is more robust and less prone to errors, especially when dealing with complex command substitutions.
-
 ## Arithmetic Operations
 
 Arithmetic operations allow for mathematical calculations within Bash, enabling you to perform calculations, comparisons, and other numeric operations. Bash supports arithmetic operations using arithmetic expansions `$((...))`, conditional arithmetic expressions `((...))`, and the `let` command.
@@ -284,6 +296,15 @@ Arithmetic operations allow for mathematical calculations within Bash, enabling 
 - **Use `$((...))` and `((...))`**: <mark>**_ALWAYS_**</mark> use `$((...))` for arithmetic expansions and `((...))` for conditional arithmetic expressions.
 - **Avoid `let`**: Avoid using `let` for arithmetic.
 - **Reasoning**: `$((...))` and `((...))` are more intuitive and provide a clearer syntax for arithmetic operations.
+
+///
+
+/// admonition | Advantages of `$((...))` and `((...))`
+    type: tip
+
+- **Clarity**: Both `((...))` and `$((...))` clearly delineate arithmetic expressions within scripts, making them easy to identify and understand.
+- **Simplicity**: These constructs are natively supported by Bash, offering a streamlined and intuitive approach to handling arithmetic.
+- **Increased Safety**: These methods specifically evaluate arithmetic without the risk of executing other commands, unlike `let`, which can interpret expressions as commands if not carefully handled.
 
 ///
 
@@ -337,12 +358,6 @@ fi
 ////
 ///
 
-### Advantages of `((...))` and `$((...))`
-
-- **Clarity**: Both `((...))` and `$((...))` clearly delineate arithmetic expressions within scripts, making them easy to identify and understand.
-- **Simplicity**: These constructs are natively supported by Bash, offering a streamlined and intuitive approach to handling arithmetic.
-- **Increased Safety**: These methods specifically evaluate arithmetic without the risk of executing other commands, unlike `let`, which can interpret expressions as commands if not carefully handled.
-
 ## Parameter Expansion
 
 Parameter expansion is a powerful feature in Bash that allows you to manipulate variables and perform string operations directly within the shell. Bash provides a wide range of parameter expansion options, including substring extraction, string replacement, and length calculation.
@@ -353,6 +368,14 @@ Parameter expansion is a powerful feature in Bash that allows you to manipulate 
 - **Bash Built-ins**: Utilize parameter expansion to handle string manipulations whenever possible. This approach is more efficient and reduces script complexity and dependencies.
 - **Avoid External Tools**: Avoid using external tools like `sed` and `awk` for string manipulation.
     - **Reason**: While powerful, they are often overkill for simple string manipulations that can be efficiently handled by parameter expansion.
+
+///
+
+/// admonition | Advantages of Parameter Expansion
+    type: tip
+
+- **Streamlined Scripting**: Keeps string manipulations inline and shell-native, simplifying the script's logic.
+- **Enhanced Portability**: Improves script portability across different Unix-like systems by avoiding dependency on external tools, which may vary in availability or functionality.
 
 ///
 
@@ -430,24 +453,40 @@ echo $length
 ////
 ///
 
-### Advantages of Parameter Expansion
-
-- **Streamlined Scripting**: Keeps string manipulations inline and shell-native, simplifying the script's logic.
-- **Enhanced Portability**: Improves script portability across different Unix-like systems by avoiding dependency on external tools, which may vary in availability or functionality.
-
 ## Avoiding Parsing `ls`
 
-...
+While parsing the output of `ls` may seem like a convenient way to list files and directories, this is generally discouraged due to the potential for errors and unexpected behavior. Instead, Bash provides more reliable and secure methods for file and directory parsing, such as Bash globing patterns (`*`).
 
 /// admonition | Guidelines
-    type: tip
+    type: info
 
-- **Bash Built-ins**: <mark>**_ALWAYS_**</mark> use Bash globing patterns like `*` for file and directory parsing.
+- **Bash Built-ins**: <mark>**_ALWAYS_**</mark> use Bash globing patterns like `*` and `find`, for file and directory parsing.
 - **Avoid Using `ls`**: Avoid using `ls` in loops or where filename interpretation is critical.
 
 ///
 
+/// admonition | Risks of Parsing `ls`
+    type: warning
+
+- **Word Splitting**: Filenames with spaces or special characters can lead to word splitting issues when parsing `ls` output.
+- **Command Interpretation**: Filenames starting with a hyphen (`-`) can be misinterpreted as options by commands like `ls`, leading to unintended behavior.
+- **Potential Vulnerabilities**: While parsing ls output may not directly lead to security vulnerabilities like code injection, improper handling of filenames can introduce bugs or unexpected behavior, potentially leading to security issues in more complex scenarios.
+
+///
+
+/// admonition | Alternatives to Parsing `ls`
+    type: tip
+
+- **Bash Globing**: Use Bash globing patterns like `*`, for listing files and directories, ensuring reliable and secure file parsing.
+- **`find` Command**: For more complex file operations, consider using the `find` command, which provides extensive options for file and directory traversal.
+- **`read` Command**: When processing files or directories, use the `read` command to safely parse inputs into variables, avoiding the need for external commands like `ls`.
+- **`stat` Command**: For detailed file information, use the `stat` command, which provides extensive metadata about files and directories.
+- **`file` Command**: To determine file types, use the `file` command, which can identify the type of a file based on its contents.
+
+///
+
 /// details | Examples
+    type: example
 //// tab | Listing Files in a Directory
 
 _Using `ls` in a loop_
@@ -496,25 +535,29 @@ done
 ////
 ///
 
-### Reasons to Use Bash Globing Over `ls`
-
-- **Enhanced Reliability**: Parsing `ls` can fail in unexpected ways if filenames contain special characters or spaces.
-- **Improved Security**: Scripts that parse `ls` are susceptible to security risks, such as injection attacks, especially if filenames are designed maliciously.
-- **Simplicity**: Using Bash globing (`*`) simplifies scripts by directly and safely accessing filenames without external commands.
-
 ## Element Collections
 
 Element collections are a common feature in Bash scripting, allowing you to manage groups of items such as filenames, user inputs, or configuration values. Bash has three primary methods for handling collections: arrays, associative arrays, and space-separated strings.
 
 /// admonition | Guidelines
-    type: tip
+    type: info
 
 - **Arrays for Collections**: <mark>**_ALWAYS_**</mark> use for arrays when managing collections of elements.
 - **Avoid Space-Separated Strings**: Avoid using space-separated strings for collections.
 
 ///
 
+/// admonition | Advantages of Arrays
+    type: tip
+
+- **Clarity and Safety**: Arrays prevent errors related to word splitting and glob expansion that can occur with space-separated strings.
+- **Flexibility**: Arrays allow for straightforward manipulation and access to individual elements, as well as simpler expansion in commands that accept multiple arguments.
+- **Ease of Maintenance**: Code utilizing arrays is generally clearer and easier to maintain, particularly as script complexity increases.
+
+///
+
 /// details | Examples
+    type: example
 //// tab | Iterating Over a Collection
 
 _Using Space-Separated Strings_
@@ -609,12 +652,6 @@ echo "${array[@]}"
 ////
 ///
 
-### Benefits of Using Arrays
-
-- **Clarity and Safety**: Arrays prevent errors related to word splitting and glob expansion that can occur with space-separated strings.
-- **Flexibility**: Arrays allow for straightforward manipulation and access to individual elements, as well as simpler expansion in commands that accept multiple arguments.
-- **Ease of Maintenance**: Code utilizing arrays is generally clearer and easier to maintain, particularly as script complexity increases.
-
 ## Parsing Input into Variables
 
 Parsing input into variables is a common task in Bash scripting, allowing you to extract and process data from user inputs, files, or other sources. Bash provides the `read` command for these kinds of tasks, offering a more efficient and secure alternative to external commands like `awk`, `sed`, or `cut`.
@@ -625,6 +662,16 @@ Parsing input into variables is a common task in Bash scripting, allowing you to
 - **Bash Built-ins**: Employ `read` to safely and efficiently parse user inputs and other data directly into variables.
 - **Customize with IFS**: Adjust the Internal Field Separator (IFS) as needed when using `read` to ensure that inputs are split according to your specific requirements, enhancing the flexibility and accuracy of data parsing.
 - **Avoid External Commands**: Minimize the use of external commands like `awk`, `sed`, or `cut` for parsing strings.
+
+///
+
+/// admonition | Advantages of `read`
+    type: tip
+
+- **Efficiency**: `read` operates within the shell, avoiding needing slower, resource-intensive external commands.
+- **Security**: By parsing directly into Bash variables, `read` minimizes the risks associated with external command outputs, such as injection attacks.
+- **Simplicity**: Offers an easy-to-understand syntax for directly parsing complex data structures.
+- **Portability**: `read` is a Bash builtin, ensuring consistent behavior across different systems and environments.
 
 ///
 
@@ -680,10 +727,3 @@ echo "Username: $username, Password: $password"
 
 ////
 ///
-
-### Advantages of Using `read`:
-
-- **Efficiency**: `read` operates within the shell, avoiding needing slower, resource-intensive external commands.
-- **Security**: By parsing directly into Bash variables, `read` minimizes the risks associated with external command outputs, such as injection attacks.
-- **Simplicity**: Offers an easy-to-understand syntax for directly parsing complex data structures.
-- **Portability**: `read` is a Bash builtin, ensuring consistent behavior across different systems and environments.

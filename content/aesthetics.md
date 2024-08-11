@@ -18,10 +18,13 @@ Indentations primarily come in two forms: tabs and spaces. While both can be use
 
 ///
 
-### Why Spaces Over Tabs?
+/// admonition | Why Use Spaces Over Tabs?
+    type: tip
 
 - **Consistency**: Spaces render uniformly across different editors and environments, preventing misalignment issues.
 - **Merge Conflicts**: Spaces help minimize merge conflicts in version control systems, making them a safer choice for collaborative projects.
+
+///
 
 ## Column Length
 
@@ -36,6 +39,14 @@ The column length refers to the number of characters in a single line of code. L
 
 ///
 
+/// admonition | Why Limit Column Length?
+    type: tip
+
+- **Readability**: Shorter lines enhance the code's legibility, eliminating the need for horizontal scrolling and making it easier to read on various devices and screen sizes.
+- **Compatibility**: A standard line length ensures code displays well in various development tools, including code review platforms and IDEs.
+
+///
+
 ### Formatting Multi-lined Commands
 
 When breaking a command that exceeds the 88-character limit into multiple lines, it is crucial to ensure that it remains readable and easy to follow. Below are practical guidelines for aligning, indenting, and placing operators, such as `||` and `&&`, in multi-lined commands.
@@ -46,7 +57,7 @@ When breaking a command that exceeds the 88-character limit into multiple lines,
 
 - **Indentation**: Use the standard four-space indentation for each continuation line.
 
-///// admonition | Example
+///// details | Example
     type: example
 
 ```bash
@@ -61,7 +72,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
 - **Placement**: When multiple commands are connected by logical operators (`&&`, `||`), place these operators at the beginning of a new continuation line.
 - **Reason**: This formatting ensures that the start of a new command is clearly visible, distinguishing it from the previous command.
 
-///// admonition | Example
+///// details | Example
     type: example
 
 **NOTE**: Either of the following examples are valid, thought the second one is generally preferred for its readability and ease to follow.
@@ -92,7 +103,7 @@ mkdir /path/to/backup \
 - **Placement**: When breaking up a long command that includes redirect or I/O operators (`>`, `>>`, `<`, `|`), place these operators at the beginning of a new continuation line.
 - **Reason**: This formatting ensures that the redirection or I/O operation is clearly visible, distinguishing it from the previous command.
 
-///// admonition | Examples
+///// details | Examples
     type: example
 
 **NOTE**: Either of the following examples are valid, though the second or third ones generally preferred for their readability and ease to follow.
@@ -134,11 +145,6 @@ grep -r "TODO" /path/to/project \
 /////
 ////
 ///
-
-### Why Limit Line Length
-
-- **Readability**: Shorter lines enhance the code's legibility, eliminating the need for horizontal scrolling and making it easier to read on various devices and screen sizes.
-- **Compatibility**: A standard line length ensures code displays well in various development tools, including code review platforms and IDEs.
 
 ## Function Declaration
 
@@ -194,7 +200,7 @@ Block statements in Bash, such as `if` statements and loops, can be formatted 
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
 - **Reason**: These guidelines follow standard Bash practices and enhance script readability.
 
-///// admonition | Example
+///// details | Example
     type: example
 
 ```bash
@@ -216,7 +222,7 @@ done
 - **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of the block statement.
 - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between them. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
 
-///// admonition | Example
+///// details | Example
     type: example
 
 ```bash
@@ -237,7 +243,7 @@ fi
 - **Avoid Clutter**: Avoid adding multiple commands or complex logic to single-line statements.
     - **Reason**: Single-line block statements are best suited for simple conditions or loops that can be expressed succinctly. Complex logic or multiple commands can make single-line statements less readable.
 
-///// admonition | Example
+///// details | Example
     type: example
 
 _Example of a single-line block statement:_
@@ -265,6 +271,13 @@ Vertical spacing is just as important as horizontal spacing in maintaining a cle
 
 ///
 
+/// admonition | Why Vertical Spacing Matters?
+    type: tip
+
+- **Readability**: Too many blank lines can make the script harder to read, while too few can make it appear cluttered. Proper vertical spacing strikes a balance between readability and visual organization.
+
+///
+
 /// details | Example
     type: example
 
@@ -288,10 +301,6 @@ echo "Script finished."
 
 ///
 
-### Why Vertical Spacing Matters
-
-- **Readability**: Too many blank lines can make the script harder to read, while too few can make it appear cluttered. Proper vertical spacing strikes a balance between readability and visual organization.
-
 ## Comments
 
 Comments are essential for explaining script functionality and enhancing long-term usability and readability. Effective commenting practices ensure scripts are accessible and easily understood by new developers or future maintainers. While similar to previous guidelines, comments have a few additional considerations depending on their context.
@@ -306,7 +315,7 @@ Comments are essential for explaining script functionality and enhancing long-te
 
 ///
 
-/// admonition | Example
+/// details | Example
     type: example
 
 ```bash

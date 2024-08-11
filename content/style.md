@@ -302,6 +302,14 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
 
 ///
 
+/// admonition | Why the Choice Matters
+    type: tip
+
+- **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash might not be located in the same path, or the installed version might be older. Many macOS users, for example, upgrade Bash through [Homebrew](https://brew.sh/), which does not alter the system-installed version located at `/bin/bash`. On BSD, Bash is often located at `/usr/local/bin/bash` rather than `/bin/bash`.
+- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to utilize the Bash version installed in the user’s environment, which is crucial for accessing features available in newer Bash versions.
+
+///
+
 /// details | Examples
     type: example
 //// tab | Universal Compatibility
@@ -329,8 +337,3 @@ echo "This script uses the Bash located at /bin/bash."
 
 ////
 ///
-
-### Why the Choice of Shebang Matters
-
-- **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash might not be located in the same path, or the installed version might be older. Many macOS users, for example, upgrade Bash through [Homebrew](https://brew.sh/), which does not alter the system-installed version located at `/bin/bash`. On BSD, Bash is often located at `/usr/local/bin/bash` rather than `/bin/bash`.
-- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to utilize the Bash version installed in the user’s environment, which is crucial for accessing features available in newer Bash versions.
