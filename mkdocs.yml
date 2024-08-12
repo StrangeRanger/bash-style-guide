@@ -2,6 +2,8 @@ site_name: Bash Style Guide
 site_url: https://bsg.hthompson.dev
 site_author: Hunter T.
 site_description: A style guide for writing clean, consistent, and idiomatic Bash scripts.
+
+repo_name: StrangeRanger/bash-style-guide
 repo_url: https://github.com/StrangeRanger/bash-style-guide
 
 theme:
