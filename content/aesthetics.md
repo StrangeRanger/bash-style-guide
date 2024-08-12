@@ -28,12 +28,12 @@ Indentations primarily come in two forms: tabs and spaces. While both can be use
 
 ## Column Length
 
-The column length refers to the number of characters in a single line of code. Limiting the column length can significantly enhance the readability of your code.
+The column length refers to the number of characters in a single line of code. Limiting the column length can significantly improve the readability of your code.
 
 /// admonition | General Guidelines
     type: info
 
-- **88-Character Limit**: Keep the column length within 88 characters. This means breaking lines exceeding the limit into multiple lines when necessary.
+- **88-Character Limit**: Keep the column length within 88 characters. This means breaking lines exceeding the limit, into multiple lines when necessary.
 - **Exceptions**: Allow exceptions for long strings or complex expressions that are more understandable when not broken into multiple lines.
 
 ///
@@ -41,8 +41,8 @@ The column length refers to the number of characters in a single line of code. L
 /// admonition | Why Limit Column Length?
     type: tip
 
-- **Readability**: Shorter lines enhance the code's legibility, eliminating the need for horizontal scrolling and making it easier to read on various devices and screen sizes.
-- **Compatibility**: A standard line length ensures code displays well in various development tools, including code review platforms and IDEs.
+- **Readability**: Shorter lines enhance the code's readability by reducing the need for horizontal scrolling, especially when viewing the code on smaller screens or in terminal windows.
+- **Compatibility**: A standard column length ensures code displays well in various development tools, including code review platforms and IDEs.
 
 ///
 
@@ -71,12 +71,10 @@ rsync -avz /source/directory/with/a/very/long/path/ \
 - **Placement**: When multiple commands are connected by logical operators (`&&`, `||`), place these operators at the beginning of a new continuation line.
 - **Reason**: This formatting ensures that the start of a new command is clearly visible, distinguishing it from the previous command.
 
-///// details | Example
+///// details | Examples
     type: example
 
-<!-- TODO: Potentially reword NOTE. -->
-
-**NOTE**: Either of the following examples is valid, though the second one is generally preferred for its readability and ease to follow.
+**NOTE**: Either of the following examples are valid, though the second one is generally preferred due to its readability and ease of following.
 
 ---
 
@@ -107,9 +105,7 @@ mkdir /path/to/backup \
 ///// details | Examples
     type: example
 
-<!-- TODO: Potentially reword NOTE. -->
-
-**NOTE**: Either of the following examples is valid, though the second or third ones are generally preferred for their readability and ease of following.
+**NOTE**: Either of the following examples are valid, though the second or third ones are generally preferred for their readability and ease of following.
 
 ---
 
@@ -191,9 +187,7 @@ greet "World"
 
 ## Formatting Block Statements
 
-<!-- TODO: Edit the wording of this section and the examples. -->
-
-Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key.
+Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between a standard or single-line block statement. With each approach, maintaining consistency and readability is key.
 
 /// admonition | Guidelines
     type: info
@@ -202,9 +196,13 @@ Block statements in Bash, such as `if` statements and loops, can be formatted i
 - **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
 - **New Line for Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
 - **Reason**: These guidelines follow standard Bash practices and enhance script readability.
+- **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of a block statement.
+    - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between the two. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
 
 ///// details | Example
     type: example
+
+_Standard block statement formatting:_
 
 ```bash
 if [[ $1 -eq 1 ]]; then
@@ -218,17 +216,9 @@ for file in *.txt; do
 done
 ```
 
-/////
-////
-//// tab | Continuation Lines
+---
 
-<!-- TODO: Edit the wording of this section and the examples. -->
-
-- **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of block statement.
-- **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between them. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
-
-///// details | Example
-    type: example
+_Eight-space indentation for continuation lines:_
 
 ```bash
 if [[ $exit_code == "1" && $display_message == "true" ]]; then
@@ -244,7 +234,9 @@ fi
 ////
 //// tab | Single Line Block Statement
 
-- **Clarity and Maintainability**: Single-line statements should be clear and concise. Always preserve the script’s logical structure to facilitate easier updates and understanding.
+<!-- TODO: Add a guideline about placing the `done` or `fi` on the same line as the block statement. -->
+
+- **Clarity and Maintainability**: Single-line statements should be clear and concise.
 - **Avoid Clutter**: Avoid adding multiple commands or complex logic to single-line statements.
     - **Reason**: Single-line block statements are best suited for simple conditions or loops that can be expressed succinctly. Complex logic or multiple commands can make single-line statements less readable.
 
@@ -263,14 +255,14 @@ for file in *.txt; do echo "Processing $file"; done
 ////
 ///
 
-## Vertical Spacing Guidelines
+## Vertical Spacing
 
 Vertical spacing is just as important as horizontal spacing in maintaining a clean and readable script.
 
 /// admonition | Guidelines
     type: info
 
-- **Single Blank Line**: Use a single blank line to separate logical blocks of code or functions, facilitating quick visual parsing.
+- **Single Blank Line**: Use a single blank line to separate logical blocks of code or functions.
 - **Double Blank Lines**: Use double blank lines sparingly to highlight new sections or distinct logical groups within the script.
     - **Reason**: Double blank lines help visually separate sections of the script that differ significantly in purpose or functionality from the surrounding code.
 
@@ -349,8 +341,9 @@ Functions in Bash differ in a few ways from those in other programming languages
 
 ```bash
 ####
-# This function processes files given as parameters and logs results. It is designed to
-# handle a variable number of input files and demonstrate proper error handling.
+# Description:
+#   This function processes files given as parameters and logs results. It is designed
+#   to handle a variable number of input files and demonstrate proper error handling.
 #
 # Parameters:
 #   - $1: input_file (Required)
@@ -383,12 +376,11 @@ Traditionally, a single pound sign (`#`) is used to denote a comment in Bash scr
 
 /// admonition | Guidelines
     type: info
-
 //// tab | Single Pound Sign (`#`)
 
 - **Usage**: Employ a single pound sign for line-specific comments to explain the purpose of a command or a line of code.
 
-///// details | Example
+///// admonition | Example
     type: example
 
 ```bash
@@ -400,14 +392,19 @@ ls -la
 ////
 //// tab | Double Pound Signs (`##`)
 
-<!-- TODO: Potentially reword the following guidelines. -->
+<!-- TODO: Potentially reword the part about the blank line separating the comment from the code. -->
 
 - **Usage**: Use double-pound signs for comments that describe the functionality of a block of code, such as a loop, conditional sequence, or a list of variables. Ensure that these comments are directly above the relevant code block. If you place a blank line between the comment and the block of code it refers to, the comment is considered to no longer apply to that code, allowing for clear separation between different sections or concepts.
 
-///// details | Example
+///// admonition | Examples
     type: example
 
 ```bash
+## Set variables for the script.
+var_one="value_one"
+var_two="value_two"
+var_three="value_three"
+
 ## Loop through all .txt files in the directory.
 for file in *.txt; do
     # Process each file.
@@ -424,11 +421,11 @@ done
 - **Usage**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variables, or the main script logic.
 - **Subsections**: Quadruple pound signs can also represent subsections within a section of the script.
 - **Sparingly**: Quadruple pound signs should be used sparingly and only when necessary to visually separate one section of code from another. For example, you can omit them if the script is short and does not require extensive sectioning.
-- **Formatting**: Quadruple pound signs should be formatted to make it stand out from the rest of the comments. Below are the suggested formatting guidelines:
-    - **Section Naming**: Append `[ Section Name ]` after the quadruple pound signs. Within the brackets (`[]`), include the name that describes the section's content or purpose.
+- **Formatting**: Quadruple pound signs should be formatted to make them stand out from other comments. Below are the suggested formatting guidelines:
+    - **Section Naming**: Append `[ Section Name ]` after the quadruple pound signs. Within the brackets (`[]`), include a name for that section that describes its content or purpose.
     - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
     - **Section Comments**: If necessary, add comments describing the section's content or purpose by starting the comment below the quadruple pound signs, prefixed with four `#` characters.
-    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), two blank lines before and after the quadruple pound signs should be provided to provide additional visual separation between the sections.
+    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), two blank lines before and after the quadruple pound signs should be provided to add additional visual separation between the sections.
     - **Subsection Format**: Subsections should be formatted the same, except for the number of brackets (`[]`) and the section name. The number of brackets in each subsection should match the subsection's depth within the script.
 
 ///// details | Example
@@ -439,7 +436,7 @@ done
 ####[[ Modifiable Variables ]]##########################################################
 
 
-MODIFY_ME="value"
+C_MODIFY_ME="value"
 
 
 ####[[ General Variables ]]#############################################################
@@ -472,13 +469,15 @@ process_files "input.txt" "log.txt"
 ////
 //// tab | Triple Pound Signs (`###`)
 
+<!-- TODO: Potentially reword the following guidelines. -->
+
 - **Description**: Tipple pound signs can be thought of as a middle ground between double and quadruple pound signs. While they aren't limited to a single block of code seperated by a blank line, they do not represent an entirely new section of the script.
-- **Usage**: Use triple pound signs were blocks or lines of code are different enough or require some kind of distinction, but do not require a completely new section.
+- **Usage**: Use triple pound signs where blocks or lines of code are different enough or require some kind of distinction, but do not require a completely new section.
 - **Formatting**: Similar to quadruple pound signs, triple pound signs should be formatted in a way that makes them stand out from the rest of the comments. Below are the suggested formatting guidelines:
-    - **Section Naming**: After the triple pound signs, append `[ Section Name ]`. Within the brackets (`[]`), include the name that describes the section's content or purpose
+    - **Section Naming**: Append `[ Section Name ]` after the triple pound signs. Within the brackets (`[]`), include a name for that subsection that describes its content or purpose.
     - **Filler Characters**: Directly above and below the section name, There should exist 3 `#` characters to provide a clear visual separation between the sections.
-    - **Spacing**: Above and below the filler characters, there should be a single blank line that separates the previous command, triple pounds sign comments, and the next command.
-    - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below the triple pound signs, prefixed with three `#` characters.
+    - **Spacing**: Above and below the filler characters, there should be a single blank line that separates the previous command, triple pound sign comment, and the next command.
+    - **Section Comments**: If necessary, add comments to describe the section's content or purpose, by starting the comment directly below section name, prefixed with three `#` characters.
 
 ///// details | Example
     type: example
@@ -514,14 +513,10 @@ readonly C_YELLOW C_GREEN C_BLUE C_CYAN C_RED C_NC C_CLRLN
 
 ####[ Functions ]#######################################################################
 
+
 ........
 ```
 
 /////
 ////
 ///
-
-
-#### Why the Number of Pound Signs Matters
-
-- **Clarity**: Using a different number of pound signs helps distinguish between comment types, making it easier to identify the comment's scope and purpose.
