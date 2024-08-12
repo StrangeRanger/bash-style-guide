@@ -60,7 +60,7 @@ extra:
     provider: matomo
 
 extra_css:
-  - /stylesheets/extra.css
+  - stylesheets/extra.css
 
 plugins:
   ## Built-in plugins.

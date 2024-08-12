@@ -1,6 +1,6 @@
 # Aesthetics
 
-As mentioned in the [Preface](../README.md#preface), this guide strives to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
+As mentioned in the [Preface](../index.md#preface), this guide strives to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
 
 This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
 
