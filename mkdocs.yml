@@ -79,9 +79,6 @@ plugins:
   # TODO: Provide description of the below plugin.
   - exclude:
       glob:
-        - "TODO.md"
-        - "sss.md"
-        - "Examples/*"
         - "guidelines/common-mistakes.md"
 
 markdown_extensions:
