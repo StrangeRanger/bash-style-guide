@@ -425,7 +425,7 @@ done
     - **Section Naming**: Append `[ Section Name ]` after the quadruple pound signs. Within the brackets (`[]`), include a name for that section that describes its content or purpose.
     - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character limit of a single line.
     - **Section Comments**: If necessary, add comments describing the section's content or purpose by starting the comment below the quadruple pound signs, prefixed with four `#` characters.
-    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing-guidelines), two blank lines before and after the quadruple pound signs should be provided to add additional visual separation between the sections.
+    - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing), two blank lines before and after the quadruple pound signs should be provided to add additional visual separation between the sections.
     - **Subsection Format**: Subsections should be formatted the same, except for the number of brackets (`[]`) and the section name. The number of brackets in each subsection should match the subsection's depth within the script.
 
 ///// details | Example
