@@ -2,6 +2,20 @@
 
 [![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
 
+---
+
+> [!WARNING]
+> This version of the guide is not yet complete...
+
+/// admonition | WARNING
+    type: warning
+
+This version of the guide is not yet complete...
+
+///
+
+---
+
 This Bash Style Guide provides detailed recommendations for writing safe and predictable bash scripts. The guidelines are primarily based on [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices), which is an excellent resource for understanding the fundamentals of Bash scripting.
 
 If any practices are not explicitly mentioned in this guide, they should be considered to align with those outlined in the abovementioned wiki. You are encouraged to fork this [guide on GitHub](https://github.com/StrangeRanger/bash-style-guide) for your own use and to contribute to its improvement.

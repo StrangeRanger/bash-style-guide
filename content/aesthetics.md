@@ -74,7 +74,9 @@ rsync -avz /source/directory/with/a/very/long/path/ \
 ///// details | Example
     type: example
 
-**NOTE**: Either of the following examples are valid, thought the second one is generally preferred for its readability and ease to follow.
+<!-- TODO: Potentially reword NOTE. -->
+
+**NOTE**: Either of the following examples is valid, though the second one is generally preferred for its readability and ease to follow.
 
 ---
 
@@ -105,7 +107,9 @@ mkdir /path/to/backup \
 ///// details | Examples
     type: example
 
-**NOTE**: Either of the following examples are valid, though the second or third ones generally preferred for their readability and ease to follow.
+<!-- TODO: Potentially reword NOTE. -->
+
+**NOTE**: Either of the following examples is valid, though the second or third ones are generally preferred for their readability and ease of following.
 
 ---
 
@@ -152,7 +156,7 @@ While not significantly impacting script readability or functionality, there is 
 /// admonition | Guidelines
     type: info
 
-- **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (i.e., `name() {}`).
+- **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (`name() {}`).
 - **Avoid `function`**: Avoid using the `function` keyword to declare functions.
 - **Reason**: The recommended syntax is more widely accepted and aligns with standard Bash practices.
 
@@ -189,7 +193,7 @@ greet "World"
 
 <!-- TODO: Edit the wording of this section and the examples. -->
 
-Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key. In addition, continuation lines are slightly different for block statements compared to regular commands.
+Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between standard block statements or single-line block statements. With each approach, maintaining consistency and readability is key.
 
 /// admonition | Guidelines
     type: info
@@ -218,7 +222,9 @@ done
 ////
 //// tab | Continuation Lines
 
-- **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of the block statement.
+<!-- TODO: Edit the wording of this section and the examples. -->
+
+- **Indentation**: <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line of block statement.
 - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the logical conditions and the code within the block. If a standard four-space indentation were used, continuation lines will align with the block's code, making it harder to distinguish between them. While the guideline of placing operators at the beginning of continuation lines already aids readability, the additional indentation further enhances the clarity and separation between the logic and the block's content.
 
 ///// details | Example
