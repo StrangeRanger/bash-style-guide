@@ -12,6 +12,8 @@
 
 This version of the guide is not yet complete...
 
+///
+
 ---
 
 This Bash Style Guide provides detailed recommendations for writing safe and predictable bash scripts. The guidelines are primarily based on [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices), which is an excellent resource for understanding the fundamentals of Bash scripting.
