@@ -1,10 +1,12 @@
 site_name: Bash Style Guide
-docs_dir: .
-site_dir: ../site
+site_url: https://bsg.hthompson.dev
+site_author: Hunter T.
+site_description: A style guide for writing clean, consistent, and idiomatic Bash scripts.
 repo_url: https://github.com/StrangeRanger/bash-style-guide
 
 theme:
   name: material
+  custom_dir: overrides
   palette:
     # Palette toggle for dark mode.
     - media: "(prefers-color-scheme: dark)"
@@ -23,6 +25,7 @@ theme:
       primary: blue
       accent: blue
   features:
+    # TODO: Provide description of the below feature.
     - content.tabs.link
     # Code blocks can automatically render a button on the right side to allow the user
     # to copy a code block's contents to the clipboard.
@@ -52,20 +55,28 @@ theme:
     annotation: material/plus-circle
     repo: fontawesome/brands/github
 
+extra:
+  analytics:
+    provider: matomo
+
 extra_css:
-  - stylesheets/extra.css
+  - /stylesheets/extra.css
 
 plugins:
   ## Built-in plugins.
   - search
   ## External plugins.
-  - same-dir
+  # TODO: Provide description of the below plugin.
+  - include-markdown
+  # TODO: Provide description of the below plugin.
   - git-revision-date-localized:
       type: date
       timezone: America/Los_Angeles
       fallback_to_build_date: true
       enabled: true
+  # TODO: Provide description of the below plugin.
   - table-reader
+  # TODO: Provide description of the below plugin.
   - exclude:
       glob:
         - "TODO.md"
@@ -119,9 +130,8 @@ markdown_extensions:
   # inside each other, including admonitions, tabs, lists and all other elements.
   - pymdownx.superfences
 
-# TODO: Maybe make the content stuff be placed at top of page?
 nav:
-  - Home: README.md
+  - Home: index.md
   - Guidelines:
     - Aesthetics: guidelines/aesthetics.md
     - Bashism: guidelines/bashism.md
@@ -129,5 +139,5 @@ nav:
     - Error Handling: guidelines/error-handling.md
     # - Common Mistakes: guidelines/common-mistakes.md
   - Other:
-    - Changelog: CHANGELOG.md
-    - License: LICENSE.md
+    - Changelog: other/changelog.md
+    - License: other/license.md
