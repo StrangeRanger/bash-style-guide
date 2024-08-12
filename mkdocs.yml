@@ -71,7 +71,7 @@ plugins:
         - "TODO.md"
         - "sss.md"
         - "Examples/*"
-        - "content/common-mistakes.md"
+        - "guidelines/common-mistakes.md"
 
 markdown_extensions:
   # This configuration enables Markdown table support, which should normally be enabled
@@ -123,11 +123,11 @@ markdown_extensions:
 nav:
   - Home: README.md
   - Content:
-    - Aesthetics: content/aesthetics.md
-    - Bashism: content/bashism.md
-    - Style: content/style.md
-    - Error Handling: content/error-handling.md
-    # - Common Mistakes: content/common-mistakes.md
+    - Aesthetics: guidelines/aesthetics.md
+    - Bashism: guidelines/bashism.md
+    - Style: guidelines/style.md
+    - Error Handling: guidelines/error-handling.md
+    # - Common Mistakes: guidelines/common-mistakes.md
   - Other:
     - Changelog: CHANGELOG.md
     - License: LICENSE.md
