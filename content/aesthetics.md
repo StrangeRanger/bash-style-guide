@@ -34,7 +34,6 @@ The column length refers to the number of characters in a single line of code. L
     type: info
 
 - **88-Character Limit**: Keep the column length within 88 characters. This means breaking lines exceeding the limit into multiple lines when necessary.
-    - **Reason**: An 88-character limit ensures that code remains readable on various screen sizes and devices, including terminals, text editors, and code review tools.
 - **Exceptions**: Allow exceptions for long strings or complex expressions that are more understandable when not broken into multiple lines.
 
 ///
@@ -57,7 +56,7 @@ When breaking a command that exceeds the 88-character limit into multiple lines,
 
 - **Indentation**: Use the standard four-space indentation for each continuation line.
 
-///// details | Example
+///// admonition | Example
     type: example
 
 ```bash
