@@ -1,0 +1,29 @@
+name: Deploy Customized Unix Terminal GitHub Page
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          path: .cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('mkdocs-requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - run: pip install -r mkdocs-requirements.txt
+      - run: mkdocs build --strict
+      - run: mkdocs gh-deploy --force
+
+
