@@ -12,6 +12,7 @@
         "linenums",
         "matomo",
         "mkdocs",
+        "mktemp",
         "mywiki",
         "pygments",
         "pymdown",

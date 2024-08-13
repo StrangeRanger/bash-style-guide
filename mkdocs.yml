@@ -10,7 +10,7 @@ theme:
   name: material
   custom_dir: overrides
   palette:
-    # Palette toggle for dark mode.
+    ## Palette toggle for dark mode.
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
@@ -18,7 +18,7 @@ theme:
         name: Switch to light mode
       primary: blue
       accent: blue
-    # Palette toggle for light mode.
+    ## Palette toggle for light mode.
     - media: "(prefers-color-scheme: light)"
       scheme: default
       toggle:

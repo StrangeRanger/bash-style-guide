@@ -1,5 +1,8 @@
 # macOS files.
 .DS_Store
 
-# Other.
+# mkdocs files.
 site/
+
+# Other files.
+tmp.bash
