@@ -11,7 +11,7 @@ Conditional tests are fundamental to any programming language, enabling decision
 /// admonition | Guidelines
     type: info
 
-- **Use `[[ ... ]]`:** Use the `[[ ... ]]` construct for conditional tests.
+- **Use `[[ ... ]]`:** <mark>**_ALWAYS_**</mark> use the `[[ ... ]]` construct for conditional tests.
 - **Avoid `[ ... ]` and `test`:** Avoid using `[ ... ]` and the `test` command for conditional tests.
 
 ///
@@ -20,7 +20,7 @@ Conditional tests are fundamental to any programming language, enabling decision
     type: tip
 
 - **Regex Support**: Enables direct regex matching within conditional expressions, eliminating the need for external tools like `grep`.
-- **String Comparison**: Offers a more consistent and reliable approach to string comparison, especially when dealing with variables containing spaces.
+- **String Comparison**: Offers a more consistent and reliable approach to string comparison, especially when dealing with variables containing spaces or special characters.
 - **Compound Conditions**: Allows combining multiple conditions within a single `[[ ... ]]` block.
 - **Safety**: Prevents word splitting and globbing on variables, reducing the risk of unexpected behavior or security vulnerabilities.
 
@@ -39,7 +39,7 @@ if [ $var = "value with spaces" ]; then
     echo "The variable matches the value."
 else
     echo "This will output because '$var' is treated as multiple arguments."
-fis
+fi
 ```
 
 **Potential Issues**: If `$var` is not quoted, it will be subject to word splitting, potentially leading to unexpected behavior.
@@ -66,7 +66,7 @@ fi
 _Using `grep` for regex matching:_
 
 ```bash
-email="hunter@guide.com"
+email="hunter@hthompson.dev"
 
 if echo "$email" | grep -qE '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'; then
     echo "Valid email address."
@@ -82,7 +82,7 @@ fi
 _Using `[[ ... ]]` for regex matching:_
 
 ```bash
-email="hunter@guide.com"
+email="hunter@hthompson.dev"
 
 if [[ "$email" =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
     echo "Valid email address."
@@ -104,11 +104,13 @@ file="example.txt"
 touch "$file" && chmod 700 "$file"
 
 if [ -f "$file" ] && [ -r "$file" ] || [ -w "$file" ]; then
-    echo "File exists and is readable and writable."
+    echo "File exists and is readable and/or writable."
 else
     echo "File is either missing, unreadable, or unwritable."
 fi
 ```
+
+**Disadvantage**: `[ ... ]` does not support compound conditions directly, requiring additional commands or constructs to achieve the desired behavior.
 
 ---
 
@@ -119,13 +121,14 @@ file="example.txt"
 
 touch "$file" && chmod 700 "$file"
 
-# Each test can be placed within the same brackets.
 if [[ -f $file && -r $file || -w $file ]]; then
-    echo "File exists and is readable and writable."
+    echo "File exists and is readable and/or writable."
 else
     echo "File is either missing, unreadable, or unwritable."
 fi
 ```
+
+**Advantage**: `[[ ... ]]` supports compound conditions, simplifying script logic and improving readability.
 
 ////
 ///
@@ -142,11 +145,12 @@ Iterating over sequences is a common task in Bash, allowing you to process eleme
 
 ///
 
-/// admonition | Advantages of Builtins
+/// admonition | Advantages of Built-in Iteration
     type: tip
 
-- **Greater Portability**: Builtins are universally supported across systems running Bash, ensuring consistent behavior and compatibility.
-- **Reduced Complexity**: Scripts become simpler and more readable when using builtins, enhancing both maintainability and readability.
+- **Simplicity**: Built-in mechanisms like brace expansion and C-style `for` loops are native to Bash, providing a straightforward and efficient way to iterate over sequences.
+- **Portability**: These constructs are widely supported across different Unix-like systems, ensuring consistent behavior and script portability.
+- **Reduced Dependencies**: By utilizing built-in features, you minimize external dependencies, enhancing script reliability and maintainability.
 
 ///
 

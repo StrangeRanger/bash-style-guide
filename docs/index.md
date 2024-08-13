@@ -23,10 +23,6 @@ This guide aims to be as objective as possible by providing well-founded reasons
 
 If you find any issues with this guide, whether it be a typo, a broken link, or a suggestion for improvement, please create an issue on [GitHub](https://github.com/StrangeRanger/bash-style-guide/issues).
 
-## Notice
-
-If you view this document on GitHub or as a standard markdown file, you will not be able to see many of the interactive elements, such as the details and tabs. To view the document in its entirety, please visit the [website](https://bsg.hthompson.dev).
-
 ## Extra Resources
 
 - [mywiki.wooledge.org/Bashism](https://mywiki.wooledge.org/Bashism)
