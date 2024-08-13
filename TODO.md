@@ -5,4 +5,3 @@
 - [ ] Update the `README.md` and include link to the website for the actual guide.
 - [ ] Verify that analytics works on main website.
 - [ ] Maybe provide explanations for examples.
-- [ ] Fix deployments being published to the wrong URL.
