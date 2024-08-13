@@ -3,3 +3,6 @@
 
 # mkdocs files.
 site/
+
+# Other files.
+tmp.bash
