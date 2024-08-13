@@ -1,4 +1,4 @@
-name: Deploy Customized Unix Terminal GitHub Page
+name: Deploy Bash Style Guide GitHub Page
 
 on:
   push:
@@ -25,5 +25,3 @@ jobs:
       - run: pip install -r mkdocs-requirements.txt
       - run: mkdocs build --strict
       - run: mkdocs gh-deploy --force
-
-
