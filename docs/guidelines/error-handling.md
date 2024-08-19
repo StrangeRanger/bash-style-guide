@@ -12,30 +12,40 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> follow commands that could cause issues if they fail with a conditional check to handle errors appropriately.
+- **Usage**: <mark>**_ALWAYS_**</mark> follow commands that could cause issues if they fail, with a conditional check to handle errors appropriately.
     - **Reason**: By checking the success of critical commands, you can prevent further operations if something goes wrong, protecting your script from unintended behavior.
-    - **Example**:
-        ```bash
-        cd /some/path || exit 1
-        rm file
-        ```
-        **Explanation**: If the `cd` command fails, the script exits with a status of `1`, preventing any further potentially harmful actions.
 
+///// admonition | Examples
+    type: example
+
+```bash
+cd /some/path || exit 1
+rm file
+```
+
+**Explanation**: If the `cd` command fails, the script exits with a status of `1`, preventing any potentially harmful actions.
+
+/////
 ////
 //// tab | Error Messages for Clarity
 
 - **Guideline**: When a command fails, provide a clear and descriptive error message to indicate what went wrong.
     - **Reason**: Clear error messages help users (or yourself) understand what failed and why, making it easier to troubleshoot issues.
-    - **Example**:
-        ```bash
-        cd /some/path || {
-            echo "Error: Failed to change directory to /some/path" >&2
-            exit 1
-        }
-        rm file
-        ```
-        **Explanation**: This example provides a clear error message and directs it to `stderr` (using `>&2`), ensuring that the failure is properly logged and visible. `stderr` will be touched on in the section below.
 
+///// admonition | Examples
+    type: example
+
+```bash
+cd /some/path || {
+    echo "Error: Failed to change directory to /some/path" >&2
+    exit 1
+}
+rm file
+```
+
+**Explanation**: This example provides a clear error message and directs it to `stderr` (using `>&2`), ensuring that the failure is properly logged and visible.
+
+/////
 ////
 ///
 
@@ -48,14 +58,20 @@ Standard error (`stderr`) is a file descriptor (file descriptor `2`) used for ou
 
 - **Usage**: <mark>**_ALWAYS_**</mark> use `>&2` to redirect error messages to the standard error stream.
     - **Reason**: Command-line utilities and scripts expect errors to be sent to `stderr` for proper error handling and integration with other tools. This practice ensures that error messages are not mixed with regular output, which is especially important when output is being redirected or piped into other commands.
-    - **Example**:
-        ```bash
-        cd /some/nonexistent/path || {
-            echo "Error: Failed to change directory to /some/nonexistent/path" >&2
-            exit 1
-        }
-        ```
-        **Explanation**: This example attempts to change the directory to a non-existent path. If the command fails, an error message is sent to `stderr` using `>&2`, and the script exits with a status of `1`.
+
+//// admonition | Examples
+    type: example
+
+```bash
+cd /some/nonexistent/path || {
+    echo "Error: Failed to change directory to /some/nonexistent/path" >&2
+    exit 1
+}
+```
+
+**Explanation**: This example attempts to change the directory to a non-existent path. When the command fails, an error message is sent to `stderr` using `>&2`, and the script exits with a status of `1`.
+
+////
 ///
 
 ## Using `trap` for Signal Handling
@@ -68,60 +84,70 @@ Signal handling in Bash allows scripts to capture and respond to signals sent by
 
 - **Usage**: Use `trap` to define cleanup operations or other necessary actions that should occur before a script exits.
     - **Reason**: Without `trap`, it can be difficult to ensure that temporary files or other resources are properly cleaned up, especially if an unexpected error causes the script to terminate prematurely. `trap` helps maintain a clean environment by ensuring that these operations are executed regardless of how the script exits.
-    - **Example**:
-        ```bash
-        TMP_FILE=$(mktemp)
 
-        # Define a trap to remove the temporary file on exit
-        trap 'rm -f "$TMP_FILE"' EXIT
+///// admonition | Examples
+    type: example
 
-        echo "Temporary file created: $TMP_FILE"
-        echo "Random data" > "$TMP_FILE"
+```bash
+TMP_FILE=$(mktemp)
 
-        # Simulate normal script execution
-        exit 0
-        ```
-        **Explanation**: This example creates a temporary file and uses `trap` to ensure that the file is deleted when the script exits, whether it completes successfully or is interrupted.
+# Define a trap to remove the temporary file on exit.
+trap 'rm -f "$TMP_FILE"' EXIT
 
+echo "Temporary file created: $TMP_FILE"
+echo "Random data" > "$TMP_FILE"
+
+# Simulate normal script execution.
+exit 0
+```
+
+**Explanation**: This example creates a temporary file and uses `trap` to ensure that the file is deleted when the script exits, whether it completes successfully or is interrupted.
+
+/////
 ////
 //// tab | Functions for Complex Trapping Logic
 
 - **Guideline**: For complex signal handling, define a function that performs all necessary actions, and then invoke this function in your `trap` command.
     - **Reason**: Using a function helps organize and manage complex trapping logic, making your script easier to read and maintain, especially when dealing with multiple signals or detailed cleanup operations.
-    - **Example**:
-        ```bash
-        TMP_FILE=$(mktemp)
 
-        # Define a cleanup function
-        cleanup() {
-            if (( $1 == 0 )); then
-                echo "[INFO]  Exiting normally"
-            else
-                echo "[ERROR] An error occurred" >&2
-            fi
+///// admonition | Examples
+    type: example
 
-            echo "[INFO]  Cleaning up..."
-            rm -f "$TMP_FILE" \
-                && echo "[INFO]  Temporary file removed" \
-                || {
-                    echo "[ERROR] Failed to remove temporary file" >&2
-                    echo "[NOTE]  Please remove it manually: $TMP_FILE"
-                }
+```bash
+TMP_FILE=$(mktemp)
 
-            echo "[INFO]  Exiting with status code: $1"
-            exit "$1"
+# Define a cleanup function.
+cleanup() {
+    if (( $1 == 0 )); then
+        echo "[INFO]  Exiting normally"
+    else
+        echo "[ERROR] An error occurred" >&2
+    fi
+
+    echo "[INFO]  Cleaning up..."
+    rm -f "$TMP_FILE" \
+        && echo "[INFO]  Temporary file removed" \
+        || {
+            echo "[ERROR] Failed to remove temporary file" >&2
+            echo "[NOTE]  Please remove it manually: $TMP_FILE"
         }
 
-        # Trap EXIT signal and invoke the cleanup function
-        trap 'cleanup $?' EXIT
+    echo "[INFO]  Exiting with status code: $1"
+    exit "$1"
+}
 
-        echo "[INFO]  Performing some operations..."
+# Trap EXIT signal and invoke the cleanup function.
+trap 'cleanup $?' EXIT
 
-        # Simulate an error
-        exit 1
-        ```
-        **Explanation**: In this example, a cleanup function is defined to handle both successful and erroneous exits. The `trap` command ensures that cleanup is called when the script exits, providing a clear structure for managing resources and logging exit statuses.
+echo "[INFO]  Performing some operations..."
 
+# Simulate an error.
+exit 1
+```
+
+**Explanation**: In this example, a cleanup function is defined to handle both successful and erroneous exits. The `trap` command ensures that cleanup is called when the script exits, providing a clear structure for managing resources and logging exit statuses.
+
+/////
 ////
 ///
 
@@ -134,15 +160,7 @@ The `set -e` option in Bash instructs the shell to immediately exit if any comma
 
 - **Use Carefully**: Use `set -e` judiciously, particularly in scripts where premature exits could cause problems or where errors are expected and handled.
     - **Reason**: `set -e` can cause unexpected script exits, potentially leaving tasks incomplete if a command fails unexpectedly or if the script isn’t structured to handle such failures gracefully.
-    - **Example**:
-        ```bash
-        set -e
-        mkdir -p /some/directory
-        cd /some/directory || { echo "Could not change directory"; exit 1; }
-        rm non_existent_file.txt  # This will cause the script to exit if `set -e` is active.
-        echo "This line won't be executed if the file doesn't exist."
-        ```
-- **Test Thoroughly**: Thoroughly test scripts with set -e under various scenarios to ensure they behave as expected and only exit prematurely when intended.
+- **Test Thoroughly**: Thoroughly test scripts with `set -e` under various scenarios to ensure they behave as expected and only exit prematurely when intended.
     - **Reason**: Testing is crucial to verify that the script handles all possible outcomes correctly, particularly when using `set -e`, which can make debugging more challenging if not thoroughly validated.
 
 ///
@@ -160,9 +178,8 @@ The `set -e` option in Bash instructs the shell to immediately exit if any comma
 
 /// details | Examples
     type: example
-//// tab | Unexpected Exit
 
-_Example 1: Script Exits Due to a Non-Critical Command Failure_
+_Example 1: Script Exits Due to a Command Failure_
 
 ```bash
 #!/bin/bash
@@ -198,5 +215,4 @@ echo "This line will be executed if the file was not found."
 
 **Explanation**: Here, the script uses a conditional check with `||` to handle the failure of `rm` gracefully. The script does not exit when `rm` fails, allowing the script to continue executing.
 
-////
 ///
