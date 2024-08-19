@@ -1,6 +1,10 @@
 # Bash Style Guide
 
-[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker)
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker) [![Static Badge](https://img.shields.io/badge/Click%20to%20Access%20Bash%20Style%20Guide-blue)](https://bsg.hthompson.dev)
+
+> [!NOTE]
+> To access the full Bash Style Guide, click the blue badge above or navigate to [bsg.hthompson.dev](https://bsg.hthompson.dev).
+
 
 Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills the lessons I've learned into a set of best practices for writing safe, predictable, and maintainable Bash scripts.
 
