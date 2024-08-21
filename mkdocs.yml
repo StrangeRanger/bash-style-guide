@@ -3,7 +3,7 @@ site_url: https://bsg.hthompson.dev
 site_author: Hunter T.
 site_description: A style guide for writing clean, consistent, and idiomatic Bash scripts.
 
-repo_name: StrangeRanger/bash-style-guide
+repo_name: Bash Style Guide
 repo_url: https://github.com/StrangeRanger/bash-style-guide
 
 theme:
@@ -27,7 +27,8 @@ theme:
       primary: blue
       accent: blue
   features:
-    # TODO: Provide description of the below feature.
+    # When enabled, all content tabs across the whole documentation site will be linked
+    # and switch to the same label when the user clicks on a tab.
     - content.tabs.link
     # Code blocks can automatically render a button on the right side to allow the user
     # to copy a code block's contents to the clipboard.
@@ -68,29 +69,19 @@ plugins:
   ## Built-in plugins.
   - search
   ## External plugins.
-  # TODO: Provide description of the below plugin.
-  - include-markdown
-  # TODO: Provide description of the below plugin.
+  # MkDocs plugin that enables displaying the date of the last git modification of a
+  # page.
   - git-revision-date-localized:
       type: date
       timezone: America/Los_Angeles
       fallback_to_build_date: true
       enabled: true
   # TODO: Provide description of the below plugin.
-  - table-reader
-  # TODO: Provide description of the below plugin.
   - exclude:
       glob:
         - "guidelines/common-mistakes.md"
 
 markdown_extensions:
-  # This configuration enables Markdown table support, which should normally be enabled
-  # by default, but to be sure, it's added here.
-  - tables
-  # TODO: Provide description of the below extension.
-  - attr_list
-  # TODO: Provide description of the below extension.
-  - md_in_html
   # The BetterEm extension improves the detection of Markup to emphasize text in
   # Markdown using special characters, i.e. for **bold** and _italic_ formatting.
   - pymdownx.betterem:
