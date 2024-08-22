@@ -1,6 +1,6 @@
 # Style
 
-As mentioned in the [Aesthetics](aesthetics.md) section of this Guide, this section focuses on style-related guidelines that directly impact the functionality of Bash scripts. It covers essential topics such as the correct use of quotes, variable declarations, and writing shebang lines.
+This section focuses on style-related guidelines that directly impact the functionality of Bash scripts. It covers essential topics such as the correct use of quotes, variable declarations, and writing shebang lines.
 
 ## Using Quotes
 
@@ -8,10 +8,10 @@ The choice of quotes in Bash significantly impacts how strings and variables beh
 
 /// admonition | Guidelines
     type: info
-//// tab | Double Quotes
+//// tab | Double Quotes (`"`)
 
-- **Usage**: Use double quotes (`"`) as the default method for quoting strings in Bash.
-    - **Reason**: Double quotes allow variable expansion while preventing word splitting and globbing. This makes them the safest and most flexible option for most scenarios.
+- **Usage**: Use double quotes as the default method for quoting strings in Bash.
+    - **Reason**: Double quotes allow variable expansion while preventing word splitting and globbing. This feature makes double quotes the safest and most flexible option for most scenarios.
 
 ///// admonition | Example
     type: example
@@ -23,15 +23,16 @@ echo "Hello, $name"
 
 /////
 ////
-//// tab | Single Quotes
+//// tab | Single Quotes (`'`)
 
-- **Usage**: Use single quotes (`'`) when you need to preserve string literals exactly as written, without any variable expansion or command substitution.
-    - **Reason**: Single quotes prevent all expansions, ensuring the enclosed text is treated as a literal string.
+- **Usage**: Use single quotes when you need to preserve string literals exactly as written.
+    - **Reason**: Single quotes prevent all forms of expansion, ensuring the enclosed text is treated as a literal string.
 
 ///// admonition | Example
     type: example
 
 ```bash
+name="John Doe"
 echo 'Hello, $name'
 ```
 
@@ -39,13 +40,14 @@ echo 'Hello, $name'
 ////
 //// tab | Omitting Quotes
 
-- **Guideline**: It’s acceptable to omit quotes in contexts where they aren't necessary, such as within `[[ ... ]]` statements or when word splitting and globbing are intended.
-    - **Reason**: Omitting quotes is sometimes necessary for specific operations, but should be done cautiously to avoid unintended behavior.
+- **Guideline**: Quotes can be omitted when they aren't necessary, such as within `[[ ... ]]` statements, or when word splitting and globbing are intended.
 
 ///// admonition | Example
     type: example
 
 ```bash
+name="John Doe"
+
 if [[ $name == John* ]]; then
     echo "Name starts with John"
 fi
@@ -55,7 +57,7 @@ fi
 ////
 //// tab | Recommendations
 
-- **Syntax Highlighting**: Ensure your IDE or text editor has syntax highlighting enabled. Syntax highlighting helps identify special characters in strings, making it easier to spot expansions and other potential issues.
+- **Syntax Highlighting**: Ensure syntax highlighting is enabled in your IDE or text editor. Syntax highlighting helps you quickly identify potential issues in a string, such as missing quotes, special characters, or escaped characters.
 
 ////
 ///
@@ -68,106 +70,72 @@ Bash provides several methods for declaring variables, each with implications fo
     type: info
 //// tab | Global and Local Variables
 
-- **Naming Conventions**: Use lowercase letters for variable names, separating words with an underscore (`_`).
-    - **Reason**: Lowercase naming helps distinguish between regular variables and constants or exported/environment variables, which are conventionally in uppercase.
+<!-- TODO: Modify and ensure the wording the 'Explanation' is to my liking. -->
+
+- **Naming Conventions**: Use lowercase letters, with words separated with underscores (`_`).
+    - **Reason**: Using lowercase letters for standard variables help to distinguish from constants or exported variables, which are conventionally written in uppercase.
     - **Example**:
         ```bash
         my_var="local value"
         ```
-        **Note**: Avoid special characters, starting variable names with numbers, or using spaces to prevent syntax errors.
-- **Scope Management**: Use the `local` keyword to limit a variable's scope within a function.
-    - **Reason**: Declaring variables as `local` within functions prevents conflicts with global variables of the same name.
+- **Scope Management**: Use the `local` keyword to limit a variable's scope to within a function.
+    - **Reason**: Declaring a variable as `local` ties its lifespan and scope to the function. This practice prevents accidental overwrites of global variables with the same name.
     - **Example**:
         ```bash
+        my_var="global value"
+
         my_function() {
             local my_var="local value"
-            echo "$my_var"
+        echo "$my_var"
         }
-        my_function
-        ```
-        **Advantage**: Using `local` confines the variable's scope to the function, avoiding accidental overwrites of global variables.
-- **Global Variable Declaration**: Declare global variables at the beginning of the script or in a separate configuration file.
-    - **Reason**: Centralizing global variable declarations enhances script organization and readability, making it easier to manage and update values.
-    - **Exception**: If a global variable's value is determined later in the script, consider one of these approaches:
-        - **Options 1**: Declare the variable at the beginning with a placeholder value, and update it later in the script. Add comments to clarify the placeholder.
-        - **Option 2**: Declare and assign the variable when its value is determined. This method is acceptable but can make tracking global variables more difficult.
 
-///// details | Examples
+        my_function
+        echo "$my_var"
+        ```
+        **Explanation**: In this example, `my_var` is declared both globally and locally within the `my_function` function. The local keyword ensures that the `my_var` inside the function is distinct from the global `my_var`. When the function is called, it outputs the local value of `my_var`, while the final echo statement outputs the global value. This illustrates how `local` effectively manages variable scope, keeping global and local variables separate and avoiding conflicts.
+- **Global Variable Declaration**: Declare global variables at the beginning of the script or in a separate configuration file.
+    - **Reason**: Centralizing global variable declaration improves script organization and readability, making it easier to manage and update values.
+    - **Exception**: If a variable's value is determined later in the script, consider one of the following approaches:
+        - **Options 1**: Declare the variable at the beginning with a placeholder value and update it later in the script. Add comments to clarify the placeholder.
+        - **Option 2**: Initialize the variable when its value is determined. While this approach is acceptable, it can make tracking global variables more challenging.
+
+
+<!-- TODO: Add a general example? -->
+<!-- ///// details | Example
     type: example
 
-_General variable declaration:_
-
 ```bash
-my_var="local value"
+...
 ```
 
-**Note**: Outside of a function, the `local` keyword is not applicable.
-
----
-
-_Without scope management:_
-
-```bash
-my_function() {
-    my_var="local value"
-    echo "$my_var"
-}
-
-my_function
-```
-
-**Possible Issue:** If `my_var` is already defined globally, this assignment will overwrite the global value.
-
----
-
-_With scope management:_
-
-```bash
-my_function() {
-    local my_var="local value"
-    echo "$my_var"
-}
-
-my_function
-```
-
-**Advantage:** Using `local` confines the variable's scope to the function, preventing conflicts with global variables with the same name.
-
-/////
+///// -->
 ////
 //// tab | Constant Variables
 
-- **Naming Conventions**: Use uppercase letters prefixed with `C_`, separating words with underscores (`_`).
-    - **Reason**: The `C_` prefix, combined with uppercase letters, signals that the variable is a constant, helping prevent accidental modification.
+- **Naming Conventions**: Use uppercase letters, separate words with underscores (`_`), and prefix the variable name with `C_`.
+    - **Reason**: The `C_` prefix, combined with uppercase letters, signals that the variable is a constant. This naming convention helps distinguish constants from other variables, reducing the risk of accidental changes.
     - **Example**:
         ```bash
         C_CONFIG_FILE_PATH="/etc/myapp/config.conf"
         ```
-- **Selective Use of `readonly`**: Apply `readonly` at or directly after assignment for constants that must remain unchanged throughout the script.
-    - **Reason**: `readonly` enforces immutability, protecting critical values from being altered accidentally.
+- **Selective Use of `readonly`**: Apply `readonly` at or directly after initializing constants that must remain unchanged throughout the script.
+    - **Reason**: `readonly` enforces immutability, protecting critical values from being altered accidentally. However, overusing `readonly` can make scripts too restrictive, hindering development and debugging. Therefore, `readonly` should be reserved for truly immutable values.
     - **When to use**:
-        - **Global Constants**: Values that ensure script consistency and prevent accidental overwrites.
-        - **Security-Sensitive Variables**: Values where changes could pose security risks (e.g., file paths, user permissions).
-    - **Example**:
-        ```bash
-        readonly C_FILE_PERMISSIONS=644
-        ```
-- **Omitting `readonly`**: Consider omitting `readonly` in cases where flexibility is necessary.
-    - **Reason**: Overusing `readonly` can reduce script flexibility, so reserve it for truly immutable values.
+        - **Global Constants**: Set `readonly` for global constants whose values significantly impact script behavior and where modifications could lead to unexpected results.
+        - **Security-Sensitive Variables**: Use `readonly` for variables where changes could pose security risks (e.g., file paths, user permissions).
     - **When to omit**:
-        - **Development and Debugging Phases**: Temporarily omitting `readonly` can speed up testing and iteration.
-        - **Readability and Simplicity**: In simple scripts, avoiding `readonly` can enhance readability.
-        - **Function-Dependent Initialization**: When a constant's value is determined by a function or complex operation, omitting `readonly` may be ideal to avoid errors if the function runs multiple times.
+        - **Function-Dependent Initialization**: When a function or complex operation determines a constant's value, omitting `readonly` is usually the safest option.
+            - **Reason**: Applying `readonly` to a variable whose value is determined by a function can result in errors if the function is called multiple times. Even if there is no intention to change the value, the potential for multiple function calls can lead to unexpected behavior and errors.
 - **Global Constants**: Declare global constants at the beginning of the script or in a separate configuration file.
     - **Reason**: Centralizing constant declarations makes managing and updating values easier and improves script readability.
     - **Exception**: If a constant's value is determined later in the script, choose one of the following methods:
-        - **Options 1**: Declare with a placeholder value, updating it later and applying readonly if needed. Add comments to clarify the placeholder.
+        - **Options 1**: Declare with a placeholder value, update it later, and apply readonly if needed. Add comments to clarify the placeholder.
         - **Option 2**: Declare and assign when the value is determined, applying readonly if appropriate. This method is acceptable but can make tracking global constants more difficult.
 
 ///// details | Example
     type: example
 
-**NOTE**: The following example may not be the best example, but hopefully it will help you understand the concept.
+**NOTE**: There may be better examples than the following, but hopefully, it will still help you understand the concept.
 
 ```bash
 #!/bin/bash
@@ -199,8 +167,8 @@ setup_environment
 ////
 //// tab | Exported Variables
 
-- **Naming Conventions**: Use uppercase letters prefixed with `E_`, separating words with underscores (`_`).
-    - **Reason**: The` E_` prefix, combined with uppercase letters, signals that the variable is an exported variable. This helps distinguish it from constants and other environment variables, reducing the risk of conflicts.
+- **Naming Conventions**: Use uppercase letters with words separated by underscores (`_`), and prefix the variable name with `E_`.
+    - **Reason**: The` E_` prefix, combined with uppercase letters, signals that the variable is an exported variable. This naming convention helps distinguish it from constants and other environment variables, reducing the risk of conflicts.
     - **Example**:
         ```bash
         export E_PATH="$HOME/.local/bin/"
@@ -228,8 +196,8 @@ export E_PATH="$HOME/.local/bin/"
 ////
 //// tab | Selective Use of `declare`
 
-- **Guideline**: Use `declare` specifically for managing advanced variable attributes, such as associative arrays.
-    - **Reason**: While `declare` can be useful, using direct assignment for simple variables reduces complexity and enhances script clarity.
+- **Guideline**: Use `declare` to manage advanced variable attributes, such as associative arrays.
+    - **Reason**: While `declare` can be helpful, direct assignment for simple variables reduces complexity and enhances script clarity.
 
 ///// details | Example
     type: example
@@ -263,7 +231,6 @@ readonly C_SSHD_CONFIG
 ////
 ///
 
-
 ## Shebang in Bash Scripts
 
 On Unix-like systems, the shebang (`#!`) line at the beginning of a script specifies the interpreter that should execute the script. In Bash, the choice of shebang can significantly impact the portability and compatibility of scripts across different operating systems. Understanding the differences between `#!/bin/bash` and `#!/usr/bin/env bash` is crucial for ensuring that scripts run as intended.
@@ -271,7 +238,7 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
 /// admonition | Guidelines
     type: info
 
-- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that need to run on various operating systems, including BSD, macOS, and Linux.
+- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that must run on various operating systems, including BSD, macOS, and Linux.
     - **Reason**: This shebang searches the user's `PATH` to locate the first instance of the Bash executable, ensuring bash can be found regardless of its location.
     - **Example**:
         ```bash
@@ -285,7 +252,7 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
         #!/bin/bash
         echo "This script is intended for Linux systems."
         ```
-- **Other Considerations**: To avoid compatibility issues when writing scripts for specific environments, ensure the shebang reflects the intended interpreter location.
+- **Other Considerations**: Ensure the shebang reflects the intended interpreter location to avoid compatibility issues when writing scripts for specific environments.
     - **Example**:
         ```bash
         #!/usr/local/bin/bash
@@ -298,6 +265,6 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
     type: tip
 
 - **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash is often located in a different path than on Linux, or the installed version may be older. For instance, many macOS users upgrade Bash via [Homebrew](https://brew.sh/), which installs it at `/usr/local/bin/bash` (Intel Macs) or `/opt/homebrew/bin/bash` (Apple Silicon), while the system version remains at `/bin/bash`.
-- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to use the Bash version installed in the user's environment, which is crucial for accessing features available in newer Bash versions. This approach is particularly useful in environments where the default Bash version is outdated or non-standard.
+- **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to use the Bash version installed in the user's environment, which is crucial for accessing features available in newer Bash versions. This approach is handy when the default Bash version is outdated or non-standard.
 
 ///
