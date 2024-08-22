@@ -96,7 +96,7 @@ Bash provides several methods for declaring variables, each with implications fo
 - **Global Variable Declaration**: Declare global variables at the beginning of the script or in a separate configuration file.
     - **Reason**: Centralizing global variable declaration improves script organization and readability, making it easier to manage and update values.
     - **Exception**: If a variable's value is determined later in the script, consider one of the following approaches:
-        - **Options 1**: Declare the variable at the beginning with a placeholder value and update it later in the script. Add comments to clarify the placeholder.
+        - **Option 1**: Declare the variable at the beginning with a placeholder value and update it later in the script. Add comments to clarify the placeholder.
         - **Option 2**: Initialize the variable when its value is determined. While this approach is acceptable, it can make tracking global variables more challenging.
 
 
@@ -129,8 +129,8 @@ Bash provides several methods for declaring variables, each with implications fo
 - **Global Constants**: Declare global constants at the beginning of the script or in a separate configuration file.
     - **Reason**: Centralizing constant declarations makes managing and updating values easier and improves script readability.
     - **Exception**: If a constant's value is determined later in the script, choose one of the following methods:
-        - **Options 1**: Declare with a placeholder value, update it later, and apply readonly if needed. Add comments to clarify the placeholder.
-        - **Option 2**: Declare and assign when the value is determined, applying readonly if appropriate. This method is acceptable but can make tracking global constants more difficult.
+        - **Option 1**: Declare with a placeholder value, update it later, and apply readonly if needed. Add comments to clarify the placeholder.
+        - **Option 2**: Initialize the variable when its value is determined, applying readonly if appropriate. While this approach is acceptable, it can make tracking global constants more challenging.
 
 ///// details | Example
     type: example
@@ -167,7 +167,9 @@ setup_environment
 ////
 //// tab | Exported Variables
 
-- **Naming Conventions**: Use uppercase letters with words separated by underscores (`_`), and prefix the variable name with `E_`.
+<!-- TODO: Maybe update guidelines and examples... -->
+
+- **Naming Conventions**: Use uppercase letters, separate words with underscores (`_`), and prefix the variable name with `E_`.
     - **Reason**: The` E_` prefix, combined with uppercase letters, signals that the variable is an exported variable. This naming convention helps distinguish it from constants and other environment variables, reducing the risk of conflicts.
     - **Example**:
         ```bash
@@ -197,7 +199,7 @@ export E_PATH="$HOME/.local/bin/"
 //// tab | Selective Use of `declare`
 
 - **Guideline**: Use `declare` to manage advanced variable attributes, such as associative arrays.
-    - **Reason**: While `declare` can be helpful, direct assignment for simple variables reduces complexity and enhances script clarity.
+    - **Reason**: The `declare` command is essential for handling complex declarations like associative arrays or when specific variable attributes are needed. However, it is typically unnecessary for simple variable declarations.
 
 ///// details | Example
     type: example
@@ -238,7 +240,7 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
 /// admonition | Guidelines
     type: info
 
-- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that must run on various operating systems, including BSD, macOS, and Linux.
+- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that must run on various operating systems, including BSD, macOS, Linux, and even Windows Subsystem for Linux (WSL).
     - **Reason**: This shebang searches the user's `PATH` to locate the first instance of the Bash executable, ensuring bash can be found regardless of its location.
     - **Example**:
         ```bash
@@ -263,6 +265,8 @@ On Unix-like systems, the shebang (`#!`) line at the beginning of a script speci
 
 /// admonition | Why the Choice Matters
     type: tip
+
+<!-- TODO: Maybe include info about why using a specific location matters. -->
 
 - **Variability in Bash Locations**: On non-Linux systems like BSD and macOS, Bash is often located in a different path than on Linux, or the installed version may be older. For instance, many macOS users upgrade Bash via [Homebrew](https://brew.sh/), which installs it at `/usr/local/bin/bash` (Intel Macs) or `/opt/homebrew/bin/bash` (Apple Silicon), while the system version remains at `/bin/bash`.
 - **Path Flexibility**: Using `#!/usr/bin/env bash` provides significant flexibility. It enables the script to use the Bash version installed in the user's environment, which is crucial for accessing features available in newer Bash versions. This approach is handy when the default Bash version is outdated or non-standard.
