@@ -12,8 +12,8 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> follow commands that could cause issues if they fail, with a conditional check to handle errors appropriately.
-    - **Reason**: By checking the success of critical commands, you can prevent further operations if something goes wrong, protecting your script from unintended behavior.
+- **Usage**: <mark>**_ALWAYS_**</mark> follow commands that could potentially cause issues if they fail, with a conditional check.
+    - **Reason**: Checking the success of critical commands prevents further execution if an error occurs, reducing the risk of unintended behavior in your script.
 
 ///// admonition | Examples
     type: example
