@@ -2,7 +2,7 @@
 
 Error handling in Bash is crucial for ensuring that scripts function as intended, providing predictable behavior, useful feedback, and effective management of unexpected events. Implementing proper error handling practices can prevent small issues from escalating into major problems.
 
-This section covers essential practices for handling errors in Bash, including checking for command success, using `trap` for signal handling, redirecting errors to `stderr`, and understanding the implications of `set -e`.
+This section covers essential practices for handling errors in Bash, including checking for command success, redirecting errors to `stderr`, and using `trap` for signal handling.
 
 ## Checking Command Success
 
@@ -12,7 +12,7 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> follow commands that could potentially cause issues if they fail, with a conditional check.
+- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands where failure could cause issues if not properly handled.
     - **Reason**: Checking the success of critical commands prevents further execution if an error occurs, reducing the risk of unintended behavior in your script.
 
 ///// admonition | Examples
@@ -23,27 +23,27 @@ cd /some/path || exit 1
 rm file
 ```
 
-**Explanation**: If the `cd` command fails, the script exits with a status of `1`, preventing any potentially harmful actions.
+**Explanation**: When `cd` fails to change to the specified directory, the script exits with a status of `1`, preventing the subsequent `rm` command from executing. This ensures that the `rm` command is only run if the `cd` command succeeds.
 
 /////
 ////
 //// tab | Error Messages for Clarity
 
 - **Guideline**: When a command fails, provide a clear and descriptive error message to indicate what went wrong.
-    - **Reason**: Clear error messages help users (or yourself) understand what failed and why, making it easier to troubleshoot issues.
+    - **Reason**: Descriptive error messages help users (or yourself) understand what failed and why, making it easier to troubleshoot issues.
 
 ///// admonition | Examples
     type: example
 
 ```bash
 cd /some/path || {
-    echo "Error: Failed to change directory to /some/path" >&2
+    echo "ERROR: Failed to change directory to /some/path" >&2
     exit 1
 }
 rm file
 ```
 
-**Explanation**: This example provides a clear error message and directs it to `stderr` (using `>&2`), ensuring that the failure is properly logged and visible.
+**Explanation**: In this example, when `cd` fails, an error message is displayed on `stderr` using `>&2`, and the script exits with a status of `1`. This provides a clear indication of the problem to the user and helps with debugging.
 
 /////
 ////
@@ -57,9 +57,11 @@ Standard error (`stderr`) is a file descriptor (file descriptor `2`) used for ou
     type: info
 
 - **Usage**: <mark>**_ALWAYS_**</mark> use `>&2` to redirect error messages to the standard error stream.
-    - **Reason**: Command-line utilities and scripts expect errors to be sent to `stderr` for proper error handling and integration with other tools. This practice ensures that error messages are not mixed with regular output, which is especially important when output is being redirected or piped into other commands.
+    - **Reason**: Command-line utilities and scripts rely on errors being sent to `stderr` for proper error handling and integration with other tools.
 
-//// admonition | Examples
+///
+
+/// admonition | Example
     type: example
 
 ```bash
@@ -69,29 +71,28 @@ cd /some/nonexistent/path || {
 }
 ```
 
-**Explanation**: This example attempts to change the directory to a non-existent path. When the command fails, an error message is sent to `stderr` using `>&2`, and the script exits with a status of `1`.
+**Explanation**: In this example, `cd` attempts to change to a nonexistent directory. When the command fails, the error message is sent to stderr using >&2, ensuring that the message is kept separate from regular output.
 
-////
 ///
 
 ## Using `trap` for Signal Handling
 
-Signal handling in Bash allows scripts to capture and respond to signals sent by the system or user actions, such as pressing ++ctrl+'C'++ to interrupt a script. The `trap` command lets you define specific actions that should be taken when a signal is received, such as cleaning up resources before the script exits.
+Signal handling in Bash enables scripts to capture and respond to signals sent by the system or user actions. The `trap` command allows you to define specific actions that should be executed when a signal is received. This is particularly useful for performing tasks such as cleanup operations before a script exits or for responding to specific signals like `SIGINT` (++ctrl+'C'++).
 
 /// admonition | Guidelines
     type: info
 //// tab | Cleanup Operations
 
-- **Usage**: Use `trap` to define cleanup operations or other necessary actions that should occur before a script exits.
-    - **Reason**: Without `trap`, it can be difficult to ensure that temporary files or other resources are properly cleaned up, especially if an unexpected error causes the script to terminate prematurely. `trap` helps maintain a clean environment by ensuring that these operations are executed regardless of how the script exits.
+- **Usage**: Use `trap` to define actions, like cleaning up temporary files, that should run before a script exits.
+    - **Reason**: Without `trap`, ensuring proper cleanup can be challenging, especially if a script terminates unexpectedly. `trap` ensures these actions are executed regardless of how the script ends, helping to maintain a clean environment.
 
-///// admonition | Examples
+///// admonition | Example
     type: example
 
 ```bash
 TMP_FILE=$(mktemp)
 
-# Define a trap to remove the temporary file on exit.
+# Define a trap statement to remove the temporary file on exit.
 trap 'rm -f "$TMP_FILE"' EXIT
 
 echo "Temporary file created: $TMP_FILE"
@@ -101,7 +102,7 @@ echo "Random data" > "$TMP_FILE"
 exit 0
 ```
 
-**Explanation**: This example creates a temporary file and uses `trap` to ensure that the file is deleted when the script exits, whether it completes successfully or is interrupted.
+**Explanation**: This example creates a temporary file and uses `trap` to ensure that the file is deleted when the script exits.
 
 /////
 ////
@@ -149,70 +150,4 @@ exit 1
 
 /////
 ////
-///
-
-## Understanding `set -e`
-
-The `set -e` option in Bash instructs the shell to immediately exit if any command returns a non-zero exit status. While this behavior can be useful for ensuring that scripts halt execution upon encountering an error, it can also lead to unexpected exits if not used carefully.
-
-/// admonition | Guidelines
-    type: info
-
-- **Use Carefully**: Use `set -e` judiciously, particularly in scripts where premature exits could cause problems or where errors are expected and handled.
-    - **Reason**: `set -e` can cause unexpected script exits, potentially leaving tasks incomplete if a command fails unexpectedly or if the script isn’t structured to handle such failures gracefully.
-- **Test Thoroughly**: Thoroughly test scripts with `set -e` under various scenarios to ensure they behave as expected and only exit prematurely when intended.
-    - **Reason**: Testing is crucial to verify that the script handles all possible outcomes correctly, particularly when using `set -e`, which can make debugging more challenging if not thoroughly validated.
-
-///
-
-/// admonition | Risks of Using `set -e`
-    type: warning
-
-- **Unintended Exits**: `set -e` can cause a script to terminate prematurely if a command fails, even if the failure is expected or handled, leading to incomplete execution.
-- **Limited Control**: `set -e` enforces a blanket error-handling approach, which can be too restrictive in situations where failures are expected or need specific handling.
-- **Debugging Challenges**: The immediate exit behavior of `set -e` can obscure the exact point of failure, making it harder to identify and fix issues.
-- **Compatibility Issues**: `set -e` may behave inconsistently across different shell environments or under certain conditions (e.g., subshells, pipelines), potentially causing inconsistencies in script execution.
-
-///
-
-
-/// details | Examples
-    type: example
-
-_Example 1: Script Exits Due to a Command Failure_
-
-```bash
-#!/bin/bash
-set -e
-
-echo "Starting the script..."
-mkdir -p /some/directory
-
-# This command will cause the script to exit immediately if the file doesn't exist
-rm non_existent_file.txt
-
-echo "This line won't be executed."
-```
-
-**Explanation**: In this example, the script will exit immediately when `rm non_existent_file.txt` fails because the file doesn’t exist. As a result, the subsequent echo statement is never executed. This behavior could be problematic if the non-existence of the file was expected or acceptable.
-
----
-
-_Example 2: Handling Specific Failures While Using `set -e`_
-
-```bash
-#!/bin/bash
-set -e
-
-echo "Starting the script..."
-mkdir -p /some/directory
-
-# Use a conditional check to handle the failure gracefully
-rm non_existent_file.txt || echo "File not found, continuing without deletion."
-
-echo "This line will be executed if the file was not found."
-```
-
-**Explanation**: Here, the script uses a conditional check with `||` to handle the failure of `rm` gracefully. The script does not exit when `rm` fails, allowing the script to continue executing.
-
 ///
