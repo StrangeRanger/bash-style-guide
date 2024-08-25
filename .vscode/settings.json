@@ -23,6 +23,7 @@
         "pymdownx",
         "pypi",
         "readarray",
+        "reinitialization",
         "SIGALRM",
         "SIGCHLD",
         "SIGCONT",
