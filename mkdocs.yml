@@ -82,6 +82,8 @@ plugins:
         - "guidelines/common-mistakes.md"
 
 markdown_extensions:
+  # TODO: Provide description of the below extensions.
+  - attr_list  # Required for Material for MkDocs Annotations to work.
   # The BetterEm extension improves the detection of Markup to emphasize text in
   # Markdown using special characters, i.e. for **bold** and _italic_ formatting.
   - pymdownx.betterem:
