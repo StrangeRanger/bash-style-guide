@@ -4,7 +4,7 @@ This section focuses on style-related guidelines that directly impact the functi
 
 ## Using Quotes
 
-In Bash, the type of quotes you use—single, double, or none—directly affects how strings and variables are interpreted. Knowing when and how to use each one is essential to avoid common issues like [word splitting](https://mywiki.wooledge.org/WordSplitting) (1), [globbing](https://mywiki.wooledge.org/glob) (2), and unintended [parameter expansion](https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) (3).
+In Bash, the type of quotes you use—single, double, or none—directly affects how strings and variables are interpreted. Knowing when and how to use each one is essential to avoid common issues with [word splitting](https://mywiki.wooledge.org/WordSplitting) (1), [globbing](https://mywiki.wooledge.org/glob) (2), and [parameter expansion](https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) (3).
 { .annotate }
 
 1. **Word splitting**: In Bash, word splitting occurs when the shell divides a string into multiple words or tokens based on the value of the `IFS` (Internal Field Separator) variable. This typically happens during variable expansion or command substitution, where the expanded value is broken into words before being processed.
