@@ -4,58 +4,62 @@ As mentioned in the [Preface](../index.md#preface), this guide aims to be as obj
 
 This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
 
-For stylistic guidelines that have a significant impact on the script's functionality, please refer to this guide's [Style](style.md) section.
+For stylistic guidelines that significantly impact a script's functionality, please refer to this guide's [Style](style.md) section.
 
 ## Indentations
 
-Indentations in Bash scripts can be achieved using either tabs or spaces. However, spaces are generally preferred over tabs for consistent formatting.
+Indentations can be achieved by using either tabs or spaces. In most languages, including Bash, spaces are the preferred method for ensuring consistent formatting.
 
 /// admonition | Guidelines
     type: info
 
-- **Indent Size**: <mark>**_ALWAYS_**</mark> use **four spaces** per indentation level.
-    - **Reason**: Four spaces is the standard indentation size in Bash scripting, widely accepted across the community. This size strikes a balance between readability and space efficiency.
+- **Indent Size**: <mark>**_ALWAYS_**</mark> use four spaces per indentation level.
+    - **Reason**: Four spaces are the standard indentation size in Bash scripting and is widely accepted across the community. This size strikes a balance between readability and an efficient use of space.
 
 ///
 
 /// admonition | Why Use Spaces Over Tabs?
     type: tip
 
-- **Consistency**: Spaces render uniformly across different editors and environments, ensuring consistent alignment and preventing issues caused by varying tab widths.
-- **Merge Conflicts**: Spaces help minimize merge conflicts in version control systems, making them a safer choice for collaborative projects where multiple contributors might use different editors or settings.
+- **Consistency**: Spaces render uniformly across different editors and environments, ensuring consistent alignment and preventing issues caused by differing tab widths.
+- **Merge Conflicts**: Spaces help minimize merge conflicts in version control systems, making them ideal for collaborative projects where multiple contributors might use different editors or settings.
 
 ///
 
-## Column Length
+## Characters Per Line
 
-Column length refers to the number of characters in a single line of code. Limiting the column length in Bash scripts is crucial for maintaining readability, consistency, and ease of maintenance across different environments and tools.
+Historically speaking, the maximum number of Characters Per Line (CPL) was set at 80 due to the constraints of older terminals. While modern terminals and editors can display more characters per line, adhering to a reasonable limit remains beneficial for maintaining readability, consistency, and ease of maintenance across different environments and tools.
 
 /// admonition | General Guidelines
     type: info
 
-- **88-Character Limit**: Keep the column length within 88 characters. Break lines that exceed this limit into multiple lines when necessary.
-- **Exceptions**: Allow exceptions for long strings or complex expressions that are more understandable when kept on a single line.
+- **88-Character Limit**: The maximum CPL for Bash scripts is 88 characters.
+    - **Reason**: The 88-character limit offers a slight increase over the traditional 80-character limit, allowing for more descriptive variable names, comments, or longer strings without sacrificing readability.
+- **Exceptions**: The CPL limit may be exceeded in specific cases where breaking a line greatly reduces readability or negatively impacts the script's structure. These exceptions should be rare and well-justified. (1)
+    { .annotate }
+
+    1. **Exception Note**: There will also be cases where the 88-character limit is not feasible due to the nature of the code or the complexity of the logic. In such instances, it is essential to prioritize functionality and maintainability over strict adherence to the CPL limit.
 
 ///
 
-/// admonition | Why Limit Column Length?
+/// admonition | Why Does A CPL Limit Matter?
     type: tip
 
-- **Readability**: Shorter lines enhance readability by reducing the need for horizontal scrolling and minimizing the impact of word wrapping, especially when viewing code on smaller screens or in terminal windows.
-- **Compatibility**: A consistent column length ensures that code displays well across various development tools, including code review platforms and IDEs.
+- **Readability**: Shorter lines improve readability by reducing the need for horizontal scrolling and minimizing word wrapping issues. This also facilitates easier code comparison when using split-screen editors or working with multiple files simultaneously.
+- **Tool Compatibility**: Maintaining consistent line lengths ensures that code is displayed uniformly across different development environments, such as code review platforms, IDEs, and terminals, preventing layout issues and preserving the intended structure.
 
 ///
 
 ### Formatting Multi-lined Commands
 
-When breaking a command that exceeds the 88-character limit into multiple lines, it is crucial to ensure that it remains readable and easy to follow. Below are some practical guidelines for aligning, indenting, and placing operators, such as `||` and `&&`, in multi-lined commands.
+Maintaining a clear and readable format is important when breaking up commands that exceed the CPL limit. Below are some practical guidelines for aligning continuation lines and placing operators like `||` and `&&` in multi-lined commands.
 
 /// admonition | Guidelines
     type: info
 //// tab | Indentation and Alignment
 
-- **Indentation**: Use the standard four-space indentation for each continuation line.
-    - **Reason**: Consistent indentation enhances readability by ensuring predictable alignment and structure in multi-line commands.
+- **Indentation**: Use the [standard four-space indentation](#indentations) for each continuation line.
+    - **Reason**: Consistent indentations enhance readability by ensuring predictable alignment and structure in multi-lined commands.
 
 ///// admonition | Example
     type: example
@@ -69,12 +73,12 @@ rsync -avz /source/directory/with/a/very/long/path/ \
 ////
 //// tab | Logical Operators
 
-- **Two or More Operators**: When **three or more** commands are connected by logical operators (`&&`, `||`), place each operator at the beginning of a new continuation line, even if the total line length is within the 88-character limit.
-    - **Reason**: Starting each logical operator on a new line clarifies the beginning of each command, improving readability. This practice prevents commands from being cramped together on a single line, which can make the code harder to follow.
-- **Single Operator**: When **two commands** are connected by a **single logical operator** (`&&`, `||`) and the combined line length **does not** exceed the 88-character limit, it is acceptable to keep them on the same line.
-    - **Reason**: In this case, keeping the two commands on the same line generally does not significantly impact readability, particularly when the line is short and straightforward.
-- **Exception**: If a command is followed by a single `||` operator, and the subsequent operations related to `||` span multiple lines, it is acceptable to place `||` at the end of the initial command, followed by `{` on the same line. The closing bracket (`}`) should be on a new line, with the operations for `||` placed between the braces.
-    - **Reason**: This exception allows for a more concise structure when the `||` operation handles a single failure condition. Alternative formatting might introduce unnecessary complexity without improving clarity, making this approach more readable and straightforward.
+- **Two or More Operators**: When two or more logical operators (`&&`, `||`) join a sequence of commands, place each operator at the beginning of a new continuation line. This applies even if the CPL limit has yet to be reached.
+    - **Reason**: Too many operators on a single line can make each operation harder to distinguish. Placing each logical operator at the beginning of a continuation line makes each command easier to identify. This practice ensures that the sequence of operations is easy to follow, even in complex command chains.
+- **Single Operator**: When a single logical operator (`&&` or `||`) connects two separate commands and the combined length doesn't exceed the CPL limit, both commands **MAY** remain on the same line.
+    - **Reason**: This guideline can enhance readability and conciseness, especially when the commands are short, and no other operators are involved. Additionally, separating the two commands can often introduce unnecessary complexity with few benefits.
+- **Exception**: When a command is followed by a single `||` operator and the subsequent operations span multiple lines, it is acceptable to place `|| {` at the end of the initial command. The closing bracket (`}`) should be on a new line, with the operations for `||` placed between the braces.
+    - **Reason**: This format keeps the structure concise when handling a single failure condition with `||`. Other formatting options could introduce unnecessary complexity without enhancing clarity, making this approach more straightforward and readable.
     - **Example of acceptable formatting**:
         ```bash
         cp /some/config/file /some/config/file.bak || {
@@ -83,7 +87,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
             exit 1
         }
         ```
-        **Explanation**: Here, the `||` operator is directly followed by `{`, which starts a block of commands. This structure maintains clarity even when the operations within the block span multiple lines.
+        **Explanation**:  In this example, the `||` operator is immediately followed by `{`, which indicates the start of a block of commands to be performed if the initial `cp` command fails. The closing `}` is placed on a new line. This structure maintains clarity even when the operations within the block span multiple lines.
       - **Example of formatting that is not acceptable**:
         ```bash
         rm /some/config/file.bak && cp /some/config/file /some/config/file.bak || {
@@ -91,7 +95,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
             exit 1
         }
         ```
-        **Explanation**: In this scenario, placing the `&&` and `||` operators on the same line can make the code harder to read and feel slightly disjointed. The preferred formatting for this situation is:
+        **Explanation**: In this scenario, the `&&` and `||` operators are placed on the same line, which violates the "Two or More Operators" guideline. This formatting can make the sequence of operations harder to follow or slightly disjointed. The preferred formatting for this situation is:
         ```bash
         rm /some/config/file.bak \
             && cp /some/config/file /some/config/file.bak \
@@ -100,34 +104,34 @@ rsync -avz /source/directory/with/a/very/long/path/ \
                 exit 1
             }
         ```
-        **Explanation**: This formatting places each logical operator at the beginning of a new line, ensuring the sequence of operations is easier to follow.
+        **Explanation**: This formatting places each logical operator at the beginning of a continuation line, making the sequence of operations more visible.
 
 ///// details | General Examples
     type: example
 
+<!-- TODO: Maybe add an explanation to the examples? -->
+
 _Example 1:_
 
 ```bash
-mkdir /path/to/backup && echo "Backup successful"
+[[ -f /some/location/of/file.txt ]] && rm -f /some/location/of/file.txt
 ```
-
-<!-- **Explanation**: This example shows two commands connected by a single logical operator (`&&`). Since the combined line length does not exceed the 88-character limit, it is acceptable to keep them on the same line. -->
 
 ---
 
 _Example 2:_
 
 ```bash
-mkdir /path/to/backup \
+mkdir -p /path/to/backup \
     && rsync -av --delete /path/to/source/ /path/to/backup/ \
     || echo "Backup failed" >> error.log
 ```
 
-<!-- **Explanation**: In this example, three commands are connected by two logical operators (`&&` and `||`). The operators are placed at the beginning of new lines to enhance readability and ensure the sequence of operations is easy to follow. -->
-
 /////
 ////
 //// tab | Redirect and I/O Operators
+
+<!-- TODO: Come Back to and rework. -->
 
 - **Placement**: When breaking up a long sequence of commands separated by redirect or I/O operators (`>`, `>>`, `<`, `|`), place these operators on a new continuation line.
     - **Reason**: Placing the operators on a new line makes them more visible and separates them from the preceding command, improving overall readability.
@@ -179,7 +183,7 @@ grep -r "TODO" /path/to/project \
 
 ## Function Declaration
 
-While the syntax for function declaration in Bash may not greatly impact script readability or functionality, there exists a preferred style that aligns with best practices for clarity and consistency.
+While the syntax for function declarations may not significantly impact script readability or functionality, there is a preferred style that aligns with best practices for clarity and consistency.
 
 /// admonition | Guidelines
     type: info
@@ -190,54 +194,23 @@ While the syntax for function declaration in Bash may not greatly impact script 
     - **Reason**: While the `function` keyword is valid in Bash, it adds unnecessary verbosity without providing additional benefits.
 ///
 
-<!-- /// details | Example
-    type: example
+## Formatting Control Structures
 
-_Using the `function` keyword:_
-
-```bash
-function greet() {
-    echo "Hello, $1!"
-}
-
-greet "World"
-```
-
-**Explanation**: While this syntax is valid in Bash, it adds unnecessary verbosity without providing additional benefits.
-
----
-
-_Preferred syntax for declaring functions:_
-
-```bash
-greet() {
-    echo "Hello, $1!"
-}
-
-greet "World"
-```
-
-**Explanation**: This example uses the recommended `name() {}` syntax, which is straightforward and efficient.
-
-/// -->
-
-## Formatting Block Statements
-
-Block statements in Bash, such as `if` statements and loops, can be formatted in multiple ways. Depending on the context, you can choose between a standard or single-line block statement. In either case, maintaining consistency and readability is key.
+Control structures in Bash, such as `if` statements and `for` or `while` loops, can be formatted in multiple ways. Depending on the context, you can choose between a standard or single-line control structure. In either case, maintaining consistency and readability is key.
 
 /// admonition | Guidelines
     type: info
-//// tab | Standard Block Statement
+//// tab | Standard Control Structure
 
-- **Inline Placement**: Place `then` on the same line as `if` statements, and `do` on the same line as `for` or `while` loops.
-- **Block Endings**: End `if` statements with `fi` and loops with `done` on their own lines.
-- **Indentation**: If the condition statement of a block exceeds the 88-character limit, <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line.
-    - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the conditions and the code within the block.
+- **Opening Keyword Placement**: Place `then` on the same line as the `if` statement and `do` on the same line as the `for` or `while` loop.
+- **Closing Keyword Placement**: End `if` statements with `fi` and loops with `done` on their own lines.
+- **Continuation Line**: If the condition or loop statement exceeds the CPL limit, <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line rather than the standard four spaces.
+    - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the conditions and the code within the control structure.
 
 ///// details | Example
     type: example
 
-_Standard block statement formatting:_
+_Standard control structure formatting:_
 
 ```bash
 if [[ $1 -eq 1 ]]; then
@@ -265,23 +238,25 @@ elif [[ ($exit_code == "130" ||  $exit_code == "143") \
 fi
 ```
 
+<!-- TODO: Review the explanation and everything below within this section... Got too tired... -->
+
 **Explanation**: The eight-space indentation makes the conditions and their corresponding actions easy to distinguish, especially in complex logical structures.
 
 /////
 ////
-//// tab | Single Line Block Statement
+//// tab | Single-Line Control Structure
 
-- **Clarity and Maintainability**: Single-line block statements should be clear and concise.
-    - **Reason**: Single-line block statements are best suited for simple conditions or loops that can be expressed succinctly. This prevents clutter and ensures the code remains readable.
-- **Avoid Complex Logic**: Avoid adding multiple commands or complex logic to single-line statements.
-    - **Reason**: Complex logic or multiple commands in a single-line block statement can reduce readability and make the code harder to maintain.
-- **When to Avoid**: Avoid using single-line block statements if they cannot fit within the 88-character limit.
-    - **Reason**: If a single-line block statement exceeds the 88-character limit, it compromises readability. In such cases, the block should be expanded into multiple lines.
+- **Clarity and Maintainability**: Single-line control structures should be clear and concise.
+    - **Reason**: Single-line control structures are best suited for simple conditions or loops that can be expressed succinctly. This prevents clutter and ensures the code remains readable.
+- **Avoid Complex Logic**: Avoid adding multiple commands or complex logic to single-line control structures.
+    - **Reason**: Complex logic or multiple commands in a single-line control structure can reduce readability and make the code harder to maintain.
+- **When to Avoid**: Avoid using single-line control structures if they cannot fit within the 88-character limit.
+    - **Reason**: If a single-line control structure exceeds the 88-character limit, it compromises readability. In such cases, the structure should be expanded into multiple lines.
 
 ///// details | Example
     type: example
 
-_Example of a single-line block statement:_
+_Example of a single-line control structure:_
 
 ```bash
 [[ $1 -eq 1 ]] && echo "You entered one."
@@ -289,7 +264,7 @@ _Example of a single-line block statement:_
 for file in *.txt; do echo "Processing $file"; done
 ```
 
-**Explanation**: These examples show how to use single-line block statements for straightforward logic, keeping the code clean and easy to read.
+**Explanation**: These examples show how to use single-line control structures for straightforward logic, keeping the code clean and easy to read.
 
 /////
 ////
@@ -297,20 +272,20 @@ for file in *.txt; do echo "Processing $file"; done
 
 ## Vertical Spacing
 
-Vertical spacing is just as important as horizontal spacing in maintaining a clean and readable script. Proper use of vertical spacing helps to visually organize code, making it easier to follow and maintain.
+Vertical spacing is just as important as horizontal spacing in maintaining a clean and readable script. Proper use of vertical spacing helps to visually organize code, making it easier to follow.
 
 /// admonition | Guidelines
     type: info
 
 - **Single Blank Line**: Use a single blank line to separate logical blocks of code or functions.
-- **Double Blank Lines**: Use double blank lines sparingly to highlight new sections or distinct logical groups within the script.
+- **Double Blank Lines**: Use double-blank lines sparingly to highlight new sections or distinct logical groups within the script.
 
 ///
 
 /// admonition | Why Vertical Spacing Matters?
     type: tip
 
-- **Readability**: Proper vertical spacing is key to balancing readability and organization. Too many blank lines can make the script appear disjointed, while too few can make it look cluttered. Striking the right balance ensures that the script is easy to read and logically organized.
+- **Readability**: Proper vertical spacing balances readability and organization. Too many blank lines can make the script appear disjointed, while too few can make it look cluttered. Striking the right balance ensures the script is easily read and logically organized.
 
 ///
 
@@ -335,7 +310,7 @@ subtract 10 4
 echo "Script finished."
 ```
 
-**Explanation**: In this example, a single blank line is used to separate the add and subtract functions. Double blank lines are used before the `echo "Starting the script..."` line, signifying a transition from function definitions to the main execution block of the script. This approach keeps the script well-organized and easy to follow.
+**Explanation**: In this example, a single blank line separates the add and subtract functions. Double blank lines are used before the `echo "Starting the script..."` line, signifying a transition from function definitions to the main execution block of the script. This approach keeps the script well-organized and easy to follow.
 
 ///
 
@@ -349,7 +324,7 @@ Comments are essential for explaining script functionality and enhancing long-te
 - **Capitalization**: Begin each comment with a capital letter, except for code elements like variables or functions.
 - **Punctuation**: Conclude comments with a period to indicate a complete thought.
 - **Spacing**: For inline comments, maintain two spaces between the code and the comment.
-    - **Reason**: While single spaces are sufficient, two spaces provide a clearer visual separation between the code and the comment, enhancing readability.
+    - **Reason**: While a single space is often sufficient, two spaces provide a clearer visual separation between the code and the comment, enhancing readability.
 
 ///
 
@@ -370,60 +345,218 @@ Functions in Bash differ from those in other languages, especially regarding arg
 /// admonition | Guidelines
     type: info
 
-- **Purpose**: Clearly describe the function's role and purpose within the script.
-    - **Reason**: Documenting the purpose helps others (and yourself) quickly understand what the function is intended to do, making the script easier to maintain and debug.
-- **Global Variables**: If the function relies on any global variables, be sure to mention which ones.
-    - **Reason**: Explicitly stating the global variables the function depends on improves transparency and reduces the risk of unintended side effects when modifying the script.
-    - **NOTE**: You do not need to explain how the global variables are used, only that they are being used.
+- **Purpose**: Provide a clear and comprehensive description of the function's role within the script. This description should go beyond merely repeating the function's name; it should offer context and explain its intended use.
+    - **Reason**: Clearly documenting a function's purpose allows developers, including yourself, to quickly grasp what the function is meant to achieve. Even if the function name is descriptive, a brief explanation adds valuable context, facilitating a better understanding of its role.
+    - **Exception**: If the function is short **AND** its name provides enough description, the purpose may be left blank, or a short and simple description may be used instead. This exception should be used sparingly and only when the function's purpose is immediately evident from its name.
+- **Global Variables**: If the function relies on any global variables, specify which ones are used. Indicate whether the function modifies these variables, how they are used, and any potential side effects.
+    - **Reason**: Identifying how the function interacts with global variables helps developers (including yourself) understand the function's impact on the script's state. This is especially important in larger scripts where tracking variable scope can be challenging.
 - **Parameters**: Detail each parameter the function accepts, noting whether they are required or optional, and specify any default values.
-    - **Reason**: Clearly defining the function's parameters helps users understand how to interact with the function and what values are expected.
-    - **Value Assignment**: Assign parameter values to local variables.
-        - **Reason**: Assigning parameters to local variables helps prevent accidental changes to the original values and enhances readability by making the function’s logic clearer.
+    - **Reason**: Documenting the parameters clarifies how the function should be called and what inputs it requires to operate correctly. This reduces the likelihood of errors or misuse and ensures that the function is used consistently with its intended design.
+    - **Value Assignment**: Assign parameter values to local variables within the function.
+        - **Reason**: Assigning parameter values to local variables enhances readability and ensures the function's logic is self-contained. This practice also prevents accidental modification of the original parameters.
 - **Output and Return**: Specify the function's output and return values.
-    - **Reason**: Describing the function's output and return values helps users understand what to expect when calling the function and how to handle the results.
+    - **Reason**: Describing the function's output and return values helps users understand what to expect when calling the function and how to handle the results. This makes the code more predictable and easier to debug and maintain.
+- **General Reasoning**: Besides the reasons for each guideline, documenting functions allows for quick reference and understanding of the script's structure and logic. This is especially beneficial when revisiting the script or collaborating with other developers after an extended period.
+- **Format/Structure Example**: Below is the recommended format and structure to be followed when documenting functions in Bash scripts. This format provides a clear outline for documenting functions effectively. Please pay attention to the annotations within the example. They provide additional context and explanations for specific parts of the function documentation.
+
+    ```{ .bash .annotate }
+    ####
+    # Function description...
+    #
+    # NOTES:
+    #   Additional notes or considerations. This section may be omitted if there are no
+    #   extra notes.
+    #
+    # GLOBALS:
+    #   - global_var : Brief description of usage. (1)
+    #       - Detailed description of the global variable's role in the function. (2)
+    #
+    # NEW GLOBALS:
+    #   - new_global_var : Brief description of usage (i.e. "Initialized for external use.")
+    #       - Detailed description of the new global variable's role in or outside the function. (3)
+    #
+    # PARAMETERS:
+    #   - $1: parameter_name (Required or Optional, Default: default_value) (4)
+    #       - Detailed description of the parameter, including its purpose, expected values,
+    #         and any constraints. (5)
+    #
+    # OUTPUTS: (6)
+    #   Description of the data output by the function, such as data written to the console
+    #   or a file.
+    #
+    # RETURNS: (7)
+    #   Description of any values the function returns for use elsewhere in the script.
+    function_name() {
+        # Function logic here...
+    }
+    ```
+
+    1. **Short Description for GLOBALS**: Provide a concise overview indicating whether the global variable is initialized, modified, read, used in a conditional, etc.
+    2. **Detailed Explanation for GLOBALS**: Include a thorough description of the global variable's role within the function. Explain how the variable is used and why it is necessary, and mention any side effects that may result from modifying it. If the short description is sufficient, this section can be omitted, but only if it provides a clear understanding of the variable's role.
+    3. **Detailed Explanation for NEW GLOBALS**: The description of the new global variables should be similar to the GLOBALS section. Though, it should primarily describe its use outside of the function.
+    4. **Parameter Requirement**: Specify whether the parameter is "Required" or "Optional." If the parameter is optional, include the default value in the format `(Optional, Default: default_value)`.
+    5. **Parameters Description**: Provide a detailed description of the parameter, explaining its purpose, expected values, and any constraints or limitations. This information helps other developers and yourself understand how to use the function correctly.
+    6. **OUTPUTS Section**: Document any data the function outputs, such as data written to the console or a file. Clearly describe the format, purpose, and destination of the output.
+    7. **RETURNS Section**: Describe any values the function returns for use elsewhere in the script.
 
 ///
 
-/// details | Example
+/// admonition | Example
     type: example
+//// tab | Example 1
 
 ```bash
 ####
-# This function processes files given as parameters and logs results. It is designed to
-# handle a variable number of input files and demonstrate proper error handling.
+# Convert a given IP address into an integer.
+#
+# NOTE:
+#   This allows for easier IP address comparison and calculation. Specifically, the
+#   integer is used to calculate the range of IP addresses to scan, among other things.
 #
 # PARAMETERS:
-#   - $1: input_file (Required)
-#       - Path to the file that needs processing.
-#   - $2: log_file (Required)
-#       - File where the processing logs are stored.
-#   - $3: debug_mode (Optional, Default: false)
-#       - If set to true, the function will perform debugging operations.
-#       - Accepted values:
-#           - true: Enable debug mode.
-#           - false: Disable debug mode.
-#
-# OUTPUTS:
-#   Logs the processing results to the specified log file.
-process_files() {
-    local input_file="$1"
-    local log_file="$2"
-    local debug_mode="${3:-false}"
+#   - $1: ip (Required)
+#       - The IP address to convert to an integer.
+ip_to_int() {
+    local ip="$1"
+    local IFS='.'
 
-    if [[ $debug_mode == true ]]; then
-        echo "Debug mode enabled" >> "$log_file"
-    elif [[ $debug_mode == false ]]; then
-        echo "Debug mode disabled" >> "$log_file"
-    else
-        echo "Invalid debug mode value. Defaulting to disabled." >> "$log_file"
-        debug_mode=false
-    }
-
-    echo "Processing '$input_file'..." >> "$log_file"
-    echo "Processing completed for '$input_file'" >> "$log_file"
+    read -r octet1 octet2 octet3 octet4 <<< "$ip"
+    echo "$(( (octet1 << 24) + (octet2 << 16) + (octet3 << 8) + octet4 ))"
 }
 ```
 
+////
+//// tab | Example 2
+
+```bash
+####
+# Verify if the provided IP address is valid, based on a regular expression pattern.
+#
+# GLOBALS:
+#   - C_RED : Set text color to red.
+#   - C_NC : Reset text color.
+#
+# PARAMETERS:
+#   - $1: ip (Required)
+#       - The IP address to verify.
+verify_valid_ip() {
+    local ip="$1"
+    local valid_ip_regex="^((25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)$"
+
+    if [[ ! $ip =~ $valid_ip_regex ]]; then
+        echo -e "${C_RED}ERROR:${C_NC} Invalid IP address: $ip" >&2
+        clean_exit "1" "" "false"
+    fi
+}
+```
+
+////
+//// tab | Example 3
+
+```{ .bash .annotate }
+####
+# Handles the cleanup process when the script exits normally or due to an error.
+#
+# NOTE:
+#   This function is designed to be triggered on normal exits, errors, or interruptions.
+#
+# GLOBALS:
+#   - background_jobs : Iterate over to kill all background jobs.
+#   - C_TMP_FILE : Temporary file to remove.
+#   - C_RED : Set text color to red.
+#   - C_NC : Reset text color.
+#   - C_YELLOW : Set text color to yellow.
+#
+# PARAMETERS:
+#   - $1: exit_code (Required)
+#       - The type of exit that occurred.
+#       - Acceptable values: (1)
+#           - 0: Normal exit. The script completed its task successfully.
+#           - 1: Exiting due to an error. An error occurred during the script execution.
+#           - 130: User interruption. The user interrupted the script using Ctrl+C.
+#           - 143: User interruption. The user interrupted the script using kill.
+#   - $2: clean_up (Optional, Default: "true")
+#       - Whether to perform cleanup operations.
+#       - Acceptable values:
+#           - "true": Perform cleanup operations.
+#           - "false": Skip cleanup operations.
+#   - $3: display_message (Optional, Default: "true")
+#       - Whether to display fatal error or user interruption messages.
+#       - Acceptable values:
+#           - "true": Display the message.
+#           - "false": Skip displaying the message.
+clean_exit() {
+    local exit_code="$1"
+    local clean_up="${2:-true}"
+    local display_message="${3:-true}"
+
+    if [[ $exit_code == "1" && $display_message == "true" ]]; then
+        echo "${C_RED}==>${C_NC} A fatal error occurred." >&2
+    elif [[ ($exit_code == "130" ||  $exit_code == "143") \
+            && $display_message == "true" ]]; then
+        echo ""
+        echo "${C_YELLOW}==>${C_NC} User interruption detected."
+    fi
+
+    if [[ $clean_up == "true" ]]; then
+        echo "${C_CYAN}==>${C_NC} Cleaning up..."
+
+        for job in "${background_jobs[@]}"; do
+            kill -9 "$job" > /dev/null 2>&1
+        done
+
+        [[ -f "$C_TMP_FILE" ]] && rm "$C_TMP_FILE"
+    fi
+
+    exit "$exit_code"
+}
+```
+
+1. **Acceptable Values**: As mentioned in the guidelines, if a parameter has a specific set of acceptable values, list them. This is an example of how to document such values.
+
+////
+//// tab | Example 4
+
+```{ .bash .annotate }
+####
+# Given two IP addresses, determine the lower and upper bounds, and store them in the in
+# the global variables $C_LOWER_BOUND and $C_UPPER_BOUND.
+#
+# GLOBALS:
+#   - C_RED : Set text color to red.
+#   - C_NC : Reset text color.
+#
+# NEW GLOBALS:
+#   - C_LOWER_BOUND : Initialized for external use.
+#       - Indicates the *start* of the IP range to be scanned. (1)
+#   - C_UPPER_BOUND : Initialized for external use.
+#       - Indicates the *end* of the IP range to be scanned.
+#
+# PARAMETERS:
+#   - $1: bound_one (Required)
+#       - The first IP address to compare.
+#   - $2: bound_two (Required)
+#       - The second IP address to compare.
+check_lower_upper_bounds() {
+    local bound_one="$1"
+    local bound_two="$2"
+
+    if (( $(ip_to_int "$bound_one") > $(ip_to_int "$bound_two") )); then
+        C_LOWER_BOUND="$bound_two"
+        C_UPPER_BOUND="$bound_one"
+    elif (( $(ip_to_int "$bound_one") < $(ip_to_int "$bound_two") )); then
+        C_LOWER_BOUND="$bound_one"
+        C_UPPER_BOUND="$bound_two"
+    else
+        echo -e "${C_RED}ERROR:${C_NC} The lower and upper bounds are the same." >&2
+        clean_exit "1" "" "false"
+    fi
+}
+```
+
+1. **New Globals**: In situations like these, this is where you'd want to provide a detailed explanation of the new global variables' roles and how they are used within or outside the function.
+
+////
 ///
 
 ### Pound Signs in Comments
@@ -435,7 +568,7 @@ Traditionally, a single pound sign (`#`) is used to denote a comment in Bash scr
     type: info
 //// tab | Single Pound Sign (`#`)
 
-- **Usage**: Use a single pound sign for line-specific comments to explain the purpose of a command or a line of code.
+- **Usage**: For single-line comments, start the line with a single `#`.
 
 ///// admonition | Example
     type: example
@@ -449,8 +582,8 @@ ls -la
 ////
 //// tab | Double Pound Signs (`##`)
 
-- **Usage**: Use double pound signs for comments that describe the functionality of a block of code, such as a loop, conditional sequence, or a group of related variable declarations. Place these comments directly above the relevant code block.
-    - **Blank Lines**: If a blank line is placed between the comment and the block of code it refers to, the comment is considered to no longer apply to that code, allowing for clear separation between different logical units or groups of code.
+- **Usage**: Use two `##` for comments that describe the functionality of a block of code, such as a loop, conditional sequence, control structure, or a group of related variable declarations. Place these comments directly above the relevant code block.
+- **Blank Lines**: If a blank line is placed between the comment and the block of code it refers to, the comment is considered to no longer apply to that code, allowing for a clear separation between different logical units or groups of code.
 
 ///// admonition | Examples
     type: example
@@ -461,7 +594,7 @@ var_one="value_one"
 var_two="value_two"
 var_three="value_three"
 
-## Loop through all .txt files in the directory.
+## Loop through all ".txt" files in the directory.
 for file in *.txt; do
     echo "Processing $file"
 done
@@ -471,9 +604,9 @@ done
 ////
 //// tab | Quadruple Pound Signs (`####`)
 
-- **Usage**: Use quadruple pound signs to separate distinct parts of the script, such as functions, variable declarations, or main script logic.
-- **Sparingly**: Use quadruple pound signs sparingly, primarily when it’s necessary to visually distinguish major sections of code. In shorter scripts, extensive use of quadruple pound signs for sectioning may be unnecessary.
-- **Subsections**: Quadruple pound signs can also be used to indicate subsections within a larger section of the script. However, this should be done even more sparingly. Consider using triple pound signs (`###`) before resorting to quadruple pound signs for subsections.
+- **Usage**: Use quadruple-pound signs to separate distinct parts of the script, such as functions, variable declarations, or main script logic.
+- **Sparingly**: Use quadruple-pound signs sparingly, primarily when it’s necessary to visually distinguish major sections of code. Extensive use of quadruple-pound signs for sectioning may be unnecessary in shorter scripts and can often be omitted.
+- **Subsections**: Quadruple-pound signs can also be used to indicate subsections within a larger section of the script. However, this should be done even more sparingly. Consider using [triple-pound signs](#__tabbed_4_4) (`###`) before resorting to quadruple-pound signs for subsections.
 - **Formatting**: Quadruple pound signs should be formatted to stand out from other comments. Below are the suggested formatting guidelines:
     - **Section Naming**: Append `[ Section Name ]` after the quadruple pound signs. The section name should describe the content or purpose of that section.
     - **Filler Characters**: After the section name, add enough `#` characters to reach the 88-character line limit.
