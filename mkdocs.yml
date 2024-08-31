@@ -104,7 +104,7 @@ markdown_extensions:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
-      linenums: true
+      #linenums: true
   # The InlineHilite extension add support for syntax highlighting of inline code
   # blocks. It's built on top of the Highlight extension, from which it sources its
   # configuration.
@@ -131,5 +131,6 @@ nav:
     - Error Handling: guidelines/error-handling.md
     # - Common Mistakes: guidelines/common-mistakes.md
   - Other:
+    - TODO: other/todo.md
     - Changelog: other/changelog.md
     - License: other/license.md
