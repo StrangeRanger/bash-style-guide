@@ -1,5 +1,11 @@
 # Bash Style Guide
 
+/// admonition | WARNING type: warning
+
+This version of the guide is not yet complete...
+
+///
+
 This Bash Style Guide offers detailed recommendations for writing safe, predictable, and maintainable Bash scripts. It is a complete rewrite of the [Bash Style Guide](https://github.com/bahamas10/bash-style-guide) by [bahamas10](https://github.com/bahamas10), drawing inspiration from the core concepts and ideas in [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). While this guide expands upon and reinterprets those foundational principles, any practices not explicitly covered here should be assumed to align with the standards outlined in the referenced resources.
 
 You are encouraged to fork this [guide on GitHub](https://github.com/StrangeRanger/bash-style-guide) for your own use and to contribute to its improvement.
