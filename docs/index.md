@@ -1,6 +1,7 @@
 # Bash Style Guide
 
 /// admonition | WARNING type: warning
+    type: warning
 
 This version of the guide is not yet complete...
 
