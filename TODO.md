@@ -3,6 +3,8 @@
 ## Small TODOs
 
 - Instead of just saying, "It makes things more clear," explain how it makes things more clear.
+    - Example:
+        - **Explanation**: Bash globbing, using patterns like `*`, directly matches filenames in the specified directory without invoking an external command. Unlike `ls`, which produces plain text output that may misinterpret or mishandle filenames containing spaces, newlines, or special characters, Bash globbing handles these scenarios correctly and efficiently. When a glob pattern is used (e.g., `/path/to/dir/*`), the shell itself expands the pattern into a list of matching filenames. This approach ensures that each filename, regardless of its complexity or the characters it contains, is correctly identified and processed. Consequently, Bash globbing is more reliable and secure than parsing the output of ls, which can easily lead to errors or security vulnerabilities when encountering unconventional filenames.
 - Ensure terminology is consistent and correct throughout the document. (e.g., "Block statements" vs. "Control statements")
 
 ## Big(ger) TODOs
