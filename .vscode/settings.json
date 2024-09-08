@@ -17,6 +17,7 @@
     "mktemp",
     "myapp",
     "mywiki",
+    "POSIX",
     "Pubkey",
     "pygments",
     "pymdown",
@@ -33,6 +34,7 @@
     "smartsymbols",
     "subshells",
     "superfences",
+    "unwritable",
     "viewports",
     "wooledge"
   ]
