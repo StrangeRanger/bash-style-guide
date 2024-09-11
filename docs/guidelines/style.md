@@ -1,17 +1,17 @@
 # Style
 
-This section provides style-related guidelines essential for writing functional and robust Bash scripts. It covers best practices for using quotes, declaring variables, and writing shebangs.
+This section outlines style guidelines that directly impact the functionality of Bash scripts. It includes best practices for quoting, variable declaration, and writing shebang lines.
 
 ## Using Quotes
 
-In Bash, the type of quotes you use—single, double, or none—determines how strings and variables are interpreted. Understanding when to use each type is essential to prevent common pitfalls, such as unintended [word splitting](https://mywiki.wooledge.org/WordSplitting), [globbing](https://mywiki.wooledge.org/glob), and [parameter expansion](https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion).
+In Bash, the type of quotes you use—single, double, or none—affects how strings and variables are interpreted. Understanding when to use each type is crucial to avoid common pitfalls, such as unintended [word splitting](https://mywiki.wooledge.org/WordSplitting), [globbing](https://mywiki.wooledge.org/glob), and [parameter expansion](https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion).
 
 /// admonition | Guidelines
     type: info
 //// tab | Double Quotes (`"`)
 
-- **First Choice**: Use double quotes as the default method for quoting strings and variables.
-    - **Reason**: Double quotes allow the shell to interpret variables, command substitutions, and escape sequences (e.g., `\n`, `\t`) while preventing word splitting and globbing.
+- **First Choice**: Use double quotes as the default method of quoting strings and variables.
+    - **Reason**: Double quotes allow the shell to interpret [expansions](https://guide.bash.academy/expansions/) (such as variables, command substitutions, and escape sequences) while preventing word splitting and globbing.
 
 ///// admonition | Example
     type: example
@@ -25,8 +25,8 @@ echo "Hello, $name"
 ////
 //// tab | Single Quotes (`'`)
 
-- **String Literals**: Use single quotes to treat enclosed text exactly as written, without any form of expansion.
-    - **Reason**: Single quotes preserve the string as a literal, preventing any form of expansion by the shell. This is crucial for commands like `find`, `grep`, and `awk`, which have their own rules for interpreting special characters. Using single quotes ensures that these commands receive the text exactly as written, without modification by the shell.
+- **String Literals**: Use single quotes to define string literals.
+    - **Reason**: Single quotes preserve the literal value of every character in a string, preventing the shell from performing expansions or substitutions. This behavior is essential for commands like `find`, `grep`, and `awk`, which have their own rules for interpreting special characters. Using single quotes ensures that these commands receive the input exactly as written, without modification by the shell.
 
 ///// admonition | Example
     type: example
@@ -34,7 +34,7 @@ echo "Hello, $name"
 _Literal string_:
 
 ```bash
-echo 'This is a literal $string with no variable substitution'
+echo '${C_BLUE}This is a literal ${string} with no variable substitution${C_NC}'
 ```
 
 ---
@@ -49,9 +49,13 @@ find . -name '*.txt' -exec grep 'pattern.*here' {} \; -print
 ////
 //// tab | Omitting Quotes
 
-- **When to Omit Quotes**: In Bash, certain situations allow for safely omitting quotes:
-    - **Arithmetic Operations**: Quotes are not required when performing arithmetic operations within `$(( ... ))`, as [arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
-    - **Double Bracket Tests (`[[ ... ]]`)**: Quotes around variables can be omitted within double brackets. The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing comparisons and checks without needing quotes.
+<!-- TODO: Come back to... -->
+
+- **When to Omit Quotes**: Under specific circumstances, quotes can be omitted without causing issues.
+    - **Arithmetic Operations**: Quotes are not needed within `$(( ... ))`, as [arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
+    - **Double Bracket Tests**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing for comparisons and checks without requiring quotes.
+- **Caution**: Although there are other scenarios where quotes can be omitted, it is generally safer to use them to prevent unexpected behavior. Omit quotes only when you are confident that word splitting and globbing will not affect the desired outcome.
+- **When in Doubt, Quote**: If you are unsure whether quotes are necessary, it is best to use them. Quoting variables and strings by default helps prevent common errors and makes scripts more robust and predictable
 
 ///// admonition | Example
     type: example
@@ -70,27 +74,28 @@ fi
 ////
 //// tab | Recommendations
 
-- **Syntax Highlighting**: Ensure syntax highlighting is enabled in your IDE or text editor. This helps identify potential issues, such as missing quotes or misplaced escape sequences and special characters.
-- **When in Doubt, Quote**: If unsure whether to use quotes, it's generally safer to include them to avoid unexpected behavior.
+- **Syntax Highlighting**: Enable syntax highlighting in your IDE or text editor.
+    - **Reason**: Syntax highlighting visually distinguishes different code elements, such as keywords, strings, and variables, making it easier to identify potential issues, such as missing quotes, misplaced escape sequences, or incorrect special characters. This feature enhances debugging by making errors more visible and improving overall code readability.
 
 ////
 ///
 
 ## Declaring and Naming Variables
 
-Bash provides several methods for declaring variables, each with implications for scope, immutability, and readability. Following best practices for naming and declaring variables is essential to maintain consistency and avoid unintended side effects
+<!-- TODO: Modify intro to include a proper mention of how Bash has certain naming conventions and such. -->
+
+Bash offers several methods for declaring variables, each with implications for scope, immutability, and readability. Following best practices for naming and declaring variables is essential to maintain consistency and avoid unintended side effects
 
 /// admonition | Guidelines
     type: info
 //// tab | Global and Local Variables
 
-- **Naming Conventions**: Use `snake_case` for variable names.
-    <!-- - **Reason**: Snake case helps differentiate standard variables from constants and exported variables, which are conventionally written in uppercase. -->
+- **Naming Convention**: Use `snake_case` for variable names.
 - **Scope Management**: Use the `local` keyword to limit a variable's scope to within a function.
-    - **Reason**: Declaring a variable as `local` prevents unintended overwrites of global variables with the same name. It also ensures that once the function completes, the variable is unset and released from memory. (1)
+    - **Reason**: Declaring a variable as `local` prevents accidental overwrites of global variables with the same name. It also ensures that once the function completes, the variable is unset and released from memory. (1)
         { .annotate }
 
-        1. **Variable Scope**: In Bash, variables declared inside a function without the `local` keyword are global by default, meaning they persist beyond the function scope and can impact other parts of the script.
+        1. **Variable Scope**: In Bash, variables declared inside a function without the `local` keyword are global by default, meaning they persist beyond the function's scope and can impact other parts of the script.
 
     - **Example**:
         ```bash

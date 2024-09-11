@@ -1,15 +1,15 @@
 # Proper Error Handling
 
-Error handling in Bash is crucial for ensuring that scripts function as intended, produce predictable behavior, provide useful feedback, and efficiently manage unexpected events. Implementing proper error-handling practices can prevent small issues from escalating into major problems.
+Error handling in Bash is crucial for ensuring that scripts function as intended, exhibit predictable behavior, provide meaningful feedback, and efficiently manage unexpected events. Proper error-handling helps prevent minor issues from escalating into major problems.
 
-This section covers essential practices for handling errors in Bash, such as checking for command success, working with standard error streams (1), and using `trap` for signal handling.
+This section outlines essential practices for handling errors in Bash, including verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
 { .annotate }
 
-1. **Streams**: Streams in Unix-like systems are standardized channels used for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, usually from the keyboard; `stdout` (standard output) is the stream where a program writes its output, typically to the terminal; and `stderr` (standard error) is the stream used for outputting error messages, also usually directed to the terminal but can be redirected separately from stdout. _(Definition provided by ChatGPT)_
+1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, typically from the keyboard. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream specifically used for outputting error messages, which can be redirected independently from stdout.<br>_(Definition provided by ChatGPT, vetted by human)_
 
 ## Checking Command Success
 
-Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorrect paths, insufficient permissions, or missing files. Failing to check the success of these commands can lead to unintended consequences, such as deleting the wrong files or modifying the wrong directories.
+Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorrect paths, insufficient permissions, or missing files. If the success of these commands is not verified, it may lead to unintended consequences, such as deleting the wrong files or modifying the wrong directories.
 
 /// admonition | Guidelines
     type: info
