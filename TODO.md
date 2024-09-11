@@ -13,3 +13,4 @@
 - Add a section explaining how to properly use `set -e`.
 - Add information regarding how to deal with logical operators (or redirect and i/o operators), similar to that of inside "Formatting Multi-lined Commands", to _____...
 - Add information to (some section) specifying that global variables should often be placed at the top of the script. This ensures that the script isn't reliant on variables defined within a function. (or something like that)
+- While out of scope of this document, consider adding information to "Using Quotes" in style.md about the background of using quotes and how they are used in other programming languages. This could help readers understand the importance of quotes in Bash and why they should be used consistently.
