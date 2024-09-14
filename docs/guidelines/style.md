@@ -1,6 +1,6 @@
 # Style
 
-This section outlines style guidelines that directly impact the functionality of Bash scripts. It includes best practices for quoting, variable declaration, and writing shebang lines.
+This section outlines style guidelines that directly impact the functionality of Bash scripts. It includes best practices for quoting and variable declaration.
 
 ## Using Quotes
 
@@ -51,10 +51,9 @@ find . -name '*.txt' -exec grep 'pattern.*here' {} \; -print
 
 <!-- TODO: Come back to... -->
 
-- **When to Omit Quotes**: Under specific circumstances, quotes can be omitted without causing issues.
+- **When to Omit Quotes**: Under specific circumstances, quotes may be omitted without any potential risk. A few common scenarios include:
     - **Arithmetic Operations**: Quotes are not needed within `$(( ... ))`, as [arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
     - **Double Bracket Tests**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing for comparisons and checks without requiring quotes.
-- **Caution**: Although there are other scenarios where quotes can be omitted, it is generally safer to use them to prevent unexpected behavior. Omit quotes only when you are confident that word splitting and globbing will not affect the desired outcome.
 - **When in Doubt, Quote**: If you are unsure whether quotes are necessary, it is best to use them. Quoting variables and strings by default helps prevent common errors and makes scripts more robust and predictable
 
 ///// admonition | Example
@@ -119,14 +118,14 @@ Bash offers several methods for declaring variables, each with implications for 
     - **Reason**: This naming convention helps distinguish constants from other variables and aligns with common practices across various programming languages. (1)
         { .annotate }
 
-        1. **Constants and Environment Variables**: Constants typically use `UPPER_SNAKE_CASE`, a standard adopted in many languages, such as C, Python, and Java. Sticking to a common convention ensures that other developers can easily identify constants in your scripts. However, in Unix-like systems, environment variables are also written in `UPPER_SNAKE_CASE`. Using the same naming convention without any variation can lead to confusion. A prefix such as `C_` is used to differentiate constants from environment variables.
+        1. **Constants and Environment Variables**: Constants typically use `UPPER_SNAKE_CASE`, a standard followed in many languages, such as C, Python, and Java. Adopting a common convention ensures that other developers can easily recognize constants in your scripts. However, in Unix-like systems, environment variables are also written in `UPPER_SNAKE_CASE`. To prevent confusion, a prefix such as `C_` is used to differentiate constants from environment variables.
 
-    - **Alternative Prefix**: `C_` is the default prefix for constants. However, you can use other prefixes, like `CONST_` or `CONFIG_`, if they better suit your naming conventions or project requirements. The key is to maintain consistency within your script or project.
-        - **Example**: An example of an alternative prefix is the use of `OMZ_` for the [oh-my-zsh project](https://github.com/ohmyzsh/ohmyzsh). The prefix clearly indicates that this constant is part of the oh-my-zsh project while following the `UPPER_SNAKE_CASE` convention.
+    - **Alternative Prefix**: While `C_` is the default prefix for constants, other prefixes like `CONST_` or `CONFIG_` may be used if they better suit your naming conventions or project requirements. The key is to maintain consistency within your script or project.
+        - **Example**: The [oh-my-zsh project](https://github.com/ohmyzsh/ohmyzsh) uses the `OMZ_` prefix to clearly indicate constants as part of the project while following the `UPPER_SNAKE_CASE` convention.
 
 - **Selective Use of `readonly`**: Use `readonly` to define constants that must remain unchanged throughout the script.
-    - **Reason**: The `readonly` keyword enforces immutability, preventing accidental modification of critical values. However, overusing `readonly` can make scripts overly restrictive, complicating development and debugging. Therefore, reserve `readonly` for _truly_ immutable values.
-    - **Declaration**: Use `readonly` during variable initialization or immediately afterward.
+    - **Reason**: The `readonly` keyword enforces immutability, preventing accidental modification of critical values. However, overusing `readonly` can make scripts overly restrictive and complicate development and debugging. Therefore, reserve `readonly` for values that are _truly_ immutable.
+    - **Declaration**: Use `readonly` when initializing the variable or immediately afterward.
     - **Example of When to Use**:
         - **Global Constants**: Apply `readonly` to global constants where changes could significantly affect script behavior or cause unexpected results.
     - **Example of When to Omit**:
@@ -185,8 +184,10 @@ perform_operation
 ////
 //// tab | Exported Variables
 
+<!-- TODO: Come back and update wording for 'Reason' and annotation. -->
+
 - **Naming Conventions**: Use `UPPER_SNAKE_CASE` with an `E_` prefix for exported variables (e.g., `E_PATH`).
-    - **Reason**: This naming convention helps distinguish exported variables from other variable types and aligns with standard Unix practices. (1)
+    - **Reason**: This naming convention differentiates exported variables from other variable types and aligns with the Unix naming convention for environment variables. (1)
         { .annotate }
 
         1. **Exported and Environment Variables**: Under Unix conventions, environment variables are written in `UPPER_SNAKE_CASE`. However, just like constants, using the same naming convention for exported variables can cause confusion and lead to accidental modifications of existing environment variables. A prefix such as `E_` is used to differentiate exported variables from others while adhering to the `UPPER_SNAKE_CASE` convention.
@@ -207,10 +208,12 @@ export E_PATH
 
 /////
 ////
-//// tab | Selective Use of `declare`
+//// tab | Using `declare`
 
-- **Guideline**: Use `declare` to manage advanced variable attributes, such as for associative arrays.
-    - **Reason**: The `declare` command is essential for handling complex variable declarations, such as associative arrays, or when specific attributes are required. It is generally unneeded for simple variable declarations.
+<!-- TODO: Re-review the wording of the below guidelines. -->
+
+- **Selective Use**: Use the `declare` command to manage advanced variable attributes, such as associative arrays. For simple variable declarations, or when keywords like `local` and `readonly` are sufficient, avoid using `declare`.
+    - **Reason**: The `declare` command is useful for managing complex variable types, such as associative arrays, or when specific attributes are needed. However, using `declare` for basic variable assignments can reduce readability and is often unnecessary.
 
 ///// details | Example
     type: example
@@ -244,17 +247,17 @@ readonly C_SSHD_CONFIG
 ////
 ///
 
-## Shebang in Bash Scripts
+<!-- ## Shebang in Bash Scripts
 
-The shebang (`#!`) in Bash scripts is a crucial component that specifies the interpreter that should execute the script. The choice of shebang can significantly impact a script's compatibility and behavior across different operating systems and environments. Understanding the purpose and appropriate usage of different shebangs is essential for writing robust Bash scripts.
+The shebang (`#!`) in Bash scripts is a crucial component that specifies the interpreter to execute the script. The choice of shebang can significantly affect a script's compatibility and behavior across different operating systems and environments. Understanding the purpose and appropriate usage of different shebangs is essential for writing robust Bash scripts.
 
 /// admonition | Guidelines
     type: info
 
-- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that must run on various operating systems, including BSD, macOS, Linux, and Windows Subsystem for Linux (WSL).
-    - **Reason**: This shebang uses the `env` command to search the user's `PATH` and locate the first instance of the Bash executable, ensuring the script finds Bash regardless of its installation location.
+- **Universal Compatibility**: Use `#!/usr/bin/env bash` for scripts that need to run on various operating systems, including BSD, macOS, Linux, and Windows Subsystem for Linux (WSL).
+    - **Reason**: This shebang leverages the `env` command to search the user's `PATH` for the first instance of the Bash executable, ensuring the script can locate Bash regardless of its installation location.
 - **Linux-Specific Scripts**: Use `#!/bin/bash` for scripts intended to run exclusively on Linux.
-    - **Reason**: On Linux systems, Bash is typically installed at `/bin/bash`. This shebang is suitable for scripts designed exclusively for Linux, where cross-platform compatibility is not required.
+    - **Reason**: On Linux systems, Bash is typically located at `/bin/bash`. This shebang is suitable for scripts designed exclusively for Linux, where cross-platform compatibility is not necessary.
 - **Non-Standard Installations**: For environments with non-standard Bash installations, specify the exact path to the Bash interpreter in the shebang to ensure correct execution.
     - **Example**:
         ```bash
@@ -270,4 +273,4 @@ The shebang (`#!`) in Bash scripts is a crucial component that specifies the int
 - **Script Portability**: The shebang choice affects whether your script can be executed on different systems without modification. Using `#!/usr/bin/env bash` enhances portability by ensuring the script can locate the Bash interpreter regardless of its installation path.
 - **System Compliance and Security**: In environments where system integrity and security are critical, using a direct path like `#!/bin/bash` ensures the script runs with the system’s default, vetted Bash interpreter, reducing the risk of unintended behavior from using an alternative version.
 
-///
+/// -->
