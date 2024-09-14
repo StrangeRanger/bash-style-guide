@@ -49,12 +49,9 @@ find . -name '*.txt' -exec grep 'pattern.*here' {} \; -print
 ////
 //// tab | Omitting Quotes
 
-<!-- TODO: Come back to... -->
-
-- **When to Omit Quotes**: Under specific circumstances, quotes may be omitted without any potential risk. A few common scenarios include:
-    - **Arithmetic Operations**: Quotes are not needed within `$(( ... ))`, as [arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
-    - **Double Bracket Tests**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing for comparisons and checks without requiring quotes.
-- **When in Doubt, Quote**: If you are unsure whether quotes are necessary, it is best to use them. Quoting variables and strings by default helps prevent common errors and makes scripts more robust and predictable
+- **When to Omit Quotes**: In certain cases, quotes can be safely omitted without risk. Common scenarios include arithmetic operations and double bracket tests.
+    - **Arithmetic Operations (`$(( ... ))`)**: [Arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
+    - **Double Bracket Tests `[[ ... ]]`**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing comparisons and checks without the need for quotes.
 
 ///// admonition | Example
     type: example
@@ -75,13 +72,12 @@ fi
 
 - **Syntax Highlighting**: Enable syntax highlighting in your IDE or text editor.
     - **Reason**: Syntax highlighting visually distinguishes different code elements, such as keywords, strings, and variables, making it easier to identify potential issues, such as missing quotes, misplaced escape sequences, or incorrect special characters. This feature enhances debugging by making errors more visible and improving overall code readability.
+- **When in Doubt, Quote**: If unsure whether quotes are necessary, it's recommended to use them. Quoting variables and strings by default helps prevent common pitfalls.
 
 ////
 ///
 
 ## Declaring and Naming Variables
-
-<!-- TODO: Modify intro to include a proper mention of how Bash has certain naming conventions and such. -->
 
 Bash offers several methods for declaring variables, each with implications for scope, immutability, and readability. Following best practices for naming and declaring variables is essential to maintain consistency and avoid unintended side effects
 
