@@ -1,10 +1,8 @@
-mkdocs==1.6.0
+mkdocs==1.6.1
 mkdocs-git-revision-date-localized-plugin==1.2.7
-mkdocs-material==9.5.31
-mkdocs-table-reader-plugin==3.0.1
+mkdocs-material==9.5.34
 mkdocs-exclude==1.0.2
 pymdown-extensions==10.9
-mkdocs-include-markdown-plugin==6.2.2
 
 ## Requirements for 'pymdown-extensions'.
 Pygments==2.18.0
