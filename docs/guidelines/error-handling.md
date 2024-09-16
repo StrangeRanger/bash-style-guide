@@ -32,8 +32,8 @@ rm file
 ////
 //// tab | Error Messages for Clarity
 
-- **Guidelines**: When a command fails, provide a clear and descriptive error message to indicate what went wrong.
-    - **Reason**: Descriptive error messages help users (or yourself) understand what failed and why, making it easier to troubleshoot issues.
+- **Guidelines**: When a command fails, provide a clear and descriptive error message indicating what went wrong.
+    - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, making it easier to troubleshoot issues.
 
 ///// admonition | Example
     type: example
@@ -46,7 +46,7 @@ cd /some/path || {
 rm file
 ```
 
-**Explanation**: Here, the script not only exits when `cd` fails but also provides a clear error message sent to `stderr`. This message informs the user about what went wrong, which directory change failed, and why the script is exiting
+**Explanation**: In this example, if the `cd` command fails, the script not only exits but also outputs a clear error message to `stderr`. The message specifies which directory change failed, helping the user understand the issue and the reason for the script's termination
 
 /////
 ////
