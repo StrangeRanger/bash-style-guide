@@ -1,11 +1,11 @@
 # Proper Error Handling
 
-Error handling in Bash is crucial for ensuring that scripts function as intended, exhibit predictable behavior, provide meaningful feedback, and efficiently manage unexpected events. Proper error-handling helps prevent minor issues from escalating into major problems.
+Error handling in Bash scripts is essential for ensuring scripts operate as intended, maintain predictable behavior, provide meaningful feedback, and efficiently manage unexpected events. Proper error handling can prevent minor issues from escalating into significant problems.
 
 This section outlines essential practices for handling errors in Bash, including verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
 { .annotate }
 
-1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, typically from the keyboard. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream specifically used for outputting error messages, which can be redirected independently from stdout.<br>_(Definition provided by ChatGPT, vetted by human)_
+1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, typically from the keyboard. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream specifically used for outputting error messages and can be redirected independently of `stdout`.<br>_(Definition provided by ChatGPT, vetted by human)_
 
 ## Checking Command Success
 
@@ -15,8 +15,8 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands where failure could cause issues if left unhandled.
-    - **Reason**: Checking the success of critical commands ensures that appropriate actions are taken in the event of a failure. This helps prevent unintended side effects and provides better control over script execution.
+- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands in which failure could cause issues if left unhandled.
+    - **Reason**: Verifying the success of critical commands ensures that failures are handled appropriately, preventing unintended side effects and maintaining control over script execution.
 
 ///// admonition | Example
     type: example
@@ -32,8 +32,8 @@ rm file
 ////
 //// tab | Error Messages for Clarity
 
-- **Guidelines**: When a command fails, provide a clear and descriptive error message to indicate what went wrong.
-    - **Reason**: Descriptive error messages help users (or yourself) understand what failed and why, making it easier to troubleshoot issues.
+- **Guidelines**: When a command fails, provide a clear and descriptive error message indicating what went wrong.
+    - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, making it easier to troubleshoot issues.
 
 ///// admonition | Example
     type: example
@@ -46,7 +46,7 @@ cd /some/path || {
 rm file
 ```
 
-**Explanation**: Here, the script not only exits when `cd` fails but also provides a clear error message sent to `stderr`. This message informs the user about what went wrong, which directory change failed, and why the script is exiting
+**Explanation**: In this example, if the `cd` command fails, the script not only exits but also outputs a clear error message to `stderr`. The message specifies which directory change failed, helping the user understand the issue and the reason for the script's termination
 
 /////
 ////
