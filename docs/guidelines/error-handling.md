@@ -1,8 +1,8 @@
 # Proper Error Handling
 
-Error handling in Bash scripts is essential for ensuring scripts operate as intended, maintain predictable behavior, provide meaningful feedback, and efficiently manage unexpected events. Proper error handling can prevent minor issues from escalating into significant problems.
+Error handling is essential for ensuring scripts operate as intended, providing meaningful feedback, and efficiently managing unexpected events. It helps prevent minor issues from escalating into major problems.
 
-This section outlines essential practices for handling errors in Bash, including verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
+This section outlines essential practices for handling errors in Bash, such as verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
 { .annotate }
 
 1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, typically from the keyboard. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream specifically used for outputting error messages and can be redirected independently of `stdout`.<br>_(Definition provided by ChatGPT, vetted by human)_
@@ -15,7 +15,7 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands in which failure could cause issues if left unhandled.
+- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands where failure could cause issues if left unhandled.
     - **Reason**: Verifying the success of critical commands ensures that failures are handled appropriately, preventing unintended side effects and maintaining control over script execution.
 
 ///// admonition | Example
@@ -32,7 +32,7 @@ rm file
 ////
 //// tab | Error Messages for Clarity
 
-- **Guidelines**: When a command fails, provide a clear and descriptive error message indicating what went wrong.
+- **Guidelines**: When a command fails, provide a clear, descriptive error message indicating what went wrong.
     - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, making it easier to troubleshoot issues.
 
 ///// admonition | Example
@@ -46,7 +46,7 @@ cd /some/path || {
 rm file
 ```
 
-**Explanation**: In this example, if the `cd` command fails, the script not only exits but also outputs a clear error message to `stderr`. The message specifies which directory change failed, helping the user understand the issue and the reason for the script's termination
+**Explanation**: In this example, if the `cd` command fails, the script outputs a clear error message to `stderr` and then exits. The message specifies which directory change failed, indicating where the issue occurred.
 
 /////
 ////
@@ -79,8 +79,8 @@ cd /some/nonexistent/path || {
 ////
 //// tab | Logging Errors
 
-- **Guideline**: When dealing with scripts that may produce many errors, consider logging errors to a file for later review, while still using `stderr` for critical error messages.
-    - **Reason**: This practice helps in maintaining clean output in the terminal while ensuring that all errors are captured and accessible for debugging or auditing purposes.
+- **Guideline**: When dealing with scripts that may produce many errors, consider logging errors to a file for later review while still using `stderr` for critical error messages.
+    - **Reason**: This practice helps maintain a clean output in the terminal while ensuring that all errors are captured and accessible for debugging or auditing purposes.
 
 ///// admonition | Example
     type: example
@@ -108,7 +108,7 @@ done
 echo "Completed. Check $error_log for non-critical errors."
 ```
 
-**Explanation**: This script attempts to list the contents of directories specified in the `directories` array. If an error occurs during the `ls` command, the error message is appended to the `error_log` file using `2>>`. Additionally, a critical error message is sent to stderr using `>&2`, ensuring it is immediately visible to the user in the terminal. This approach keeps the terminal output clean while capturing all errors for later review.
+**Explanation**: This script attempts to list the contents of directories specified in the `directories` array. If an error occurs during the `ls` command, the error message is appended to the `error_log` file using `2>>`. Additionally, a critical error message is sent to `stderr` using `>&2`, ensuring it is immediately visible to the user in the terminal. This approach keeps the terminal output clean while capturing all errors for later review.
 
 /////
 ////
@@ -119,7 +119,6 @@ echo "Completed. Check $error_log for non-critical errors."
 
 ////
 ///
-
 
 ## Using `trap` for Signal Handling
 
