@@ -1,0 +1,1551 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A style guide for writing clean, consistent, and idiomatic Bash scripts.">
+      
+      
+        <meta name="author" content="Hunter T.">
+      
+      
+        <link rel="canonical" href="https://bsg.hthompson.dev/guidelines/bashism/">
+      
+      
+        <link rel="prev" href="../aesthetics/">
+      
+      
+        <link rel="next" href="../style/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
+    
+    
+      
+        <title>Bashism - Bash Style Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+  
+  
+  
+  
+  <style>:root{--md-annotation-icon:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2"/></svg>');}</style>
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  <!DOCTYPE html>
+<script>
+  var _paq = (window._paq = window._paq || []);
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+  (function () {
+    var u = "https://analytics.hthompson.dev/";
+    _paq.push(["setTrackerUrl", u + "matomo.php"]);
+    _paq.push(["setSiteId", "2"]);
+    var d = document,
+      g = d.createElement("script"),
+      s = d.getElementsByTagName("script")[0];
+    g.async = true;
+    g.src = u + "matomo.js";
+    s.parentNode.insertBefore(g, s);
+  })();
+
+  navigation.addEventListener("navigate", function (e) {
+    _paq.push(["setDocumentTitle", document.title]);
+    _paq.push(["trackPageView"]);
+  });
+</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#bashisms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Bash Style Guide" class="md-header__button md-logo" aria-label="Bash Style Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Bash Style Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Bashism
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/StrangeRanger/bash-style-guide" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Bash Style Guide
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Bash Style Guide" class="md-nav__button md-logo" aria-label="Bash Style Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Bash Style Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/StrangeRanger/bash-style-guide" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Bash Style Guide
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Guidelines
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Guidelines
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aesthetics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aesthetics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Bashism
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Bashism
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional Tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence Iteration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-substitution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Substitution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arithmetic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Expansion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoid-parsing-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoid Parsing ls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#element-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Element Collections
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-input-into-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing Input into Variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#efficient-array-population" class="md-nav__link">
+    <span class="md-ellipsis">
+      Efficient Array Population
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Style
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Error Handling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/todo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TODO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/changelog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../other/license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conditional Tests
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sequence-iteration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sequence Iteration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-substitution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Command Substitution
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arithmetic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arithmetic Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameter-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parameter Expansion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#avoid-parsing-ls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoid Parsing ls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#element-collections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Element Collections
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-input-into-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parsing Input into Variables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#efficient-array-population" class="md-nav__link">
+    <span class="md-ellipsis">
+      Efficient Array Population
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="bashisms">Bashisms</h1>
+<p>As a reminder, this style guide is designed specifically for Bash scripting. When given a choice, <mark><strong><em>ALWAYS</em></strong></mark> prefer Bash built-ins or keywords over external commands or <code>sh(1)</code> syntax.</p>
+<p class="annotate">This section focuses on common Bashisms, which are shell features or commands unique to Bash. Using these Bash-specific constructs can improve your scripts' efficiency, portability (1), readability (2), and robustness.</p>
+<ol>
+<li><strong>Efficiency and Portability</strong>: Bashisms provide built-in functionalities that are more efficient and portable than external commands or purely <a href="https://mywiki.wooledge.org/POSIX">POSIX</a>-compliant syntax. By leveraging these features, you can write scripts that execute faster and run on any system where Bash is available, without relying on external tools.</li>
+<li><strong>Readability</strong>: While Bashisms generally improve readability, some features, such as the parameter expansion syntax, may be confusing for beginners. However, the robustness and efficiency they offer make them worth learning.</li>
+</ol>
+<h2 id="conditional-tests">Conditional Tests</h2>
+<p>Conditional tests are essential in any programming language, allowing decision-making based on evaluating expressions. Bash provides several constructs for these tests, including <code>[ ... ]</code>, <code>[[ ... ]]</code>, and the <code>test</code> command.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Use <code>[[ ... ]]</code>:</strong> <mark><strong><em>ALWAYS</em></strong></mark> use the <code>[[ ... ]]</code> construct when performing conditional tests.</li>
+<li><strong>Avoid Using <code>[ ... ]</code> and <code>test</code>:</strong> <mark><strong><em>DO NOT</em></strong></mark> use <code>[ ... ]</code> and the <code>test</code> command for conditional tests.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of <code>[[ ... ]]</code></p>
+<ul>
+<li><strong>Regex Support</strong>: Enables direct regex matching within conditional expressions, eliminating the need for external tools like <code>grep</code>.</li>
+<li><strong>String Comparison</strong>: Provides a consistent and reliable method for string comparison, especially when dealing with variables containing spaces or special characters.</li>
+<li><strong>Compound Conditions</strong>: Allows multiple conditions to be combined within a single <code>[[ ... ]]</code> block, simplifying logic and improving readability.</li>
+<li><strong>Safety</strong>: Prevents <a href="https://mywiki.wooledge.org/WordSplitting">word splitting</a> and <a href="https://mywiki.wooledge.org/glob">globbing</a> on variables, reducing the risk of unexpected behavior.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Basic String Comparison</label><label for="__tabbed_1_2">Regex Matching</label><label for="__tabbed_1_3">Compound Conditions</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using <code>[ ... ]</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">var</span><span class="o">=</span><span class="s2">&quot;value with spaces&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="nv">$var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;value with spaces&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The variable matches the value.&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">else</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This will output because &#39;</span><span class="nv">$var</span><span class="s2">&#39; is treated as multiple arguments.&quot;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Potential Issues</strong>: Without proper quoting, <code>[ ... ]</code> may cause unexpected behaviors due to word splitting, treating the variable as multiple arguments.</p>
+<hr />
+<p><em>Using <code>[[ ... ]]</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">var</span><span class="o">=</span><span class="s2">&quot;value with spaces&quot;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$var</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;value with spaces&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The variable matches the value.&quot;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">else</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This will output because </span><span class="nv">$var</span><span class="s2"> is treated as multiple arguments.&quot;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>[[ ... ]]</code> safely handles variables with spaces, whether or not they are quoted.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>grep</code> for regex matching:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">email</span><span class="o">=</span><span class="s2">&quot;hunter@hthompson.dev&quot;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">if</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$email</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-qE<span class="w"> </span><span class="s1">&#39;^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Valid email address.&quot;</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">else</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Invalid email address.&quot;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Disadvantage</strong>: <code>grep</code> is an external command, which can introduce errors and performance issues (though negligible) due to differing implementations across different operating systems.</p>
+<hr />
+<p><em>Using <code>[[ ... ]]</code> for regex matching:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">email</span><span class="o">=</span><span class="s2">&quot;hunter@hthompson.dev&quot;</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$email</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">=</span>~<span class="w"> </span>^<span class="o">[</span>a-zA-Z0-9._%+-<span class="o">]</span>+@<span class="o">[</span>a-zA-Z0-9.-<span class="o">]</span>+<span class="se">\.</span><span class="o">[</span>a-zA-Z<span class="o">]{</span><span class="m">2</span>,<span class="o">}</span>$<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Valid email address.&quot;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">else</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Invalid email address.&quot;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>[[ ... ]]</code> directly supports regex matching, eliminating the need for external commands and enhancing script portability.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>[ ... ]</code> for compound conditions:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">file</span><span class="o">=</span><span class="s2">&quot;example.txt&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>touch<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-f<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>-w<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;File exists and is readable and/or writable.&quot;</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">else</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;File is either missing, unreadable, or unwritable.&quot;</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Disadvantage</strong>: <code>[ ... ]</code> does not support compound conditions directly, requiring additional commands or constructs.</p>
+<hr />
+<p><em>Using <code>[[ ... ]]</code> for compound conditions:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">file</span><span class="o">=</span><span class="s2">&quot;example.txt&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>touch<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>chmod<span class="w"> </span><span class="m">700</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$file</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>-r<span class="w"> </span><span class="nv">$file</span><span class="w"> </span><span class="o">||</span><span class="w"> </span>-w<span class="w"> </span><span class="nv">$file</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;File exists and is readable and/or writable.&quot;</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">else</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;File is either missing, unreadable, or unwritable.&quot;</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">fi</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>[[ ... ]]</code> supports compound conditions, simplifying logic and enhancing readability.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="sequence-iteration">Sequence Iteration</h2>
+<p>Iterating over sequences is a common task in Bash, allowing you to process elements in a range or list. Bash offers built-in mechanisms for sequence iteration, such as brace expansion and C-style <code>for</code> loops.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Bash Built-ins</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use brace expansion (<code>{start..end}</code>) for fixed ranges and the C-style <code>for</code> loop for variable limits when iterating over sequences.</li>
+<li><strong>Avoid Using <code>seq</code>:</strong> <mark><strong><em>DO NOT</em></strong></mark> use <code>seq</code> for sequence iteration.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of Built-in Iteration</p>
+<ul>
+<li><strong>Simplicity</strong>: Built-in mechanisms like brace expansion and C-style <code>for</code> loops are native to Bash, providing a straightforward and efficient way to iterate over sequences.</li>
+<li><strong>Reduced Dependencies</strong>: Utilizing built-in features minimizes external dependencies, enhancing script reliability and maintainability.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Iterating Over a Fixed Range</label><label for="__tabbed_2_2">Iterating Over a Variable Range</label><label for="__tabbed_2_3">Iterating with Step Values</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using <code>seq</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="m">5</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using brace expansion:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">{</span><span class="m">1</span>..5<span class="o">}</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">done</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>seq</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">start</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">end</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="nv">$start</span><span class="w"> </span><span class="nv">$end</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using C-style <code>for</code> loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">start</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">end</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">for</span><span class="w"> </span><span class="o">((</span><span class="w"> </span><span class="nv">i</span><span class="o">=</span>start<span class="p">;</span><span class="w"> </span>i&lt;<span class="o">=</span>end<span class="p">;</span><span class="w"> </span>i++<span class="w"> </span><span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">done</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>seq</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">for</span><span class="w"> </span>i<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>seq<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="m">100</span><span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using C-style <code>for</code> loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">for</span><span class="w"> </span><span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">0</span><span class="p">;</span><span class="w"> </span>i&lt;<span class="o">=</span><span class="m">100</span><span class="p">;</span><span class="w"> </span><span class="nv">i</span><span class="o">+=</span><span class="m">2</span><span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Number: </span><span class="nv">$i</span><span class="s2">&quot;</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">done</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+</details>
+<h2 id="command-substitution">Command Substitution</h2>
+<p><a href="https://mywiki.wooledge.org/CommandSubstitution">Command substitution</a> allows you to capture the output of a command and use it as part of another command or assignment. Bash provides two syntaxes for command substitution: <code>$(...)</code> and backticks (<code>`...`</code>).</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Use <code>$(...)</code></strong>: <mark><strong><em>ALWAYS</em></strong></mark> use <code>$(...)</code> for command substitution instead of backticks.</li>
+<li><strong>Avoid Using Backticks</strong>: <mark><strong><em>DO NOT</em></strong></mark> use backticks for command substitution.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of <code>$(...)</code></p>
+<ul>
+<li><strong>Improved Readability</strong>: <code>$(...)</code> is visually clearer, making scripts easier to read, particularly as commands grow in complexity.</li>
+<li><strong>Easier Nesting</strong>: Facilitates nesting multiple commands without the syntactic awkwardness associated with backticks.</li>
+<li><strong>Enhanced Safety</strong>: More robust and less prone to errors, especially in complex command substitutions.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Basic Command Substitution</label><label for="__tabbed_3_2">Nesting Command Substitution</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using backticks:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">output</span><span class="o">=</span><span class="sb">`</span>ls<span class="w"> </span>-l<span class="sb">`</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The output is: </span><span class="nv">$output</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>$(...)</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nv">output</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-l<span class="k">)</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;The output is: </span><span class="nv">$output</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><em>Using backticks:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">date_and_users</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Date: \`date\` - Users: \`who | wc -l\`&quot;</span><span class="sb">`</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$date_and_users</span>
+</span></code></pre></div>
+<p><strong>Disadvantage</strong>: Nesting commands with backticks can be challenging to read and are often prone to errors.</p>
+<hr />
+<p><em>Using <code>$(...)</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nv">date_and_users</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Date: </span><span class="k">$(</span>date<span class="k">)</span><span class="s2"> - Users: </span><span class="k">$(</span>who<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span><span class="s2">&quot;</span><span class="k">)</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$date_and_users</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: The <code>$(...)</code> syntax simplifies nested commands, improving readability and reducing the likelihood of errors.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="arithmetic-operations">Arithmetic Operations</h2>
+<p>Arithmetic operations in Bash enable mathematical calculations, comparisons, and other numeric operations. Bash supports these operations using arithmetic expansions <code>$((...))</code>, conditional arithmetic expressions <code>((...))</code>, and the <code>let</code> command.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Use <code>$((...))</code> and <code>((...))</code></strong>: <mark><strong><em>ALWAYS</em></strong></mark> use <code>$((...))</code> for arithmetic expansions and <code>((...))</code> for conditional arithmetic expressions.</li>
+<li><strong>Avoid Using <code>let</code></strong>: <mark><strong><em>DO NOT</em></strong></mark> use <code>let</code> for arithmetic operations.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of <code>$((...))</code> and <code>((...))</code></p>
+<ul>
+<li><strong>Clarity</strong>: Both <code>((...))</code> and <code>$((...))</code> explicitly indicate arithmetic operations within scripts, making them easier to understand.</li>
+<li><strong>Increased Safety</strong>: Unlike <code>let</code>, these methods exclusively evaluate arithmetic expressions and do not risk executing other commands by mistake.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Basic Arithmetic</label><label for="__tabbed_4_2">Conditional Arithmetic Expressions</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using <code>let</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">let</span><span class="w"> </span><span class="nv">result</span><span class="o">=</span><span class="m">1</span>+2
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Result: </span><span class="nv">$result</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>$((...))</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nv">result</span><span class="o">=</span><span class="k">$((</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="k">))</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Result: </span><span class="nv">$result</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>let</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">a</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="nv">b</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">if</span><span class="w"> </span><span class="nb">let</span><span class="w"> </span><span class="s2">&quot;a &lt; b&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;a is less than b&quot;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="k">fi</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>((...))</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nv">a</span><span class="o">=</span><span class="m">5</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nv">b</span><span class="o">=</span><span class="m">10</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="k">if</span><span class="w"> </span><span class="o">((</span><span class="w"> </span>a<span class="w"> </span>&lt;<span class="w"> </span>b<span class="w"> </span><span class="o">))</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;a is less than b&quot;</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="k">fi</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: <code>((...))</code> provides a more concise and readable way to evaluate arithmetic expressions within conditional statements.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="parameter-expansion">Parameter Expansion</h2>
+<p class="annotate"><a href="https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion">Parameter expansion</a> in Bash allows you to manipulate variables and perform string operations directly within the shell. It offers a wide range of options, including substring extraction, string replacement, and transformations.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Use Parameter Expansion</strong>: Use parameter expansion for tasks such as string manipulation, default value assignment, and pattern matching.</li>
+<li><strong>Limit Use of External Tools</strong>: Minimize the use of tools like <code>sed</code> and <code>awk</code> for string manipulation unless advanced text processing is required and cannot be handled by Bash.<ul>
+<li><strong>Rationale</strong>: While powerful, these tools are often unnecessary for tasks that can be performed efficiently using parameter expansion.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of Parameter Expansion</p>
+<ul>
+<li><strong>Streamlined Scripting</strong>: Keeps string manipulations inline and shell-native, simplifying the script's logic.</li>
+<li><strong>Enhanced Portability</strong>: Enhances script portability across different Unix-like systems by avoiding dependencies on external tools that may not be available or consistent in functionality.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Extracting Substrings</label><label for="__tabbed_5_2">Removing a Suffix</label><label for="__tabbed_5_3">String Length</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using <code>sed</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;Hello, World!&quot;</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="nv">substring</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$string</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/Hello,//&#39;</span><span class="k">)</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$substring</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Parameter Expansion</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;Hello, World!&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nv">substring</span><span class="o">=</span><span class="si">${</span><span class="nv">string</span><span class="p">/Hello,/</span><span class="si">}</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$substring</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: Parameter expansion offers a more direct and efficient way to extract substrings compared to using external tools like <code>sed</code>.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>awk</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;document.txt&quot;</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nv">basename</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$filename</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F.<span class="w"> </span><span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$basename</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Parameter Expansion</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nv">filename</span><span class="o">=</span><span class="s2">&quot;document.txt&quot;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nv">basename</span><span class="o">=</span><span class="si">${</span><span class="nv">filename</span><span class="p">%.txt</span><span class="si">}</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$basename</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: Parameter expansion simplifies the removal of suffixes from filenames and is more efficient than using external commands like <code>awk</code>.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>wc</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;Hello, World!&quot;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="nv">length</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="nv">$string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-c<span class="k">)</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$length</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Parameter Expansion</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;Hello, World!&quot;</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nv">length</span><span class="o">=</span><span class="si">${#</span><span class="nv">string</span><span class="si">}</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$length</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: Parameter expansion provides a more straightforward and efficient method for determining the length of a string compared to using external commands like <code>wc</code>.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="avoid-parsing-ls">Avoid Parsing <code>ls</code></h2>
+<p>Parsing the output of <code>ls</code> in Bash scripts can result in errors and unpredictable behavior, especially when dealing with filenames that contain spaces or special characters. Instead, Unix-like systems provide safer and more reliable alternatives for handling files and directories, such as Bash globbing, <code>find</code>, and <code>read</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Bash Built-ins</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use Bash globbing patterns (<code>*</code>) or commands like <code>find</code> for file and directory operations to ensure reliable handling.</li>
+<li><strong>Avoid Using <code>ls</code></strong>: <mark><strong><em>DO NOT</em></strong></mark> use <code>ls</code> in scripts where accurate filename interpretation is necessary, such as in loops or complex operations.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Risks of Parsing <code>ls</code></p>
+<ul>
+<li><strong>Word Splitting</strong>: Filenames with spaces or special characters may cause unintended word splitting when processed by <code>ls</code>, leading to errors.</li>
+<li><strong>Command Misinterpretation</strong>: Filenames that begin with a hyphen (<code>-</code>) may be interpreted as command-line options, potentially causing unintended behavior.</li>
+<li><strong>Potential Vulnerabilities</strong>: Improper handling of filenames can introduce bugs or security vulnerabilities, especially in more complex scripts.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Alternatives to Parsing <code>ls</code></p>
+<ul>
+<li><strong>Bash Globbing</strong>: Use Bash globbing patterns (like <code>*</code>) to list files and directories. This method is safer and more reliable for handling filenames with special characters.</li>
+<li><strong><code>find</code> Command</strong>: Use the <code>find</code> command for complex file operations, which provides extensive options for searching and handling files.</li>
+<li><strong><code>read</code> Command</strong>: Use <code>read</code> with the appropriate settings to safely process filenames without relying on external commands like <code>ls</code>.</li>
+<li><strong><code>stat</code> Command</strong>: Use <code>stat</code> to obtain detailed file information, such as size, permissions, and modification times.</li>
+<li><strong><code>file</code> Command</strong>: Use <code>file</code> to identify the type of a file based on its content, rather than its extension.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:5"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><input id="__tabbed_6_3" name="__tabbed_6" type="radio" /><input id="__tabbed_6_4" name="__tabbed_6" type="radio" /><input id="__tabbed_6_5" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Listing Files in a Directory</label><label for="__tabbed_6_2">Using <code>find</code> for File Operations</label><label for="__tabbed_6_3">Parsing Filenames with <code>read</code></label><label for="__tabbed_6_4">Detailed File Information</label><label for="__tabbed_6_5">Determining File Type</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<!-- TODO: Maybe add "potential issues" or "disadvantages" for each example? -->
+
+<p><em>Using <code>ls</code> in a loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>/path/to/dir<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Bash Globing:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>/path/to/dir/*<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="k">$(</span>basename<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$file</span><span class="s2">&quot;</span><span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: Bash globbing uses patterns like <code>*</code> to match filenames directly in the specified directory, eliminating the need for external commands like <code>ls</code>. This approach ensures that filenames with spaces, newlines, or special characters are handled correctly by the shell. Using glob patterns (e.g., <code>/path/to/dir/*</code>), the shell expands them into a list of matching filenames, making this method more secure and reliable.</p>
+</div>
+<div class="tabbed-block">
+<!-- TODO: Maybe add "potential issues" or "disadvantages" for each example? -->
+
+<p><em>Using <code>ls</code> with wildcards:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>/path/to/dir/*.txt<span class="k">)</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>find</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>find<span class="w"> </span>/path/to/dir<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.txt&quot;</span><span class="w"> </span>-exec<span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing {}&quot;</span><span class="w"> </span><span class="se">\;</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: The <code>find</code> command offers robust and flexible options for file searching and operations, making it more suitable for handling complex tasks than <code>ls</code>. It provides precise control over which files are selected and how they are processed.</p>
+</div>
+<div class="tabbed-block">
+<!-- TODO: Maybe add "potential issues" or "disadvantages" for each example? -->
+
+<p><em>Using <code>ls</code> with <code>while</code> loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>ls<span class="w"> </span>/path/to/dir<span class="w"> </span>&gt;<span class="w"> </span>filelist.txt
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">while</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>file<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>filelist.txt
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>find</code> and <code>read</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>find<span class="w"> </span>/path/to/dir<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span>&gt;<span class="w"> </span>filelist.txt
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="k">while</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>file<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="nv">$file</span><span class="s2">&quot;</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>filelist.txt
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: Setting the <code>IFS</code> (Internal Field Separator) correctly with <code>read</code> ensures that filenames containing spaces or special characters are processed safely. This method avoids the risks associated with parsing the output of <code>ls</code>.</p>
+</div>
+<div class="tabbed-block">
+<!-- TODO: Maybe add "potential issues" or "disadvantages" for each example? -->
+
+<p><em>Using <code>ls -l</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>/path/to/file
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>stat</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>stat<span class="w"> </span>/path/to/file
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: <code>stat</code> provides more comprehensive metadata about a file than <code>ls -l</code>, such as size, permissions, and modification times.</p>
+</div>
+<div class="tabbed-block">
+<!-- TODO: Maybe add "potential issues" or "disadvantages" for each example? -->
+
+<p><em>Using <code>ls</code> with file extension check:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="k">$(</span>ls<span class="w"> </span>/path/to/file<span class="k">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span>*.txt<span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This is a text file&quot;</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="k">fi</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>file</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="nv">file_type</span><span class="o">=</span><span class="k">$(</span>file<span class="w"> </span>--mime-type<span class="w"> </span>-b<span class="w"> </span>/path/to/file<span class="k">)</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$file_type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;text/plain&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;This is a text file&quot;</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="k">fi</span>
+</span></code></pre></div>
+<hr />
+<p><strong>Explanation</strong>: The <code>file</code> command examines the contents of a file to determine its type, offering a more accurate method than relying solely on file extensions.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="element-collections">Element Collections</h2>
+<p>Element collections are a fundamental feature in Bash scripting that allows you to manage groups of items, such as filenames, user inputs, or configuration values. Bash provides three main methods for handling collections: arrays, associative arrays, and space-separated strings.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Arrays for Collections</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use arrays when managing collections of elements to ensure clarity and safety.</li>
+<li><strong>Avoid Space-Separated Strings</strong>: <mark><strong><em>DO NOT</em></strong></mark> use space-separated strings for handling collections.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of Arrays</p>
+<ul>
+<li><strong>Clarity and Safety</strong>: Arrays prevent errors caused by word splitting and glob expansion that can occur with space-separated strings.</li>
+<li><strong>Flexibility</strong>: Arrays allow for easy manipulation and access to individual elements, as well as simplified expansion in commands that accept multiple arguments.</li>
+<li><strong>Ease of Maintenance</strong>: Code utilizing arrays is generally clearer and easier to maintain, particularly as script complexity increases.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:3"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><input id="__tabbed_7_3" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">Iterating Over a Collection</label><label for="__tabbed_7_2">Passing Multiple Arguments to a Command</label><label for="__tabbed_7_3">Accessing Individual Elements</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using Space-Separated Strings</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="nv">items</span><span class="o">=</span><span class="s2">&quot;apple orange banana&quot;</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="k">for</span><span class="w"> </span>item<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$items</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Item: </span><span class="nv">$item</span><span class="s2">&quot;</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="k">done</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Arrays</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="nv">items</span><span class="o">=(</span><span class="s2">&quot;apple&quot;</span><span class="w"> </span><span class="s2">&quot;orange&quot;</span><span class="w"> </span><span class="s2">&quot;banana&quot;</span><span class="o">)</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="k">for</span><span class="w"> </span>item<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">items</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Item: </span><span class="nv">$item</span><span class="s2">&quot;</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="k">done</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: Arrays handle items with spaces or special characters correctly, preventing unintended word splitting.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using Space-Separated Strings</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="nv">files</span><span class="o">=</span><span class="s2">&quot;file1.txt file2.txt file3.txt&quot;</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>cp<span class="w"> </span><span class="nv">$files</span><span class="w"> </span>/destination/
+</span></code></pre></div>
+<hr />
+<p><em>Using Arrays</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nv">files</span><span class="o">=(</span><span class="s2">&quot;file1.txt&quot;</span><span class="w"> </span><span class="s2">&quot;file2.txt&quot;</span><span class="w"> </span><span class="s2">&quot;file3.txt&quot;</span><span class="o">)</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>cp<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">files</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span>/destination/
+</span></code></pre></div>
+<p><strong>Advantage</strong>: Arrays simplify command syntax and ensure all arguments are correctly passed, even if filenames contain spaces.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using Space-Separated Strings</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;one two three&quot;</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="nv">first</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="s1">&#39; &#39;</span><span class="w"> </span>-f1<span class="k">)</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;First element: </span><span class="nv">$first</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Arrays</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nv">array</span><span class="o">=(</span><span class="s2">&quot;one&quot;</span><span class="w"> </span><span class="s2">&quot;two&quot;</span><span class="w"> </span><span class="s2">&quot;three&quot;</span><span class="o">)</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="nv">first</span><span class="o">=</span><span class="si">${</span><span class="nv">array</span><span class="p">[0]</span><span class="si">}</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;First element: </span><span class="nv">$first</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: Arrays allow direct access to individual elements without additional parsing.</p>
+</div>
+</div>
+</div>
+<p>//// Adding Elements to a Collection</p>
+<p><em>Using Space-Separated Strings</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;apple orange&quot;</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$string</span><span class="s2"> banana&quot;</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$string</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using Arrays</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nv">array</span><span class="o">=(</span><span class="s2">&quot;apple&quot;</span><span class="w"> </span><span class="s2">&quot;orange&quot;</span><span class="o">)</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="nv">array</span><span class="o">+=(</span><span class="s2">&quot;banana&quot;</span><span class="o">)</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">array</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: Arrays provide straightforward syntax for adding elements, improving readability and maintainability.</p>
+<p>////</p>
+</details>
+<h2 id="parsing-input-into-variables">Parsing Input into Variables</h2>
+<p>Parsing input into variables is a common task in Bash scripting, allowing you to extract and process data from user inputs, files, or other sources. Bash provides the <code>read</code> command for these tasks, offering a more efficient and secure alternative to external commands like <code>awk</code>, <code>sed</code>, or <code>cut</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Bash Built-ins</strong>: Use <code>read</code> to safely and efficiently parse user inputs and other data directly into variables.</li>
+<li><strong>Customize with IFS</strong>: Adjust the Internal Field Separator (IFS) as needed when using <code>read</code> to ensure that inputs are split according to your specific requirements, enhancing the flexibility and accuracy of data parsing.</li>
+<li><strong>Avoid External Commands</strong>: Minimize the use of external commands like <code>awk</code>, <code>sed</code>, or <code>cut</code> for parsing strings.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of <code>read</code></p>
+<ul>
+<li><strong>Efficiency</strong>: <code>read</code> operates within the shell, eliminating the need for slower, resource-intensive external commands.</li>
+<li><strong>Controlled Parsing</strong>: <code>read</code> allows for controlled and direct parsing of inputs into variables within the shell, reducing the complexity and potential risks associated with using external commands for input processing.</li>
+<li><strong>Simplicity</strong>: Offers an easy-to-understand syntax for directly parsing complex data structures.</li>
+<li><strong>Portability</strong>: <code>read</code> is a Bash builtin, ensuring consistent behavior across different systems and environments.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">Parsing a Space-Separated String</label><label for="__tabbed_8_2">Parsing User Input</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using <code>awk</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;one two three&quot;</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="nv">first</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="nv">second</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="nv">third</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$string</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">&#39;{print $3}&#39;</span><span class="k">)</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;First: </span><span class="nv">$first</span><span class="s2">, Second: </span><span class="nv">$second</span><span class="s2">, Third: </span><span class="nv">$third</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>read</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="nv">string</span><span class="o">=</span><span class="s2">&quot;one two three&quot;</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>first<span class="w"> </span>second<span class="w"> </span>third<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$string</span><span class="s2">&quot;</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;First: </span><span class="nv">$first</span><span class="s2">, Second: </span><span class="nv">$second</span><span class="s2">, Third: </span><span class="nv">$third</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>read</code> provides a simpler and more efficient way to parse space-separated strings directly into variables.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using <code>sed</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="nv">input</span><span class="o">=</span><span class="s2">&quot;username:password&quot;</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="nv">username</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$input</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/:.*//&#39;</span><span class="k">)</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="nv">password</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="nv">$input</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">&#39;s/.*://&#39;</span><span class="k">)</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Username: </span><span class="nv">$username</span><span class="s2">, Password: </span><span class="nv">$password</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>read</code></em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="nv">input</span><span class="o">=</span><span class="s2">&quot;username:password&quot;</span>
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="nv">IFS</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>username<span class="w"> </span>password<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span>
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Username: </span><span class="nv">$username</span><span class="s2">, Password: </span><span class="nv">$password</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>read</code> directly parses the input into variables, reducing complexity and improving readability.</p>
+</div>
+</div>
+</div>
+</details>
+<h2 id="efficient-array-population">Efficient Array Population</h2>
+<p>The <code>mapfile</code> command, also known as <code>readarray</code>, is a Bash built-in that provides an efficient way to populate an array with lines from a file or the output of a command. This command simplifies the process of reading and storing multiline data, making it particularly useful when working with large datasets or when you need to process input line by line.</p>
+<div class="admonition info">
+<p class="admonition-title">Guidelines</p>
+<ul>
+<li><strong>Use <code>mapfile</code> for Multiline Input</strong>: When you need to read and store multiline data into an array, prefer mapfile over looping constructs.</li>
+<li><strong>Specify a Delimiter with <code>-d</code></strong>: Use the <code>-d</code> option to specify a custom delimiter if the input data is not newline-separated.</li>
+<li><strong>Avoid Excessive Loops</strong>: <code>mapfile</code> can efficiently replace complex loops that read and store data line by line, improving script readability and performance.</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Advantages of <code>mapfile</code></p>
+<ul>
+<li><strong>Efficiency</strong>: <code>mapfile</code> reads an entire stream into an array at once, making it faster and more efficient than reading lines individually in a loop.</li>
+<li><strong>Simplicity</strong>: The command reduces the amount of code required to populate arrays, leading to cleaner and more maintainable scripts.</li>
+<li><strong>Flexibility</strong>: With options like <code>-t</code> (to remove trailing newlines) and <code>-d</code> (to specify a delimiter), mapfile offers flexibility in handling various input formats.</li>
+</ul>
+</div>
+<details class="example">
+<summary>Examples</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:3"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><input id="__tabbed_9_3" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">Reading a File into an Array</label><label for="__tabbed_9_2">Reading Command Output into an Array</label><label for="__tabbed_9_3">Using a Custom Delimiter</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><em>Using a loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="nv">lines</span><span class="o">=()</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="k">while</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>line<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="w">    </span><span class="nv">lines</span><span class="o">+=(</span><span class="s2">&quot;</span><span class="nv">$line</span><span class="s2">&quot;</span><span class="o">)</span>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>input.txt
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>mapfile</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>mapfile<span class="w"> </span>-t<span class="w"> </span>lines<span class="w"> </span>&lt;<span class="w"> </span>input.txt
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>mapfile</code> simplifies the process of reading a file into an array, reducing the code and improving efficiency.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Using a loop:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nb">declare</span><span class="w"> </span>-a<span class="w"> </span>commands
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="k">while</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>command<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">    </span><span class="nv">commands</span><span class="o">+=(</span><span class="s2">&quot;</span><span class="nv">$command</span><span class="s2">&quot;</span><span class="o">)</span>
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="k">done</span><span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>/usr/bin<span class="o">)</span>
+</span></code></pre></div>
+<hr />
+<p><em>Using <code>mapfile</code>:</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>mapfile<span class="w"> </span>-t<span class="w"> </span>commands<span class="w"> </span>&lt;<span class="w"> </span>&lt;<span class="o">(</span>ls<span class="w"> </span>/usr/bin<span class="o">)</span>
+</span></code></pre></div>
+<p><strong>Advantage</strong>: <code>mapfile</code> efficiently reads the output of a command into an array without the need for an explicit loop.</p>
+</div>
+<div class="tabbed-block">
+<p><em>Example: Reading data separated by colons (:):</em></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="nv">input</span><span class="o">=</span><span class="s2">&quot;one:two:three:four&quot;</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>mapfile<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;:&#39;</span><span class="w"> </span>-t<span class="w"> </span>items<span class="w"> </span><span class="o">&lt;&lt;&lt;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">items</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><strong>Explanation</strong>: The <code>-d</code> option allows <code>mapfile</code> to split the input based on a custom delimiter, which can be useful for parsing structured data.</p>
+</div>
+</div>
+</div>
+</details>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 12, 2024</span>
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.tabs.link", "content.code.copy", "navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
