@@ -4,55 +4,46 @@ As mentioned in the [Preface](../index.md#preface), this guide aims to be as obj
 
 This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
 
-For stylistic guidelines that significantly impact a script's functionality, please refer to this guide's [Style](style.md) section.
+For stylistic guidelines that impact a script's functionality, please refer to this guide's [Style](style.md) section.
 
 ## Indentations
 
-Indentations can be achieved by either using tabs or spaces. In most programming languages, including Bash, spaces are the preferred method for ensuring consistent formatting.
+Indentations help structure code and improve readability by visually grouping related statements. The indentation method can greatly affect how well a script can be understood and maintained.
 
 /// admonition | Guidelines
     type: info
 
-- **Indentation Size**: <mark>**_ALWAYS_**</mark> use <u>four spaces</u> per indentation level.
-    - **Reason**: Using four spaces for indentations is considered the standard and is widely accepted within the Bash community. This size strikes a balance between readability and an efficient use of space.
-
-///
-
-/// admonition | Why Use Spaces Over Tabs?
-    type: tip
-
-- **Consistency**: Spaces render uniformly across different editors and environments, ensuring consistent alignment and preventing issues caused by differing tab widths.
-- **Merge Conflicts**: Spaces help minimize merge conflicts in version control systems, making them ideal for collaborative projects where multiple contributors might use different editors or settings.
+- **Type**: <mark>**_ALWAYS_**</mark> use <u>spaces</u> for indentation.
+    - **Reason**: Spaces are universally supported and render consistently across different editors and environments. This ensures that the script's structure remains intact regardless of where it is viewed or edited.
+- **Size**: <mark>**_ALWAYS_**</mark> use <u>four spaces</u> per indentation level.
+    - **Reason**: Four spaces per indentation level is considered the standard and is widely accepted within the Bash community. This size strikes a balance between readability and an efficient use of space.
 
 ///
 
 ## Characters Per Line
 
-In the past, the maximum number of Characters Per Line (CPL) was limited to 80 because of the constraints of older terminals. Even though modern terminals and editors can display more characters per line, it's still beneficial to stick to a reasonable limit to maintain readability, consistency, and ease of maintenance across different environments and tools.
+In the past, the maximum CPL was limited to 80-characters because of the constraints of older terminals. Even though modern terminals and editors can display more characters per line, it's still beneficial to stick to a reasonable limit to maintain readability, consistency, and ease of maintenance across different environments and tools.
 
 /// admonition | General Guidelines
     type: info
 
-- **88-Character Limit**: The maximum CPL for Bash scripts is 88 characters.
-    - **Reason**: The 88-character limit offers a slight increase over the traditional 80-character limit, allowing for more descriptive variable names, comments, or longer strings without sacrificing readability.
-- **Exceptions**: The CPL limit may be exceeded in cases where breaking up a line _significantly_ reduces readability or negatively impacts the script's structure. (1)
-    { .annotate }
-
-    1. **Exception Note**: There will also be cases where the 88-character limit is not feasible due to the nature of the code or the complexity of the logic. In such instances, it is essential to prioritize functionality and maintainability over strict adherence to the CPL limit.
+- **CPL Limit**: Set a maximum CPL of <u>88 characters</u>.
+    - **Reason**: An 88-character limit offers a balance between the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.
+- **Exceptions**: The CPL limit may be exceeded if breaking a line _significantly_ reduces readability or negatively impacts the script's structure.
 
 ///
 
-/// admonition | Why Does A CPL Limit Matter?
+/// admonition | Importance of CPL Limits
     type: tip
 
-- **Readability**: Shorter lines improve readability by reducing the need for horizontal scrolling and minimizing word wrapping issues. They also facilitate easier code comparison when using split-screen editors or working with multiple files simultaneously.
-- **Tool Compatibility**: Maintaining consistent line lengths ensures that code is displayed uniformly across different development environments, such as code review platforms, IDEs, and terminals, preventing layout issues and preserving the intended structure.
+- **Readability**: Shorter lines reduce the need for horizontal scrolling and minimize word wrapping issues, which can make all the difference when working with multiple windows simultaneously.
+- **Tool Compatibility**: Maintaining a consistent CPL ensures that code is displayed uniformly across different development environments, such as code review platforms, IDEs, and terminals. This prevents layout issues and preserves the intended structure.
 
 ///
 
-### Formatting Multi-lined Commands
+### Formatting Multi-lined Commands (CONTINUE FROM HERE)
 
-Maintaining a clear and readable format is important when breaking up commands that exceed the CPL limit. Below are some practical guidelines for aligning continuation lines and placing operators like `||` and `&&` in multi-lined commands.
+With a CPL limit in place, commands will inevitably span multiple lines. As such, it's essential to format these multi-lined commands in a way that maintains an easy-to-understand and follow structure.
 
 /// admonition | Guidelines
     type: info
@@ -73,12 +64,12 @@ rsync -avz /source/directory/with/a/very/long/path/ \
 ////
 //// tab | Logical Operators
 
-- **Two or More Operators**: When two or more logical operators join a sequence of commands, place each operator at the beginning of a new continuation line. This applies even if the CPL limit has yet to be reached.
-    - **Reason**: Having multiple commands on a single line can make it difficult to distinguish between operations. Separating each command onto a new line improves readability by breaking the sequence into clear, distinguishable parts. Additionally, starting each continuation line with an operator makes it immediately clear which commands are connected and how they relate to each other.
-- **Single Operator**: When a single logical operator connects two separate commands and the combined length doesn't exceed the CPL limit, both commands may remain on the same line. Use your best judgment to determine when this is appropriate.
-    - **Reason**: Keeping both commands on the same line can improve readability and conciseness, especially when the commands are short and no other operators are involved. Separating the commands onto different lines may introduce unnecessary complexity without providing significant benefits.
-- **Exception**: When a command is followed by a single `||` operator and the subsequent operations span multiple lines, it is acceptable to place `|| {` at the end of the initial command. The closing bracket (`}`) should be on a new line, with the operations for `||` placed between the braces.
-    - **Reason**: This format keeps the structure concise when handling a single failure condition with `||`. Other formatting options could introduce unnecessary complexity without enhancing clarity, often making this approach more straightforward and readable.
+- **Two or More Operators**: If two or more logical operators are used in a command sequence, place each operator at the start of a new line, even if the CPL limit hasn't been reached.
+    - **Reason**: Multiple commands on a single line can obscure operations. Separating them into new lines improves readability by making the sequence more transparent. Beginning each continuation line with an operator also clarifies how commands are related.
+- **Single Operator**: If a single logical operator connects two commands and the length is within the CPL limit, both commands may remain on the same line.
+    - **Reason**: By keeping commands on the same line, we can enhance readability and conciseness, especially when dealing with short commands. Splitting them unnecessarily may introduce complexity without added clarity.
+- **Exception**: There are times when a single `||` operator follows a command, and the subsequent operations span multiple lines. In such cases, placing `|| {` at the end of the command is acceptable. The closing bracket (`}`) should start a new line, with operations enclosed between the braces.
+    - **Reason**: This format keeps the structure concise for handling a single failure condition with `||`. Other formats can add complexity without improving clarity, making this approach more readable.
     - **Example of acceptable formatting**:
         ```bash
         cp /some/config/file /some/config/file.bak || {
@@ -94,7 +85,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
             exit 1
         }
         ```
-        **Explanation**: In this scenario, the `&&` and `||` operators are placed on the same line, which violates the "Two or More Operators" guideline. This formatting can make the sequence of operations harder to follow. The preferred formatting for this situation is:
+        **Explanation**: Here, `&&` and `||` are on the same line, violating the "Two or More Operators" guideline and making the sequence potentially harder to follow. The preferred format is:
         ```bash
         rm /some/config/file.bak \
             && cp /some/config/file /some/config/file.bak \
@@ -103,7 +94,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
                 exit 1
             }
         ```
-        **Explanation**: This formatting places each logical operator at the beginning of a continuation line, making the sequence of operations easier to follow.
+        **Explanation**: Placing each operator at the beginning of a new line improves readability by clearly separating the operations.
 
 ///// details | General Examples
     type: example
@@ -130,10 +121,10 @@ mkdir -p /path/to/backup \
 ////
 //// tab | Piping Operators
 
-- **Placement**: When breaking up a long sequence of piped commands that exceeds the CPL limit, place each pipe operator at the beginning of a new continuation line, along with the preceding command (`| command`).
-    - **Reason**: Placing each pipe operator at the start of a new line makes it immediately visible, clearly separates each stage of the pipeline, and improves readability by indicating the flow of data between commands.
-- **Single-Line Placement**: When a sequence of piped commands fits within the 88-character limit, they may remain on the same line. However, this approach should be used judiciously to avoid overly long or complex command sequences.
-    - **Reason**: Keeping piped commands on a single line can make the code more concise and easier to write. However, if overused, it can lead to long or complex command sequences that are harder to read, understand, and maintain. Use this approach carefully to balance brevity with clarity.
+- **Placement**: When a piped command sequence exceeds the CPL limit, place each pipe (`|`) at the start of a new line with the preceding command (`| command`).
+    - **Reason**: Starting each pipe on a new line improves readability by making the pipeline stages clear and highlighting the data flow between commands.
+- **Single-Line Placement**: If piped commands fit within the 88-character limit, they may remain on the same line. Use this sparingly to avoid creating complex or hard-to-read sequences.
+    - **Reason**: Single-line commands are more concise and quicker to write, but overuse can reduce readability and maintainability. Balance brevity with clarity.
 
 ///// details | Examples
     type: example
@@ -160,19 +151,6 @@ grep -r "TODO" /path/to/project \
 
 /////
 ////
-///
-
-## Function Declaration
-
-While the syntax for function declarations may not significantly impact script readability or functionality, there is a preferred style that aligns with best practices for clarity and consistency.
-
-/// admonition | Guidelines
-    type: info
-
-- **Syntax**: <mark>**_ALWAYS_**</mark> declare functions using their name followed by parentheses and curly braces (`name() {}`).
-    - **Reason**: This syntax is concise and widely accepted within the Bash community.
-- **Avoid `function`**: Avoid using the `function` keyword to declare functions.
-    - **Reason**: While the `function` keyword is valid in Bash, it adds unnecessary verbosity without providing additional benefits.
 ///
 
 ## Formatting Control Structures
@@ -348,37 +326,31 @@ Functions in Bash differ from those in other languages, especially regarding arg
     #   Additional notes or considerations. This section may be omitted if there is no
     #   additional information to provide.
     #
-    # GLOBALS:
-    #   - global_var : Brief description of usage. (1)
-    #       - Detailed description of the global variable's role in the function. (2)
-    #
-    # NEW GLOBALS:
-    #   - new_global_var : Brief description of usage (i.e., "Initialized for external use.")
-    #       - Detailed description of the new global variable's role in or outside the function. (3)
-    #
     # PARAMETERS:
-    #   - $1: parameter_name (Required or Optional, Default: default_value) (4)
-    #       - Detailed description of the parameter, including its purpose, expected values,
-    #         and constraints. (5)
+    #   - $1: parameter_name (Required) (1)
+    #       - Description of the parameter. (2)
+    #   - $2: parameter_name (Optional, Default: default_value)
+            - Description of the parameter.
+    #       - Acceptable values: (3)
+    #           - value_one: Description of value_one.
+    #           - value_two: Description of value_two.
     #
-    # OUTPUTS: (6)
+    # OUTPUTS: (4)
     #   Description of the data output by the function, such as data written to the console
     #   or a file.
     #
-    # RETURNS: (7)
+    # RETURNS: (5)
     #   Description of any values the function returns for use elsewhere in the script.
     function_name() {
         # Function logic here...
     }
     ```
 
-    1. **Short Description for GLOBALS**: Provide a concise overview indicating whether the global variable is initialized, modified, read, used in a conditional statement, etc.
-    2. **Detailed Explanation for GLOBALS**: Include a thorough description of the global variable's role within the function. Explain how the variable is used and why it is necessary, and mention any side effects that may result from modifying it. If the short description is sufficient, this section can be omitted, but only if it provides a clear understanding of the variable's role.
-    3. **Detailed Explanation for NEW GLOBALS**: The description of the new global variables should be similar to the GLOBALS section. Though, it should primarily describe its use outside of the function.
-    4. **Parameter Requirement**: Specify whether the parameter is "Required" or "Optional." If the parameter is optional, include the default value in the format `(Optional, Default: default_value)`.
-    5. **Parameters Description**: Provide a detailed description of the parameter, explaining its purpose, expected values, and any constraints or limitations. This information helps other developers and yourself understand how to use the function correctly.
-    6. **OUTPUTS Section**: Document any data the function outputs, such as data written to the console or a file. Clearly describe the format, purpose, and destination of the output.
-    7. **RETURNS Section**: Describe any values the function returns for use elsewhere in the script.
+    1. **Parameter Requirement**: Specify whether the parameter is "Required" or "Optional." If the parameter is optional, include the default value in the format `(Optional, Default: default_value)`.
+    2. **Parameters Description**: Provide a detailed description of the parameter, explaining its purpose, expected values, and any constraints or limitations. This information helps other developers and yourself understand how to use the function correctly.
+    3. **Acceptable Values**: If a parameter has specific acceptable values, list them. This ensures that the function is used correctly and helps prevent errors.
+    4. **OUTPUTS Section**: Document any data the function outputs, such as data written to the console or a file. Clearly describe the format, purpose, and destination of the output.
+    5. **RETURNS Section**: Describe any values the function returns for use elsewhere in the script.
 
 ///
 
