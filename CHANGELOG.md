@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2024.12.4] - 2024-12-04
+
+> [!NOTE]
+> This marks a major update to the style guide. The guide has been completely rewritten and converted to "MkDocs + Material for MkDocs". However, please note I don't consider this the "final" version of this rewrite. While 99% of the guidelines are ready for use, I want to modify the wording quite a bit, as I think I need to write it in a more easy-to-understand way. Consider this release a "beta" version of the rewrite.
+
+### Changed
+
 - Complete rewrite of the style guide.
 - Convert standard markdown of guide to "MkDocs + Material for MkDocs".
 
@@ -100,7 +107,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2022.7.13...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2024.12.4...HEAD
+[2024.12.4]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2024.12.4
 [2022.7.13]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.7.13
 [2022.7.11]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.7.11
 [2022.2.18]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.2.18
