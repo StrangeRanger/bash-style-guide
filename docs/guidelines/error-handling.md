@@ -1,11 +1,11 @@
 # Proper Error Handling
 
-Error handling in Bash scripts is essential for ensuring scripts operate as intended, maintain predictable behavior, provide meaningful feedback, and efficiently manage unexpected events. Proper error handling can prevent minor issues from escalating into significant problems.
+Error handling is essential for ensuring scripts operate as intended, providing meaningful feedback, and efficiently managing unexpected events. It helps prevent minor issues from escalating into major problems.
 
-This section outlines essential practices for handling errors in Bash, including verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
+This section outlines essential practices for handling errors in Bash, such as verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
 { .annotate }
 
-1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, typically from the keyboard. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream specifically used for outputting error messages and can be redirected independently of `stdout`.<br>_(Definition provided by ChatGPT, vetted by human)_
+1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, with the keyboard typically serving as the default input source. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream used for outputting error messages, which are typically directed to the terminal, separate from `stdout`.<br>_(Definition provided by ChatGPT, vetted by human)_
 
 ## Checking Command Success
 
@@ -15,8 +15,8 @@ Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorre
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks on commands in which failure could cause issues if left unhandled.
-    - **Reason**: Verifying the success of critical commands ensures that failures are handled appropriately, preventing unintended side effects and maintaining control over script execution.
+- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks for commands where failure, if left unhandled, could cause issues for the rest of the script.
+    - **Reason**: Verifying the success of critical commands ensures that failures are appropriately managed, preventing unintended side effects and maintaining control over script execution.
 
 ///// admonition | Example
     type: example
@@ -26,14 +26,14 @@ cd /some/path || exit 1
 rm file
 ```
 
-**Explanation**: In this example, the script attempts to change directories. If the `cd` command fails, the script immediately exits with a status code of `1`, preventing any subsequent commands (like `rm`) from running.
+<!-- **Explanation**: In this example, if the `cd` command fails, the script immediately exits, preventing any subsequent commands (like `rm`) from running. -->
 
 /////
 ////
 //// tab | Error Messages for Clarity
 
-- **Guidelines**: When a command fails, provide a clear and descriptive error message indicating what went wrong.
-    - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, making it easier to troubleshoot issues.
+- **Guideline**: When a command fails, provide a clear and descriptive error message that indicates what went wrong.
+    - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, simplifying troubleshooting.
 
 ///// admonition | Example
     type: example
@@ -46,7 +46,7 @@ cd /some/path || {
 rm file
 ```
 
-**Explanation**: In this example, if the `cd` command fails, the script not only exits but also outputs a clear error message to `stderr`. The message specifies which directory change failed, helping the user understand the issue and the reason for the script's termination
+<!-- **Explanation**: In this example, if the `cd` command fails, an error message is sent to the terminal, and the script exits with a status code of `1`. The error message clearly indicates that the directory change failed, offering context for troubleshooting. -->
 
 /////
 ////
@@ -54,16 +54,17 @@ rm file
 
 ## Standard Error Stream
 
-Standard error (`stderr`) is a [file descriptor](https://mywiki.wooledge.org/FileDescriptor) used for outputting error messages on Unix-like systems. By default, messages sent to `stderr` are displayed in the terminal separately from standard output (`stdout`). This separation is essential for effective error management, as it ensures that error messages are clearly distinguished and can be handled independently. This is particularly useful when scripts are part of pipelines or used by command-line tools that parse specific output streams.
+Standard error (`stderr`) is a [file descriptor](https://mywiki.wooledge.org/FileDescriptor) used for directing error messages on Unix-like systems. By default, messages sent to `stderr` are displayed in the terminal separate from the standard output (`stdout`). This separation is essential for effective error management, ensuring that error messages can be handled independently from other streams. <!-- This is particularly useful when scripts are part of pipelines or used by command-line tools that parse specific output streams. -->
 
 /// admonition | Guidelines
     type: info
-//// tab | Redirecting Errors
 
-- **Guideline**: <mark>**_ALWAYS_**</mark> use `>&2` to redirect error messages to the standard error stream (`stderr`).
-    - **Reason**: As previously mentioned, command-line utilities and scripts expect errors to be sent to `stderr` and regular output to `stdout`. Directing errors to `stderr` ensures that error messages are displayed correctly and can be captured separately for further processing.
+- **Guideline**: <mark>**_ALWAYS_**</mark> use `>&2` to redirect error messages to `stderr`.
+    - **Reason**: Command-line utilities rely on separating standard output (`stdout`) from error output (`stderr`). By redirecting errors to `stderr`, you ensure that error messages are correctly displayed and can be captured separately for logging or further processing.
 
-///// admonition | Example
+///
+
+/// admonition | Example
     type: example
 
 ```bash
@@ -73,57 +74,13 @@ cd /some/nonexistent/path || {
 }
 ```
 
-**Explanation**: In this example, `cd` attempts to change its working directory to a nonexistent path. When the command fails, the error message is sent to `stderr` using `>&2`, ensuring that the error is communicated clearly and separately from regular output. The script then exits with a status code of `1`, signaling that an error occurred.
+<!-- **Explanation**: In this example, `cd` attempts to change its working directory to a nonexistent path. When the command fails, the error message is sent to `stderr` using `>&2`, ensuring that the error is communicated clearly and separately from regular output. The script then exits with a status code of `1`, signaling that an error occurred. -->
 
-/////
-////
-//// tab | Logging Errors
-
-- **Guideline**: When dealing with scripts that may produce many errors, consider logging errors to a file for later review, while still using `stderr` for critical error messages.
-    - **Reason**: This practice helps in maintaining clean output in the terminal while ensuring that all errors are captured and accessible for debugging or auditing purposes.
-
-///// admonition | Example
-    type: example
-
-```bash
-#!/bin/bash
-
-# Directories to list.
-directories=("/etc" "/nonexistent" "/var")
-
-# File to log errors.
-error_log="errors.log"
-
-# Clear previous error log.
-echo "" > "$error_log"
-
-# Iterate over each directory.
-for dir in "${directories[@]}"; do
-    echo "Listing contents of $dir:"
-    if ! ls "$dir" 2>> "$error_log"; then
-        echo "Error: Failed to list contents of $dir" >&2
-    fi
-done
-
-echo "Completed. Check $error_log for non-critical errors."
-```
-
-**Explanation**: This script attempts to list the contents of directories specified in the `directories` array. If an error occurs during the `ls` command, the error message is appended to the `error_log` file using `2>>`. Additionally, a critical error message is sent to stderr using `>&2`, ensuring it is immediately visible to the user in the terminal. This approach keeps the terminal output clean while capturing all errors for later review.
-
-/////
-////
-//// tab | Meaningful Error Messages
-
-- **Guideline**: When sending errors to `stderr`, include clear and descriptive messages that indicate what went wrong and where.
-    - **Reason**: Clear error messages improve the usability of scripts and make troubleshooting easier, especially when logs are reviewed long after an issue occurred.
-
-////
 ///
-
 
 ## Using `trap` for Signal Handling
 
-Signal handling in Bash allows scripts to capture and respond to signals sent by the system or user actions. The `trap` command lets you define specific actions to execute when a signal is received. This is particularly useful for tasks like cleanup operations before a script exits or responding to signals like `SIGINT` (triggered by pressing ++ctrl+'C'++).
+The `trap` command enables scripts to capture and respond to signals sent by the system or user actions. It allows you to define specific actions to execute when a signal is received, making it particularly useful for tasks such as cleanup operations before a script exits or handling signals like `SIGINT` (triggered by pressing ++ctrl+'C'++).
 
 /// admonition | Guidelines
     type: info
