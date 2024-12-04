@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [2024.12.4] - 2024-12-04
 
+> [!NOTE]
+> This marks a major update to the style guide. The guide has been completely rewritten and converted to "MkDocs + Material for MkDocs". However, please note I don't consider this the "final" version of this rewrite. While 99% of the guidelines are ready for use, I want to modify the wording quite a bit, as I think I need to write it in a more easy-to-understand way. Consider this release a "beta" version of the rewrite.
+
+### Changed
+
 - Complete rewrite of the style guide.
 - Convert standard markdown of guide to "MkDocs + Material for MkDocs".
 
