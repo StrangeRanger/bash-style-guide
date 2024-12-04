@@ -41,7 +41,7 @@ In the past, the maximum CPL was limited to 80-characters because of the constra
 
 ///
 
-### Formatting Multi-lined Commands (CONTINUE FROM HERE)
+### Formatting Multi-lined Commands
 
 With a CPL limit in place, commands will inevitably span multiple lines. As such, it's essential to format these multi-lined commands in a way that maintains an easy-to-understand and follow structure.
 
@@ -161,8 +161,9 @@ Control structures in Bash, such as `if` statements and `for` or `while` loops, 
     type: info
 //// tab | Standard Control Structure
 
-- **Opening Keyword Placement**: Place `then` on the same line as the `if` statement and `do` on the same line as the `for` or `while` loop.
-- **Closing Keyword Placement**: End `if` statements with `fi` and loops with `done` on their own lines.
+- **Keyword Placement**:
+    - **Opening Keyword**: Place `then` on the same line as the `if` statement and `do` on the same line as the `for` or `while` loop.
+    - **Closing Keyword**: End `if` statements with `fi` and loops with `done` on their own lines.
 - **Continuation Line**: If the condition or loop statement exceeds the CPL limit, <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line rather than the standard four spaces.
     - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the conditions and the code within the control structure.
 
@@ -307,7 +308,7 @@ Functions in Bash differ from those in other languages, especially regarding arg
 - **Purpose**: Provide a clear and comprehensive description of the function's role within the script. This description should go beyond merely repeating the function's name; it should offer context and explain its intended use.
     - **Reason**: Clearly documenting a function's purpose allows developers, including yourself, to quickly grasp what the function is meant to achieve. Even if the function name is descriptive, a brief explanation adds valuable context, facilitating a better understanding of its role.
     - **Exception**: If the function is short **AND** its name is descriptive, the purpose may be left blank, or a short and simple description may be used instead. This exception should be used sparingly and only when the function's purpose is immediately evident from its name.
-- **Global Variables**: If the function relies on any global variables, specify which ones are used. Indicate whether the function modifies these variables, how they are used, and any potential side effects.
+- **Global Variables**: If the function introduces new global variables or modifies existing ones, document these variables, their purpose, or how they are modified.
     - **Reason**: Identifying how the function interacts with global variables helps developers (including yourself) understand the function's impact on the script's state. This is especially important in larger scripts where tracking variable scope can be challenging.
 - **Parameters**: Detail each parameter the function accepts, noting whether they are required or optional, and specify any default values.
     - **Reason**: Documenting the parameters clarifies how the function should be called and what inputs it requires to operate correctly. This reduces the likelihood of errors or misuse and ensures that the function is used consistently with its intended design.
@@ -318,6 +319,12 @@ Functions in Bash differ from those in other languages, especially regarding arg
 - **General Reasoning**: Besides the reasons previously mentioned, documenting functions allows for quick reference and understanding of the script's structure and logic. This is especially beneficial when revisiting the script or collaborating with other developers after an extended period.
 - **Format/Structure Example**: Below is the recommended format and structure for documenting functions in Bash scripts. This format provides a clear outline for documenting functions effectively. Please pay attention to the annotations within the example. They provide additional context and explanations for the documentation.
 
+    /// admonition | Important Note
+
+    While all of the fields are highly recommended, some may be omitted if they are not applicable to the function, or if they do not provide additional value. However, it is recommended to include as much information as possible to ensure the function is well-documented. Additionally, if information in one of the fields is already provided elsewhere or is self-evident from the function's name or logic, it may be omitted. For example, say you already provide information regarding the output within the function description, you may omit the OUTPUTS section.
+
+    ///
+
     ```{ .bash .annotate }
     ####
     # Function description...
@@ -326,11 +333,17 @@ Functions in Bash differ from those in other languages, especially regarding arg
     #   Additional notes or considerations. This section may be omitted if there is no
     #   additional information to provide.
     #
+    # NEW GLOBALS:
+    #   - global_variable_one : Description of global_variable_one.
+    #
+    # MODIFIED GLOBALS:
+    #   - global_variable_two : Description of how global_variable_two is modified.
+    #
     # PARAMETERS:
     #   - $1: parameter_name (Required) (1)
     #       - Description of the parameter. (2)
     #   - $2: parameter_name (Optional, Default: default_value)
-            - Description of the parameter.
+    #       - Description of the parameter.
     #       - Acceptable values: (3)
     #           - value_one: Description of value_one.
     #           - value_two: Description of value_two.
@@ -385,10 +398,6 @@ ip_to_int() {
 ####
 # Verify that the provided IP address is valid, based on a regular expression pattern.
 #
-# GLOBALS:
-#   - C_RED : Set text color to red.
-#   - C_NC : Reset text color.
-#
 # PARAMETERS:
 #   - $1: ip (Required)
 #       - The IP address to verify.
@@ -412,13 +421,6 @@ verify_valid_ip() {
 #
 # NOTE:
 #   This function is designed to be triggered on normal exits, errors, or interruptions.
-#
-# GLOBALS:
-#   - background_jobs : Iterate over to kill all background jobs.
-#   - C_TMP_FILE : Temporary file to remove.
-#   - C_RED : Set text color to red.
-#   - C_NC : Reset text color.
-#   - C_YELLOW : Set text color to yellow.
 #
 # PARAMETERS:
 #   - $1: exit_code (Required)
@@ -475,15 +477,9 @@ clean_exit() {
 # Given two IP addresses, determine the lower and upper bounds, and store them in the
 # global in two new global variables.
 #
-# GLOBALS:
-#   - C_RED : Set text color to red.
-#   - C_NC : Reset text color.
-#
 # NEW GLOBALS:
-#   - C_LOWER_BOUND : Initialized for external use.
-#       - Indicates the *start* of the IP range to be scanned. (1)
-#   - C_UPPER_BOUND : Initialized for external use.
-#       - Indicates the *end* of the IP range to be scanned.
+#   - C_LOWER_BOUND: Indicates the *start* of the IP range to be scanned. (1)
+#   - C_UPPER_BOUND: Indicates the *end* of the IP range to be scanned.
 #
 # PARAMETERS:
 #   - $1: bound_one (Required)
