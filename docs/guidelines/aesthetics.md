@@ -164,8 +164,10 @@ Control structures in Bash, such as `if` statements and `for` or `while` loops, 
 - **Keyword Placement**:
     - **Opening Keyword**: Place `then` on the same line as the `if` statement and `do` on the same line as the `for` or `while` loop.
     - **Closing Keyword**: End `if` statements with `fi` and loops with `done` on their own lines.
-- **Continuation Line**: If the condition or loop statement exceeds the CPL limit, <mark>**_ALWAYS_**</mark> use eight spaces for each continuation line rather than the standard four spaces.
-    - **Reason**: Using eight spaces for continuation lines creates a clear visual distinction between the conditions and the code within the control structure.
+- **Continuation Line**: If the condition or loop statement exceeds the CPL limit, you have two options for formatting continuation lines:
+    - **Option 1 (Recommended)**: Place the opening keyword on the next blank line, rather than at the end of the condition or loop statement.
+    - **Option 2**: Use eight spaces for each continuation line rather than the standard four spaces.
+    - **Reason**: Both options help differentiate the condition or loop statement from the actions or commands within the control structure. This separation enhances readability and maintains a clear structure. While Option 1 is the recommended approach, Option 2 is acceptable if you prefer a different style. However, it's essential to maintain consistency within the script.
 
 ///// details | Example
     type: example
@@ -188,19 +190,36 @@ done
 
 ---
 
-_Eight-space indentation for continuation lines:_
+_Continuation lines option 1:_
 
-```{ .bash .annotate }
-if [[ $exit_code == "1" && $display_message == "true" ]]; then
-    echo "==> A fatal error occurred."
-elif [[ ($exit_code == "130" ||  $exit_code == "143")
-        && $display_message == "true" ]]; then # (1)!
-    echo ""
-    echo "==> User interruption detected."
+```bash
+if (! hash dotnet \
+    || ! hash redis-server \
+    || ! hash python3 \
+    || ! "$ccze_installed" \
+    || ! "$yt_dlp_installed" \
+    || [[ ${dotnet_version:-false} != "$C_REQ_DOTNET_VERSION" ]]) &>/dev/null
+then
+    opt_one_dis=true
+    opt_one_text="${E_GREY}${opt_one_text}${dis_option}${E_NC}"
 fi
 ```
 
-1. **Logical Operators**: As mentioned in the [Logical Operators](#__tabbed_1_2) guidelines, placing the logical operators at the beginning of the continuation line enhances readability. When combined with the eight-space indentation within a control statement, this practice ensures a clear separation between conditions and actions. Note that the guidelines of the Logical Operators section do not explicitly apply to control statements due to the different nature of the constructs. However, it's recommended to at least follow guidelines regarding the placement of logical operators. Guidelines on how to address logical operators within control statements may be provided in the future. Until then, use your best judgment to ensure readability and consistency.
+---
+
+_Continuation lines option 2:_
+
+```bash
+if (! hash dotnet \
+        || ! hash redis-server \
+        || ! hash python3 \
+        || ! "$ccze_installed" \
+        || ! "$yt_dlp_installed" \
+        || [[ ${dotnet_version:-false} != "$C_REQ_DOTNET_VERSION" ]]) &>/dev/null; then
+    opt_one_dis=true
+    opt_one_text="${E_GREY}${opt_one_text}${dis_option}${E_NC}"
+fi
+```
 
 /////
 ////

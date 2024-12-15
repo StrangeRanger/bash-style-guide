@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Introduced another option for continuation lines for control structures.
+  - `Aesthetics -> Formatting Control Structures`
+
 ## [2024.12.4] - 2024-12-04
 
 
