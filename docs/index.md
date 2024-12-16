@@ -1,9 +1,9 @@
 # Bash Style Guide
 
-/// admonition | WARNING type: warning
+/// admonition | WARNING
     type: warning
 
-This version of the guide is not yet complete...
+All guidelines in this document are in a "ready to go" state. Please note that the wording of this guide may be poor, and requires some editing.
 
 ///
 
