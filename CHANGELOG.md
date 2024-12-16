@@ -8,8 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Introduced another option for continuation lines for control structures.
+- **Guidelines**: Introduced another option for continuation lines for control structures.
   - `Aesthetics -> Formatting Control Structures`
+- **Guidelines**: Modify how global variables should be documented.
+  - `Aesthetics -> Comments -> Function Comments`
 
 ## [2024.12.4] - 2024-12-04
 
