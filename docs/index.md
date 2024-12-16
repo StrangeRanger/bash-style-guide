@@ -3,7 +3,7 @@
 /// admonition | WARNING
     type: warning
 
-All guidelines in this document are in a "ready to go" state. Please note that the wording of this guide may be poor, and requires some editing. If you find any issues with this guide, such as typos, broken links, or if you have suggestions for improvement, please create an issue on [GitHub](https://github.com/StrangeRanger/bash-style-guide/issues).
+All guidelines in this document are in a "ready to go" state. Please note that the wording of this guide may be poor, and requires some editing.
 
 ///
 
