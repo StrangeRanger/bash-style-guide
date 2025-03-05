@@ -11,9 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - **Guidelines**: Introduced another option for continuation lines for control structures.
-  - `Aesthetics -> Formatting Control Structures`
+    - `Aesthetics -> Formatting Control Structures`
 - **Guidelines**: Modify how global variables should be documented.
-  - `Aesthetics -> Comments -> Function Comments`
+    - `Aesthetics -> Comments -> Function Comments`
 - Update the wording of the guidelines and additional text.
 
 ## [2024.12.4] - 2024-12-04
@@ -33,9 +33,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Updated sections:
-  - `Aesthetics -> Comments -> Functions`
-  - `Aesthetics -> Comments -> Number of pound signs`
-  - `Style -> Quoting`
+    - `Aesthetics -> Comments -> Functions`
+    - `Aesthetics -> Comments -> Number of pound signs`
+    - `Style -> Quoting`
 - Modified code fencing format/style.
 - Update example code.
 
@@ -44,10 +44,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Updated sections:
-  - `Aesthetics -> Comments -> Number of pound signs`
-  - `Style -> Quoting`
-  - `Style -> shebang`
-  - `Error Checking -> eval`
+    - `Aesthetics -> Comments -> Number of pound signs`
+    - `Style -> Quoting`
+    - `Style -> shebang`
+    - `Error Checking -> eval`
 - Added missing periods to every comment in fenced code blocks.
 - Other small changes.
 
