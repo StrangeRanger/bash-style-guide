@@ -95,6 +95,7 @@ plugins:
 markdown_extensions:
   # The Tasklist extension allows for the usage of GitHub Flavored Markdown inspired
   # task lists, following the same syntactical conventions.
+  # DOCS: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#tasklist
   - pymdownx.tasklist:
       custom_checkbox: true
   # The Attribute Lists extension allows to add HTML attributes and CSS classes to
