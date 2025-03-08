@@ -93,6 +93,11 @@ plugins:
         - "guidelines/common-mistakes.md"
 
 markdown_extensions:
+  # The Tasklist extension allows for the usage of GitHub Flavored Markdown inspired
+  # task lists, following the same syntactical conventions.
+  # DOCS: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/#tasklist
+  - pymdownx.tasklist:
+      custom_checkbox: true
   # The Attribute Lists extension allows to add HTML attributes and CSS classes to
   # almost every Markdown inline- and block-level element with a special syntax.
   # DOCS: https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/?h=attr+list#attribute-lists
@@ -165,6 +170,6 @@ nav:
     - Error Handling: guidelines/error-handling.md
     # - Common Mistakes: guidelines/common-mistakes.md
   - Other:
-    - Todo: other/todo.md
     - Changelog: other/changelog.md
+    - Todo: other/todo.md
     - License: other/license.md
