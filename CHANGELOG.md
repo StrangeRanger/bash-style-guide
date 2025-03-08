@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2025.3.7] - 2025-03-07
+
+## Changed
+
+- Update the wording of the guidelines and additional text.
+- Improve the format and wording of the TODO list.
+
 ## [2024.12.15] - 2024-12-15
 
 ### Changed
@@ -28,7 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Complete rewrite of the style guide.
 - Convert standard markdown of guide to `MkDocs` + `Material for MkDocs`.
 
-## [2022.7.13] - 2022-07-13
+## [2025.3.7] - 2025-03-07
 
 ### Changed
 
@@ -119,7 +126,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2024.12.15...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2025.3.7...HEAD
+[2025.3.7]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.3.7
 [2024.12.15]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2024.12.15
 [2024.12.4]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2024.12.4
 [2022.7.13]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2022.7.13
