@@ -620,11 +620,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../other/todo/" class="md-nav__link">
+      <a href="../../other/changelog/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Todo
+    Changelog
     
   </span>
   
@@ -642,11 +642,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../other/changelog/" class="md-nav__link">
+      <a href="../../other/todo/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Changelog
+    Todo
     
   </span>
   
@@ -824,18 +824,18 @@
 <div class="admonition info">
 <p class="admonition-title">Guidelines</p>
 <ul>
-<li><strong>Type</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use <u>spaces</u> for indentation.<ul>
+<li><strong>Type</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use <u>spaces</u> for indentations.<ul>
 <li><strong>Reason</strong>: Spaces are universally supported and render consistently across different editors and environments. This ensures that the script's structure remains intact regardless of where it is viewed or edited.</li>
 </ul>
 </li>
 <li><strong>Size</strong>: <mark><strong><em>ALWAYS</em></strong></mark> use <u>four spaces</u> per indentation level.<ul>
-<li><strong>Reason</strong>: Using four spaces is considered the standard and is widely accepted within the Bash community. This size strikes a balance between readability and an efficient use of space.</li>
+<li><strong>Reason</strong>: Using four spaces is considered the standard and is widely accepted within the Bash community.</li>
 </ul>
 </li>
 </ul>
 </div>
 <h2 id="characters-per-line">Characters Per Line</h2>
-<p>In the past, the maximum CPL was limited to 80-characters because of the constraints of older terminals. Even though modern terminals and editors can display more characters per line, it's still beneficial to stick to a reasonable limit to maintain readability and ease of maintenance across different environments and tools.</p>
+<p>In the past, the maximum number of characters per line (CPL) was limited to 80 because of the constraints of older terminals. Even though modern terminals and editors can display more characters per line, it's still beneficial to stick to a reasonable limit to maintain readability and ease of maintenance across different environments and tools.</p>
 <div class="admonition info">
 <p class="admonition-title">General Guidelines</p>
 <ul>
@@ -873,16 +873,25 @@
 </div>
 <div class="tabbed-block">
 <ul>
-<li><strong>Two or More Operators</strong>: If two or more logical operators are used in a command sequence, place each operator at the start of a new line, even if the CPL limit hasn't been reached.<ul>
-<li><strong>Reason</strong>: Multiple commands on a single line can obscure operations. Separating them onto new lines improves readability by making the sequence more transparent. Beginning each continuation line with an operator also clarifies that we are working with a new operation.</li>
+<li>
+<p><strong>Two or More Operators</strong>: If two or more logical operators are used in a command sequence, place each operator at the start of a new line, even if the CPL limit hasn't been reached.</p>
+<ul>
+<li>
+<p class="annotate"><strong>Reason</strong>: Multiple commands on a single line can obscure operations. Placing them onto their own lines improves readability by making the sequence more transparent. (1)</p>
+<ol>
+<li><strong>Logical Operator Placement</strong><br />I have no objective reasoning for placing logical operators at the beginning of a new line. It's just a personal preference. I find it easier to read and understand the command sequence when each operator is at the beginning of a new line rather than at the end of the previous line.</li>
+</ol>
+</li>
 </ul>
 </li>
-<li><strong>Single Operator</strong>: If a single logical operator connects two commands and the length is within the CPL limit, both commands may remain on the same line.<ul>
-<li><strong>Reason</strong>: While two or more operators on a single line can make the sequence harder to follow, a single operator connecting two commands is slightly easier to read. Splitting them unnecessarily may introduce complexity without added clarity.</li>
+<li>
+<p><strong>Single Operator</strong>: If a single logical operator connects two commands and the length is within the CPL limit, both commands may remain on the same line.</p>
+<ul>
+<li><strong>Reason</strong>: Keeping a single operator on the same line can be more concise and easier to read when the command sequence is short. Splitting them unnecessarily may introduce complexity without added clarity.</li>
 </ul>
 </li>
-<li><strong>Exception</strong>: Sometimes, a single <code>||</code> operator follows a command, and the subsequent operations span multiple lines. In such cases, placing <code>|| {</code> at the end of the command is acceptable. The closing bracket (<code>}</code>) should start a new line, with operations enclosed between the braces.<ul>
-<li><strong>Reason</strong>: This format keeps the structure concise for handling a single failure condition with <code>||</code>. Other formats can add complexity without improving clarity, making this approach more readable.</li>
+<li><strong>Special Case</strong>: Sometimes, a single <code>||</code> operator follows a command, and the subsequent operations span multiple lines. In such cases, placing <code>|| {</code> at the end of the initial command is acceptable. The closing bracket (<code>}</code>) should start a new line, with operations enclosed between the braces.<ul>
+<li><strong>Reason</strong>: This format keeps the structure concise and easy to follow when handling a single failure condition with <code>||</code>. Other formats can add complexity without improving clarity, making this approach more readable.</li>
 <li><strong>Example of acceptable formatting</strong>:
     <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
 <span class="normal"><a href="#__codelineno-1-2">2</a></span>
@@ -903,7 +912,7 @@
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="o">}</span>
 </span></code></pre></div></td></tr></table></div>
-    <strong>Explanation</strong>: Here, <code>&amp;&amp;</code> and <code>||</code> are on the same line, violating the "Two or More Operators" guideline and making the sequence potentially harder to follow. The preferred format is:
+    <strong>Explanation</strong>: Here, <code>&amp;&amp;</code> and <code>||</code> are on the same line, violating the "Two or More Operators" guideline and making the sequence <em>potentially</em> harder to understand. The preferred format is:
     <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
 <span class="normal"><a href="#__codelineno-3-2">2</a></span>
 <span class="normal"><a href="#__codelineno-3-3">3</a></span>
@@ -921,8 +930,6 @@
 </ul>
 <details class="example">
 <summary>General Examples</summary>
-<!-- TODO: Maybe add an explanation to the examples? -->
-
 <p><em>Example 1:</em></p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span>/some/location/of/file.txt<span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>/some/location/of/file.txt
 </span></code></pre></div></td></tr></table></div>
@@ -943,13 +950,11 @@
 </ul>
 <details class="example">
 <summary>Examples</summary>
-<!-- TODO: Maybe add an explanation to the examples? -->
-
-<p><em>Sequence of piped commands on a single line:</em></p>
+<p><em>Piped command sequence on a single line:</em></p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;TODO&quot;</span><span class="w"> </span>/path/to/project<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s2">&quot;DONE&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sort<span class="w"> </span><span class="p">|</span><span class="w"> </span>uniq<span class="w"> </span>&gt;<span class="w"> </span>todo_list.txt
 </span></code></pre></div></td></tr></table></div>
 <hr />
-<p><em>Breaking up a sequence of piped commands, exceeding the CPL limit:</em></p>
+<p><em>Multi-line command sequence:</em></p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
 <span class="normal"><a href="#__codelineno-7-2">2</a></span>
 <span class="normal"><a href="#__codelineno-7-3">3</a></span>
@@ -966,7 +971,7 @@
 </div>
 </div>
 <h2 id="formatting-control-structures">Formatting Control Structures</h2>
-<p>Control structures in Bash, such as <code>if</code> statements and <code>for</code> or <code>while</code> loops, can be formatted in multiple ways. Depending on the context, you can choose between a standard or single-line control structure. In either case, maintaining consistency and readability is key.</p>
+<p>Control structures in Bash, such as <code>if</code> statements and <code>for</code> or <code>while</code> loops can be formatted in several ways. Depending on the context, you can choose between a standard or single-line control structure. In either case, maintaining consistency and readability is key.</p>
 <div class="admonition info">
 <p class="admonition-title">Guidelines</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Standard Control Structure</label><label for="__tabbed_2_2">Single-Line Control Structure</label></div>
@@ -987,8 +992,6 @@
 </ul>
 <details class="example">
 <summary>Examples</summary>
-<!-- TODO: Maybe add an explanation to the examples? -->
-
 <p><em>Standard control structure formatting:</em></p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
 <span class="normal"><a href="#__codelineno-8-2">2</a></span>
@@ -1062,13 +1065,11 @@
 <li><strong>Reason</strong>: Including complex logic or multiple commands on a single line can reduce readability and make the code harder to maintain.</li>
 </ul>
 </li>
-<li><strong>Character Limit</strong>: <mark><strong><em>DO NOT</em></strong></mark> use single-line control structures if they exceed the 88-character limit.</li>
+<li><strong>Character Limit</strong>: <mark><strong><em>DO NOT</em></strong></mark> use a single-line control structure if it exceeds the 88-character limit.</li>
 </ul>
 <details class="example">
 <summary>Example</summary>
-<!-- TODO: Maybe add an explanation to the examples? -->
-
-<p><em>Example of two single-line control structure:</em></p>
+<p><em>Two single-line control structures:</em></p>
 <div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
 <span class="normal"><a href="#__codelineno-11-2">2</a></span>
 <span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="o">[[</span><span class="w"> </span><span class="nv">$1</span><span class="w"> </span>-eq<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;You entered one.&quot;</span>
@@ -1086,7 +1087,7 @@
 <p class="admonition-title">Guidelines</p>
 <ul>
 <li><strong>Single Blank Line</strong>: Use a single blank line to separate logical blocks of code or functions.</li>
-<li><strong>Double Blank Lines</strong>: Use double-blank lines sparingly to highlight new sections or distinct logical groups within the script.</li>
+<li><strong>Double Blank Lines</strong>: Use double-blank lines sparingly to highlight new sections or distinct logical groups.</li>
 </ul>
 </div>
 <div class="admonition tip">
@@ -1127,7 +1128,7 @@
 </span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14"></a>subtract<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="m">4</span>
 </span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Script finished.&quot;</span>
 </span></code></pre></div></td></tr></table></div>
-<p><strong>Explanation</strong>: In this example, a single blank line separates the add and subtract functions. Two blank lines are used before the <code>echo "Starting the script..."</code> line, signifying a transition from function definitions to the main execution block of the script.</p>
+<p><strong>Explanation</strong>: In this example, a single blank line separates the add and subtract functions. Two blank lines are used before the <code>echo "Starting the script..."</code> line, signifying a transition between the function definitions and the main script logic. This spacing enhances readability and visually separates the script's distinct sections.</p>
 </div>
 <h2 id="comments">Comments</h2>
 <p>Comments are essential for explaining script functionality and enhancing long-term usability. Effective commenting practices ensure scripts are easily understood by new developers or future maintainers. While similar to previous guidelines, comments have a few additional considerations depending on their context.</p>
@@ -1171,8 +1172,8 @@
 </li>
 </ul>
 </li>
-<li><strong>Output and Return</strong>: Specify the function's output and return values separately. Describe any data the function outputs and the values it returns for use elsewhere in the script.<ul>
-<li><strong>Reason</strong>: Describing the function's output and return values helps developers understand what to expect when calling the function and how to handle the results.</li>
+<li><strong>Exit and Return</strong>: Specify the function's exit and return values separately. Describe the reason and when the exit occurs, as well as what the function outputs and the values it returns for use elsewhere in the script.<ul>
+<li><strong>Reason</strong>: Describing the function's exit and return values helps developers understand what to expect when calling the function and how to handle the results.</li>
 </ul>
 </li>
 <li><strong>General Reasoning</strong>: Besides the reasons previously mentioned, documenting functions allows for quick reference and understanding of the script's structure and logic. This is especially beneficial when revisiting the script or collaborating with other developers after an extended period.</li>
@@ -1180,7 +1181,7 @@
 <p><strong>Format/Structure Example</strong>: Below is the recommended format and structure for documenting functions in Bash scripts. This format provides a clear outline for documenting functions effectively. Please pay attention to the annotations within the examples. They provide additional context and explanations for the documentation.</p>
 <div class="admonition">
 <p class="admonition-title">Important Note</p>
-<p>While all of the fields are highly recommended, some may be omitted if they are not applicable to the function, or if they do not provide additional value. However, it is recommended to include as much information as possible to ensure the function is well-documented. Additionally, if information in one of the fields is already provided elsewhere or is self-evident from the function's name or logic, it may be omitted. For example, say you already provide information regarding the output within the function description, you may omit the <code>OUTPUTS</code> section.</p>
+<p>While all of the fields are highly recommended, some may be omitted if they are not applicable to the function, or if they do not provide additional value. However, it is recommended to include as much information as possible to ensure the function is well-documented. Additionally, if information in one of the fields is already provided elsewhere or is self-evident from the function's name or logic, it may be omitted.</p>
 </div>
 <div class="language-bash annotate highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-14-2"> 2</a></span>
@@ -1234,12 +1235,12 @@
 </span><span id="__span-14-20"><a id="__codelineno-14-20" name="__codelineno-14-20"></a><span class="c1">#           - value_one: Description of value_one.</span>
 </span><span id="__span-14-21"><a id="__codelineno-14-21" name="__codelineno-14-21"></a><span class="c1">#           - value_two: Description of value_two.</span>
 </span><span id="__span-14-22"><a id="__codelineno-14-22" name="__codelineno-14-22"></a><span class="c1">#</span>
-</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="c1"># OUTPUTS:</span>
-</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="c1">#   Description of the data output by the function, such as data written to the console</span>
-</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="c1">#   or a file.</span>
+</span><span id="__span-14-23"><a id="__codelineno-14-23" name="__codelineno-14-23"></a><span class="c1">#</span>
+</span><span id="__span-14-24"><a id="__codelineno-14-24" name="__codelineno-14-24"></a><span class="c1"># RETURNS:</span>
+</span><span id="__span-14-25"><a id="__codelineno-14-25" name="__codelineno-14-25"></a><span class="c1">#   return value: Description of when the return value is provided and its significance.</span>
 </span><span id="__span-14-26"><a id="__codelineno-14-26" name="__codelineno-14-26"></a><span class="c1">#</span>
-</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27"></a><span class="c1"># RETURNS:</span>
-</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28"></a><span class="c1">#   Description of any values the function returns for use elsewhere in the script.</span>
+</span><span id="__span-14-27"><a id="__codelineno-14-27" name="__codelineno-14-27"></a><span class="c1"># EXITS:</span>
+</span><span id="__span-14-28"><a id="__codelineno-14-28" name="__codelineno-14-28"></a><span class="c1">#   exit value: Description of when the exit occurs and the reason for the exit.</span>
 </span><span id="__span-14-29"><a id="__codelineno-14-29" name="__codelineno-14-29"></a>function_name<span class="o">()</span><span class="w"> </span><span class="o">{</span>
 </span><span id="__span-14-30"><a id="__codelineno-14-30" name="__codelineno-14-30"></a><span class="w">    </span><span class="c1"># Function logic here...</span>
 </span><span id="__span-14-31"><a id="__codelineno-14-31" name="__codelineno-14-31"></a><span class="o">}</span>
@@ -1371,62 +1372,60 @@
 <span class="normal"><a href="#__codelineno-17-45">45</a></span>
 <span class="normal"><a href="#__codelineno-17-46">46</a></span>
 <span class="normal"><a href="#__codelineno-17-47">47</a></span>
-<span class="normal"><a href="#__codelineno-17-48">48</a></span>
-<span class="normal"><a href="#__codelineno-17-49">49</a></span>
-<span class="normal"><a href="#__codelineno-17-50">50</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1">####</span>
+<span class="normal"><a href="#__codelineno-17-48">48</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1">####</span>
 </span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="c1"># Perform cleanup operations when the script exits. This includes killing any background</span>
 </span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="c1"># jobs and removing temporary files.</span>
 </span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a><span class="c1">#</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="c1"># NOTE:</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="c1">#   This function is designed to be triggered on normal exits, errors, or interruptions.</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="c1">#</span>
-</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="c1"># PARAMETERS:</span>
-</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="c1">#   - $1: exit_code (Required)</span>
-</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="c1">#       - The type of exit that occurred.</span>
-</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="c1">#       - Acceptable values: (1)</span>
-</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="c1">#           - 0: Normal exit. The script completed its task successfully.</span>
-</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="c1">#           - 1: Exiting due to an error. An error occurred during the script execution.</span>
-</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="c1">#           - 130: User interruption. The user interrupted the script using Ctrl+C.</span>
-</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="c1">#           - 143: SIGTERM signal received. The script was terminated by a SIGTERM signal.</span>
-</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="c1">#   - $2: clean_up (Optional, Default: true)</span>
-</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="c1">#       - Whether to perform cleanup operations.</span>
-</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="c1">#       - Acceptable values: (2)</span>
-</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="c1">#           - true</span>
-</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="c1">#           - false</span>
-</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="c1">#   - $3: display_message (Optional, Default: &quot;true&quot;)</span>
-</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="c1">#       - Whether to display fatal error or user interruption messages.</span>
-</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="c1">#       - Acceptable values:</span>
-</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24"></a><span class="c1">#           - true</span>
-</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25"></a><span class="c1">#           - false</span>
-</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26"></a>clean_exit<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">exit_code</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
-</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">clean_up</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">true</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">display_message</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">true</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30"></a>
-</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$display_message</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_RED</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> A fatal error occurred.&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
-</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33"></a><span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="o">(</span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;130&quot;</span><span class="w"> </span><span class="o">||</span><span class="w">  </span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;143&quot;</span><span class="o">)</span>
-</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34"></a><span class="w">            </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$display_message</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
-</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_YELLOW</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> User interruption detected.&quot;</span>
-</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37"></a><span class="w">    </span><span class="k">fi</span>
-</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38"></a>
-</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$clean_up</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
-</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_CYAN</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> Cleaning up...&quot;</span>
-</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41"></a>
-</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span>job<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">background_jobs</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
-</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43"></a><span class="w">            </span><span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
-</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44"></a><span class="w">        </span><span class="k">done</span>
-</span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45"></a>
-</span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46"></a><span class="w">        </span><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$C_TMP_FILE</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$C_TMP_FILE</span><span class="s2">&quot;</span>
-</span><span id="__span-17-47"><a id="__codelineno-17-47" name="__codelineno-17-47"></a><span class="w">    </span><span class="k">fi</span>
-</span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48"></a>
-</span><span id="__span-17-49"><a id="__codelineno-17-49" name="__codelineno-17-49"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$exit_code</span><span class="s2">&quot;</span>
-</span><span id="__span-17-50"><a id="__codelineno-17-50" name="__codelineno-17-50"></a><span class="o">}</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="c1"># PARAMETERS:</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="c1">#   - $1: exit_code (Required)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="c1">#       - The type of exit that occurred.</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8"></a><span class="c1">#       - Acceptable values: (1)</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="c1">#           - 0: Normal exit. The script completed its task successfully.</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="c1">#           - 1: Exiting due to an error. An error occurred during the script execution.</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="c1">#           - 130: User interruption. The user interrupted the script using Ctrl+C.</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="c1">#           - 143: SIGTERM signal received. The script was terminated by a SIGTERM signal.</span>
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="c1">#   - $2: clean_up (Optional, Default: true)</span>
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14"></a><span class="c1">#       - Whether to perform cleanup operations.</span>
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="c1">#       - Acceptable values: (2)</span>
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="c1">#           - true</span>
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="c1">#           - false</span>
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="c1">#   - $3: display_message (Optional, Default: &quot;true&quot;) (3)</span>
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19"></a><span class="c1">#       - Acceptable values: true, false (4)</span>
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20"></a><span class="c1">#</span>
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21"></a><span class="c1"># EXITS:</span>
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22"></a><span class="c1">#   exit_code: The exit code passed by the caller. Always executes once cleanup</span>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23"></a><span class="c1">#       operations are complete.</span>
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24"></a>clean_exit<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">exit_code</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span>
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">clean_up</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">true</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27"></a><span class="w">    </span><span class="nb">local</span><span class="w"> </span><span class="nv">display_message</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">true</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28"></a>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$display_message</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_RED</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> A fatal error occurred.&quot;</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31"></a><span class="w">    </span><span class="k">elif</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="o">(</span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;130&quot;</span><span class="w"> </span><span class="o">||</span><span class="w">  </span><span class="nv">$exit_code</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;143&quot;</span><span class="o">)</span>
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32"></a><span class="w">            </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">$display_message</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+</span><span id="__span-17-34"><a id="__codelineno-17-34" name="__codelineno-17-34"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_YELLOW</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> User interruption detected.&quot;</span>
+</span><span id="__span-17-35"><a id="__codelineno-17-35" name="__codelineno-17-35"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-17-36"><a id="__codelineno-17-36" name="__codelineno-17-36"></a>
+</span><span id="__span-17-37"><a id="__codelineno-17-37" name="__codelineno-17-37"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[[</span><span class="w"> </span><span class="nv">$clean_up</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;true&quot;</span><span class="w"> </span><span class="o">]]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-17-38"><a id="__codelineno-17-38" name="__codelineno-17-38"></a><span class="w">        </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">C_CYAN</span><span class="si">}</span><span class="s2">==&gt;</span><span class="si">${</span><span class="nv">C_NC</span><span class="si">}</span><span class="s2"> Cleaning up...&quot;</span>
+</span><span id="__span-17-39"><a id="__codelineno-17-39" name="__codelineno-17-39"></a>
+</span><span id="__span-17-40"><a id="__codelineno-17-40" name="__codelineno-17-40"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span>job<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">background_jobs</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-17-41"><a id="__codelineno-17-41" name="__codelineno-17-41"></a><span class="w">            </span><span class="nb">kill</span><span class="w"> </span>-9<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$job</span><span class="s2">&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+</span><span id="__span-17-42"><a id="__codelineno-17-42" name="__codelineno-17-42"></a><span class="w">        </span><span class="k">done</span>
+</span><span id="__span-17-43"><a id="__codelineno-17-43" name="__codelineno-17-43"></a>
+</span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44"></a><span class="w">        </span><span class="o">[[</span><span class="w"> </span>-f<span class="w"> </span><span class="nv">$C_TMP_FILE</span><span class="w"> </span><span class="o">]]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$C_TMP_FILE</span><span class="s2">&quot;</span>
+</span><span id="__span-17-45"><a id="__codelineno-17-45" name="__codelineno-17-45"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-17-46"><a id="__codelineno-17-46" name="__codelineno-17-46"></a>
+</span><span id="__span-17-47"><a id="__codelineno-17-47" name="__codelineno-17-47"></a><span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$exit_code</span><span class="s2">&quot;</span>
+</span><span id="__span-17-48"><a id="__codelineno-17-48" name="__codelineno-17-48"></a><span class="o">}</span>
 </span></code></pre></div></td></tr></table></div>
 <ol>
 <li><strong>Acceptable Values</strong>: As mentioned in the guidelines, if a parameter has a specific set of acceptable values, list them. This is an example of how to document such values.</li>
-<li><strong>Value Descriptions</strong>: Since the values' purpose is self-explanatory in relation to the parameter's description, no additional descriptions are provided.</li>
+<li><strong>Value Descriptions</strong>: Since the values' purpose is self-explanatory, no additional descriptions are necessary.</li>
+<li><strong>No Description</strong>: If the parameter's purpose is immediately evident from its name or the function's logic, a description may be omitted.</li>
+<li><strong>Alternative Formatting</strong>: When the "Acceptable values" section is short and without additional descriptions, they may be placed on the same line rather than as a separate bullet point.</li>
 </ol>
 </div>
 <div class="tabbed-block">
@@ -1514,34 +1513,44 @@
 <div class="tabbed-block">
 <ul>
 <li><strong>Usage</strong>: Use two pound signs for comments that describe the functionality of a block of code, such as a loop, conditional sequence, control structure, or a group of related variable declarations. Place these comments directly above the relevant code block.</li>
-<li><strong>Blank Lines</strong>: These comments directly apply to the block of code immediately following them. If a blank line precedes the commented code block, it indicates that the comment does not apply to the later code.</li>
+<li><strong>Blank Lines</strong>: These comments directly apply to the block of code immediately following them. If a blank line precedes the commented code block, it indicates that the comment does not apply to the later code.<ul>
+<li><strong>Exception</strong>: If a double pound sign comment is placed at the top of a control structure or loop, and a blank line is introduced within the structure, the comment still applies to the entire structure.</li>
+</ul>
+</li>
 </ul>
 <div class="admonition example">
 <p class="admonition-title">Examples</p>
-<div class="language-bash highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
-<span class="normal"><a href="#__codelineno-20-2">2</a></span>
-<span class="normal"><a href="#__codelineno-20-3">3</a></span>
-<span class="normal"><a href="#__codelineno-20-4">4</a></span>
-<span class="normal"><a href="#__codelineno-20-5">5</a></span>
-<span class="normal"><a href="#__codelineno-20-6">6</a></span>
-<span class="normal"><a href="#__codelineno-20-7">7</a></span>
-<span class="normal"><a href="#__codelineno-20-8">8</a></span>
-<span class="normal"><a href="#__codelineno-20-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1">## Set variables for the script.</span>
+<div class="language-bash annotate highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1">## Set variables for the script.</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="nv">var_one</span><span class="o">=</span><span class="s2">&quot;value_one&quot;</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="nv">var_two</span><span class="o">=</span><span class="s2">&quot;value_two&quot;</span>
 </span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="nv">var_three</span><span class="o">=</span><span class="s2">&quot;value_three&quot;</span>
 </span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5"></a>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="c1">## Loop through all &quot;.txt&quot; files in the directory.</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="c1">## Loop through all &quot;.txt&quot; files in the directory. (1)</span>
 </span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="k">for</span><span class="w"> </span>file<span class="w"> </span><span class="k">in</span><span class="w"> </span>*.txt<span class="p">;</span><span class="w"> </span><span class="k">do</span>
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Processing </span><span class="nv">$file</span><span class="s2">&quot;</span>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="k">done</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9"></a>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Done&quot;</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11"></a><span class="k">done</span>
 </span></code></pre></div></td></tr></table></div>
+<ol>
+<li><strong>Blank Line in Structure</strong>: While there is a blank line between the two <code>echo</code> commands, this comment still applies to the entire loop.</li>
+</ol>
 </div>
 </div>
 <div class="tabbed-block">
 <ul>
-<li><strong>Usage</strong>: Use quadruple-pound signs to separate distinct parts of the script, such as functions, variable declarations, or main script logic.</li>
-<li><strong>Sparingly</strong>: Use quadruple-pound signs sparingly, primarily when it’s necessary to visually distinguish major sections of code. Excessive use can clutter the script and make it harder to read.</li>
+<li><strong>Usage</strong>: Use four pound signs to separate distinct parts of the script, such as functions, variable declarations, or main script logic.</li>
+<li><strong>Sparingly</strong>: Use four pound signs sparingly, primarily when it’s necessary to visually distinguish major sections of code. Excessive use can clutter the script and make it harder to read.</li>
 <li><strong>Omitting <code>####</code></strong>: Quadruple-pound signs can be omitted if the script is relatively short, well-structured, and easy to navigate without additional sectioning.</li>
 <li><strong>Subsections</strong>: Quadruple-pound signs can also indicate subsections within a larger script section. However, this should be done <strong>VERY</strong> sparingly. Consider using <a href="#__tabbed_4_4">triple-pound signs</a> (<code>###</code>) before resorting to quadruple-pound signs for subsections.</li>
 <li><strong>Formatting</strong>: Quadruple-pound sign comments should be formatted to ensure the transition between sections is clear and visually distinct. Below are the recommended formatting guidelines:<ul>
@@ -1627,7 +1636,7 @@
 <div class="tabbed-block">
 <ul>
 <li><strong>Description</strong>: Triple-pound signs serve as a middle ground between double and quadruple-pound signs. They are used when blocks or lines of code require some distinction but does not necessitate a completely new section.</li>
-<li><strong>Usage</strong>: Use triple-pound signs where the code is different enough to warrant distinction but not significant enough to be placed in an entirely new section.</li>
+<li><strong>Usage</strong>: Use three pound signs where the code is different enough to warrant distinction but not significant enough to be placed in an entirely new section.</li>
 <li><strong>Formatting</strong>: Triple-pound sign comments should be formatted to ensure the transition between differing blocks of code is clear and visually distinct. Below are the recommended formatting guidelines:<ul>
 <li><strong>Section Naming</strong>: Append <code>[ section_name ]</code> to the end of <code>###</code>, replacing <code>section_name</code> with a descriptive title for that section. The section name should clearly indicate the content or purpose of the code below it.</li>
 <li><strong>Filler Characters</strong>: After the section name, append a series of <code>#</code> characters to fill the remaining space up to the 88-character limit. Additionally, place three <code>#</code> characters above and below the section name line.</li>
@@ -1727,7 +1736,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">December 15, 2024</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">March 7, 2025</span>
   </span>
 
     

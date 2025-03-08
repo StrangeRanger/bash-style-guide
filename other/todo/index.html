@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://bsg.hthompson.dev/other/todo/">
       
       
-        <link rel="prev" href="../../guidelines/error-handling/">
+        <link rel="prev" href="../changelog/">
       
       
-        <link rel="next" href="../changelog/">
+        <link rel="next" href="../license/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -114,7 +114,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#todo" class="md-skip">
+        <a href="#todo-list" class="md-skip">
           Skip to content
         </a>
       
@@ -492,6 +492,28 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -543,18 +565,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#small-todos" class="md-nav__link">
+  <a href="#immediate-tasks" class="md-nav__link">
     <span class="md-ellipsis">
-      Small TODOs
+      Immediate Tasks
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#bigger-todos" class="md-nav__link">
+  <a href="#substantial-enhancements" class="md-nav__link">
     <span class="md-ellipsis">
-      Big(ger) TODOs
+      Substantial Enhancements
     </span>
   </a>
   
@@ -564,28 +586,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../changelog/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Changelog
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -647,18 +647,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#small-todos" class="md-nav__link">
+  <a href="#immediate-tasks" class="md-nav__link">
     <span class="md-ellipsis">
-      Small TODOs
+      Immediate Tasks
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#bigger-todos" class="md-nav__link">
+  <a href="#substantial-enhancements" class="md-nav__link">
     <span class="md-ellipsis">
-      Big(ger) TODOs
+      Substantial Enhancements
     </span>
   </a>
   
@@ -683,26 +683,34 @@
   
 
 
-<h1 id="todo">TODO</h1>
-<h2 id="small-todos">Small TODOs</h2>
+<h1 id="todo-list">Todo List</h1>
+<h2 id="immediate-tasks">Immediate Tasks</h2>
+<p>Pages requiring review and improvement (completed pages are highlighted as green):</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Home Page</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Aesthetics</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Bashism</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Common Mistakes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Error Handling</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Style</li>
+</ul>
+<p>Action items for these pages:</p>
 <ul>
-<li>Instead of just saying, "It makes things more clear," explain how it makes things more clear.<ul>
-<li>Example:<ul>
+<li>Replace vague explanations (like "It makes things more clear") with specific, detailed reasoning.</li>
+<li><strong>Example</strong>:<ul>
 <li><strong>Explanation</strong>: Bash globbing, using patterns like <code>*</code>, directly matches filenames in the specified directory without invoking an external command. Unlike <code>ls</code>, which produces plain text output that may misinterpret or mishandle filenames containing spaces, newlines, or special characters, Bash globbing handles these scenarios correctly and efficiently. When a glob pattern is used (e.g., <code>/path/to/dir/*</code>), the shell itself expands the pattern into a list of matching filenames. This approach ensures that each filename, regardless of its complexity or the characters it contains, is correctly identified and processed. Consequently, Bash globbing is more reliable and secure than parsing the output of ls, which can easily lead to errors or security vulnerabilities when encountering unconventional filenames.</li>
 </ul>
 </li>
+<li>Standardize terminology throughout the document (e.g., consistently use either "Block statements" or "Control statements", not both).</li>
 </ul>
-</li>
-<li>Ensure terminology is consistent and correct throughout the document. (e.g., "Block statements" vs. "Control statements")</li>
-</ul>
-<h2 id="bigger-todos">Big(ger) TODOs</h2>
-<ul>
-<li>Add a section explaining the perils of using <code>eval</code> and why it should be avoided.</li>
-<li>Add a section explaining how to properly use <code>set -e</code>.</li>
-<li>Add information regarding how to deal with logical operators (or redirect and i/o operators), similar to that of inside "Formatting Multi-lined Commands", to _____...</li>
-<li>Add information to (some section) specifying that global variables should often be placed at the top of the script. This ensures that the script isn't reliant on variables defined within a function. (or something like that)</li>
-<li>While out of scope of this document, consider adding information to "Using Quotes" in style.md about the background of using quotes and how they are used in other programming languages. This could help readers understand the importance of quotes in Bash and why they should be used consistently.</li>
-<li>Add a section describing the importance of shebangs...</li>
+<h2 id="substantial-enhancements">Substantial Enhancements</h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Create a dedicated section detailing the dangers of <code>eval</code> usage and recommended alternatives.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Develop comprehensive guidelines for the proper implementation of <code>set -e</code> with examples.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Document best practices for working with logical operators and I/O redirection operators, following the format established in the "Formatting Multi-lined Commands" section.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add guidance on variable scope best practices, emphasizing that global variables should be declared at the script's beginning to prevent dependency issues with function-local variables.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Consider expanding the "Using Quotes" section in style.md to include comparative context from other programming languages, highlighting why consistent quoting practices are particularly important in Bash.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Draft a new section explaining shebang (<code>#!</code>) importance, proper syntax, and common implementations.</li>
 </ul>
 
 
