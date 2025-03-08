@@ -169,6 +169,6 @@ nav:
     - Error Handling: guidelines/error-handling.md
     # - Common Mistakes: guidelines/common-mistakes.md
   - Other:
-    - Todo: other/todo.md
     - Changelog: other/changelog.md
+    - Todo: other/todo.md
     - License: other/license.md
