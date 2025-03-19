@@ -37,7 +37,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "mkdocs-exclude", specifier = "==1.0.2" },
-    { name = "mkdocs-git-revision-date-localized-plugin", specifier = "==1.4.2" },
+    { name = "mkdocs-git-revision-date-localized-plugin", specifier = "==1.4.5" },
     { name = "mkdocs-material", specifier = "==9.6.9" },
 ]
 
@@ -271,7 +271,7 @@ wheels = [
 
 [[package]]
 name = "mkdocs-git-revision-date-localized-plugin"
-version = "1.4.2"
+version = "1.4.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -279,9 +279,9 @@ dependencies = [
     { name = "mkdocs" },
     { name = "pytz" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/29/af/1692b9372aa614932322446db34d852eaba733f5dffb0311177860cd01b9/mkdocs_git_revision_date_localized_plugin-1.4.2.tar.gz", hash = "sha256:eec56395cf647a148f9ac013f42a3e61de6ec42c59df0232fc2054c4db275eae", size = 449456 }
+sdist = { url = "https://files.pythonhosted.org/packages/3c/93/3987505121a9b596b05c8a38054b587cfe0d78a1a3e92144204f2c45722b/mkdocs_git_revision_date_localized_plugin-1.4.5.tar.gz", hash = "sha256:9e37f1343d314c9cd8f9cbbf117c4bdc1d2d24a0653c5bbd7059d072f2cd0972", size = 450263 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/da/ee/6394ab2f1f6a47dad1790391ac32217e8aeaae24356a649fd5e4718b28e7/mkdocs_git_revision_date_localized_plugin-1.4.2-py3-none-any.whl", hash = "sha256:81b7ae57c2c7f8d0a7ff5eb4d2c51120bf131165a357f73dcc5c22af9f91f41a", size = 25259 },
+    { url = "https://files.pythonhosted.org/packages/da/c0/b63cb3008564242a3d1ba7a6dd6dc29d7fb297e65bda93cef655780757af/mkdocs_git_revision_date_localized_plugin-1.4.5-py3-none-any.whl", hash = "sha256:395ae0b9eec565c78a76fffc938b70f52774bf2971245482d31aba47018c5fa9", size = 25284 },
 ]
 
 [[package]]
