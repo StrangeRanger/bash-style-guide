@@ -37,8 +37,8 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "mkdocs-exclude", specifier = "==1.0.2" },
-    { name = "mkdocs-git-revision-date-localized-plugin", specifier = "==1.3.0" },
-    { name = "mkdocs-material", specifier = "==9.6.7" },
+    { name = "mkdocs-git-revision-date-localized-plugin", specifier = "==1.4.2" },
+    { name = "mkdocs-material", specifier = "==9.6.9" },
 ]
 
 [package.metadata.requires-dev]
@@ -156,14 +156,14 @@ wheels = [
 
 [[package]]
 name = "jinja2"
-version = "3.1.5"
+version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "markupsafe" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/af/92/b3130cbbf5591acf9ade8708c365f3238046ac7cb8ccba6e81abccb0ccff/jinja2-3.1.5.tar.gz", hash = "sha256:8fefff8dc3034e27bb80d67c671eb8a9bc424c0ef4c0826edbff304cceff43bb", size = 244674 }
+sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bd/0f/2ba5fbcd631e3e88689309dbe978c5769e883e4b84ebfe7da30b43275c5a/jinja2-3.1.5-py3-none-any.whl", hash = "sha256:aba0f4dc9ed8013c424088f68a5c226f7d6097ed89b246d7749c2ec4175c6adb", size = 134596 },
+    { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899 },
 ]
 
 [[package]]
@@ -271,7 +271,7 @@ wheels = [
 
 [[package]]
 name = "mkdocs-git-revision-date-localized-plugin"
-version = "1.3.0"
+version = "1.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -279,14 +279,14 @@ dependencies = [
     { name = "mkdocs" },
     { name = "pytz" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/73/85/6dc9d4eca486ed5734a05f7fd5c612a8e60a35e65610dad6aa9c58118c3f/mkdocs_git_revision_date_localized_plugin-1.3.0.tar.gz", hash = "sha256:439e2f14582204050a664c258861c325064d97cdc848c541e48bb034a6c4d0cb", size = 384797 }
+sdist = { url = "https://files.pythonhosted.org/packages/29/af/1692b9372aa614932322446db34d852eaba733f5dffb0311177860cd01b9/mkdocs_git_revision_date_localized_plugin-1.4.2.tar.gz", hash = "sha256:eec56395cf647a148f9ac013f42a3e61de6ec42c59df0232fc2054c4db275eae", size = 449456 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/67/e5/ffeb92db53af8c3aa2d92e21a3cf6b5f83eee7e03b9cf9234ef6b30230d5/mkdocs_git_revision_date_localized_plugin-1.3.0-py3-none-any.whl", hash = "sha256:c99377ee119372d57a9e47cff4e68f04cce634a74831c06bc89b33e456e840a1", size = 22549 },
+    { url = "https://files.pythonhosted.org/packages/da/ee/6394ab2f1f6a47dad1790391ac32217e8aeaae24356a649fd5e4718b28e7/mkdocs_git_revision_date_localized_plugin-1.4.2-py3-none-any.whl", hash = "sha256:81b7ae57c2c7f8d0a7ff5eb4d2c51120bf131165a357f73dcc5c22af9f91f41a", size = 25259 },
 ]
 
 [[package]]
 name = "mkdocs-material"
-version = "9.6.8"
+version = "9.6.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "babel" },
@@ -301,9 +301,9 @@ dependencies = [
     { name = "pymdown-extensions" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9b/d7/93e19c9587e5f4ed25647890555d58cf484a4d412be7037dc17b9c9179d9/mkdocs_material-9.6.7.tar.gz", hash = "sha256:3e2c1fceb9410056c2d91f334a00cdea3215c28750e00c691c1e46b2a33309b4", size = 3947458 }
+sdist = { url = "https://files.pythonhosted.org/packages/11/cb/6dd3b6a7925429c0229738098ee874dbf7fa02db55558adb2c5bf86077b2/mkdocs_material-9.6.9.tar.gz", hash = "sha256:a4872139715a1f27b2aa3f3dc31a9794b7bbf36333c0ba4607cf04786c94f89c", size = 3948083 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/aa/d3/12f22de41bdd9e576ddc459b38c651d68edfb840b32acaa1f46ae36845e3/mkdocs_material-9.6.7-py3-none-any.whl", hash = "sha256:8a159e45e80fcaadd9fbeef62cbf928569b93df954d4dc5ba76d46820caf7b47", size = 8696755 },
+    { url = "https://files.pythonhosted.org/packages/db/7c/ea5a671b2ff5d0e3f3108a7f7d75b541d683e4969aaead2a8f3e59e0fc27/mkdocs_material-9.6.9-py3-none-any.whl", hash = "sha256:6e61b7fb623ce2aa4622056592b155a9eea56ff3487d0835075360be45a4c8d1", size = 8697935 },
 ]
 
 [[package]]
@@ -344,11 +344,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.3.6"
+version = "4.3.7"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/13/fc/128cc9cb8f03208bdbf93d3aa862e16d376844a14f9a0ce5cf4507372de4/platformdirs-4.3.6.tar.gz", hash = "sha256:357fb2acbc885b0419afd3ce3ed34564c13c9b95c89360cd9563f73aa5e2b907", size = 21302 }
+sdist = { url = "https://files.pythonhosted.org/packages/b6/2d/7d512a3913d60623e7eb945c6d1b4f0bddf1d0b7ada5225274c87e5b53d1/platformdirs-4.3.7.tar.gz", hash = "sha256:eb437d586b6a0986388f0d6f74aa0cde27b48d0e3d66843640bfb6bdcdb6e351", size = 21291 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/3c/a6/bc1012356d8ece4d66dd75c4b9fc6c1f6650ddd5991e421177d9f8f671be/platformdirs-4.3.6-py3-none-any.whl", hash = "sha256:73e575e1408ab8103900836b97580d5307456908a03e92031bab39e4554cc3fb", size = 18439 },
+    { url = "https://files.pythonhosted.org/packages/6d/45/59578566b3275b8fd9157885918fcd0c4d74162928a5310926887b856a51/platformdirs-4.3.7-py3-none-any.whl", hash = "sha256:a03875334331946f13c549dbd8f4bac7a13a50a895a0eb1e8c6a8ace80d40a94", size = 18499 },
 ]
 
 [[package]]
