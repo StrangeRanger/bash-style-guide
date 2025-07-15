@@ -1,6 +1,6 @@
 [project]
 name = "bash-style-guide"
-version = "2025.3.7"
+version = "2025.7.15"
 requires-python = "~=3.12"
 dependencies = [
     "mkdocs-git-revision-date-localized-plugin==1.4.7",
