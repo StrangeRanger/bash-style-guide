@@ -855,8 +855,8 @@
 <div class="admonition info">
 <p class="admonition-title">General Guidelines</p>
 <ul>
-<li><strong>CPL Limit</strong>: Set a maximum CPL of <u>88 characters</u>.<ul>
-<li><strong>Reason</strong>: An 88-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.</li>
+<li><strong>CPL Limit</strong>: Set a maximum CPL of <u>92 characters</u>.<ul>
+<li><strong>Reason</strong>: An 92-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.</li>
 </ul>
 </li>
 <li><strong>Exceptions</strong>: The CPL limit may be exceeded if line splitting <em>significantly</em> reduces readability or negatively impacts the script's structure.</li>
@@ -962,7 +962,7 @@
 <div class="tabbed-block">
 <ul>
 <li><strong>Placement</strong>: Similar to logical operators, when a piped command sequence exceeds the CPL limit, place each pipe (<code>|</code>) at the start of a new line with the preceding command (<code>| command</code>).</li>
-<li><strong>Single-Line Placement</strong>: If piped commands fit within the 88-character limit, they may remain on the same line. Use this sparingly to avoid creating complex or hard-to-read sequences.</li>
+<li><strong>Single-Line Placement</strong>: If piped commands fit within the 92-character limit, they may remain on the same line. Use this sparingly to avoid creating complex or hard-to-read sequences.</li>
 </ul>
 <details class="example">
 <summary>Examples</summary>
@@ -1081,7 +1081,7 @@
 <li><strong>Reason</strong>: Including complex logic or multiple commands on a single line can reduce readability and make the code harder to maintain.</li>
 </ul>
 </li>
-<li><strong>Character Limit</strong>: <mark><strong><em>DO NOT</em></strong></mark> use a single-line control structure if it exceeds the 88-character limit.</li>
+<li><strong>Character Limit</strong>: <mark><strong><em>DO NOT</em></strong></mark> use a single-line control structure if it exceeds the 92-character limit.</li>
 </ul>
 <details class="example">
 <summary>Example</summary>
@@ -1571,10 +1571,10 @@
 <li><strong>Subsections</strong>: Quadruple-pound signs can also indicate subsections within a larger script section. However, this should be done <strong>VERY</strong> sparingly. Consider using <a href="#__tabbed_4_4">triple-pound signs</a> (<code>###</code>) before resorting to quadruple-pound signs for subsections.</li>
 <li><strong>Formatting</strong>: Quadruple-pound sign comments should be formatted to ensure the transition between sections is clear and visually distinct. Below are the recommended formatting guidelines:<ul>
 <li><strong>Section Naming</strong>: Append <code>[ section_name ]</code> to the end of <code>####</code>, replacing <code>section_name</code> with a descriptive title for that section. The section name should clearly indicate the content or purpose of that section.</li>
-<li><strong>Filler Characters</strong>: After the section name, append a series of <code>#</code> characters to fill the remaining space up to the 88-character limit.</li>
+<li><strong>Filler Characters</strong>: After the section name, append a series of <code>#</code> characters to fill the remaining space up to the 92-character limit.</li>
 <li><strong>Section Comments</strong>: If necessary, add comments directly below the initial <code>####</code> line, prefixing them with four <code>#</code> characters.</li>
 <li><strong>Spacing</strong>: As mentioned in the <a href="#vertical-spacing">vertical spacing guidelines</a>, provide two blank lines before and after the quadruple-pound signs to enhance the visual separation between sections.</li>
-<li><strong>Subsection Format</strong>: Subsections should follow the same format, with the number of brackets (<code>[]</code>) indicating the depth of the subsection within the script. The deeper the subsection, the more brackets should be used. Use filler characters to maintain a consistent 88-character width.</li>
+<li><strong>Subsection Format</strong>: Subsections should follow the same format, with the number of brackets (<code>[]</code>) indicating the depth of the subsection within the script. The deeper the subsection, the more brackets should be used. Use filler characters to maintain a consistent 92-character width.</li>
 </ul>
 </li>
 </ul>
@@ -1655,7 +1655,7 @@
 <li><strong>Usage</strong>: Use three pound signs where the code is different enough to warrant distinction but not significant enough to be placed in an entirely new section.</li>
 <li><strong>Formatting</strong>: Triple-pound sign comments should be formatted to ensure the transition between differing blocks of code is clear and visually distinct. Below are the recommended formatting guidelines:<ul>
 <li><strong>Section Naming</strong>: Append <code>[ section_name ]</code> to the end of <code>###</code>, replacing <code>section_name</code> with a descriptive title for that section. The section name should clearly indicate the content or purpose of the code below it.</li>
-<li><strong>Filler Characters</strong>: After the section name, append a series of <code>#</code> characters to fill the remaining space up to the 88-character limit. Additionally, place three <code>#</code> characters above and below the section name line.</li>
+<li><strong>Filler Characters</strong>: After the section name, append a series of <code>#</code> characters to fill the remaining space up to the 92-character limit. Additionally, place three <code>#</code> characters above and below the section name line.</li>
 <li><strong>Spacing</strong>: Include a single blank line above and below the filler characters to separate the previous command(s), the triple pound sign comment, and the next command(s).</li>
 <li><strong>Section Comments</strong>: If necessary, add comments to describe the section's content or purpose, prefixed with three <code>#</code> characters.</li>
 </ul>
@@ -1752,7 +1752,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="March 7, 2025 18:16:03 PST">March 7, 2025</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date" title="July 15, 2025 15:40:03 PDT">July 15, 2025</span>
   </span>
 
     
