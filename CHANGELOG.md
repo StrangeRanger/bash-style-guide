@@ -6,9 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2025.7.15] - 2025-07-15
+
+### Changed
+
+- **Guidelines**: Modify the maximum CPL (Characters Per Line) from 88 to 92.
+    - `Aesthetics -> Characters Per Line`
+
 ## [2025.3.7] - 2025-03-07
 
-## Changed
+### Changed
 
 - Update the wording of the guidelines and additional text.
 - Improve the format and wording of the TODO list.
@@ -126,7 +133,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2025.3.7...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2025.7.15...HEAD
+[2025.7.15]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.7.15
 [2025.3.7]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.3.7
 [2024.12.15]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2024.12.15
 [2024.12.4]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2024.12.4

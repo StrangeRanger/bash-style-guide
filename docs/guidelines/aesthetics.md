@@ -27,8 +27,8 @@ In the past, the maximum number of characters per line (CPL) was limited to 80 b
 /// admonition | General Guidelines
     type: info
 
-- **CPL Limit**: Set a maximum CPL of <u>88 characters</u>.
-    - **Reason**: An 88-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.
+- **CPL Limit**: Set a maximum CPL of <u>92 characters</u>.
+    - **Reason**: An 92-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.
 - **Exceptions**: The CPL limit may be exceeded if line splitting _significantly_ reduces readability or negatively impacts the script's structure.
 
 ///
@@ -122,7 +122,7 @@ mkdir -p /path/to/backup \
 //// tab | Piping Operators
 
 - **Placement**: Similar to logical operators, when a piped command sequence exceeds the CPL limit, place each pipe (`|`) at the start of a new line with the preceding command (`| command`).
-- **Single-Line Placement**: If piped commands fit within the 88-character limit, they may remain on the same line. Use this sparingly to avoid creating complex or hard-to-read sequences.
+- **Single-Line Placement**: If piped commands fit within the 92-character limit, they may remain on the same line. Use this sparingly to avoid creating complex or hard-to-read sequences.
 
 ///// details | Examples
     type: example
@@ -223,7 +223,7 @@ fi
     - **Reason**: This format is best suited for simple conditions or loops that can be expressed succinctly.
 - **Avoid Complex Logic**: Avoid adding multiple commands or complex logic to single-line structures.
     - **Reason**: Including complex logic or multiple commands on a single line can reduce readability and make the code harder to maintain.
-- **Character Limit**: <mark>**_DO NOT_**</mark> use a single-line control structure if it exceeds the 88-character limit.
+- **Character Limit**: <mark>**_DO NOT_**</mark> use a single-line control structure if it exceeds the 92-character limit.
 
 ///// details | Example
     type: example
@@ -572,10 +572,10 @@ done
 - **Subsections**: Quadruple-pound signs can also indicate subsections within a larger script section. However, this should be done **VERY** sparingly. Consider using [triple-pound signs](#__tabbed_4_4) (`###`) before resorting to quadruple-pound signs for subsections.
 - **Formatting**: Quadruple-pound sign comments should be formatted to ensure the transition between sections is clear and visually distinct. Below are the recommended formatting guidelines:
     - **Section Naming**: Append `[ section_name ]` to the end of `####`, replacing `section_name` with a descriptive title for that section. The section name should clearly indicate the content or purpose of that section.
-    - **Filler Characters**: After the section name, append a series of `#` characters to fill the remaining space up to the 88-character limit.
+    - **Filler Characters**: After the section name, append a series of `#` characters to fill the remaining space up to the 92-character limit.
     - **Section Comments**: If necessary, add comments directly below the initial `####` line, prefixing them with four `#` characters.
     - **Spacing**: As mentioned in the [vertical spacing guidelines](#vertical-spacing), provide two blank lines before and after the quadruple-pound signs to enhance the visual separation between sections.
-    - **Subsection Format**: Subsections should follow the same format, with the number of brackets (`[]`) indicating the depth of the subsection within the script. The deeper the subsection, the more brackets should be used. Use filler characters to maintain a consistent 88-character width.
+    - **Subsection Format**: Subsections should follow the same format, with the number of brackets (`[]`) indicating the depth of the subsection within the script. The deeper the subsection, the more brackets should be used. Use filler characters to maintain a consistent 92-character width.
 
 ///// details | Example
     type: example
@@ -625,7 +625,7 @@ process_files "input.txt" "log.txt"
 - **Usage**: Use three pound signs where the code is different enough to warrant distinction but not significant enough to be placed in an entirely new section.
 - **Formatting**: Triple-pound sign comments should be formatted to ensure the transition between differing blocks of code is clear and visually distinct. Below are the recommended formatting guidelines:
     - **Section Naming**: Append `[ section_name ]` to the end of `###`, replacing `section_name` with a descriptive title for that section. The section name should clearly indicate the content or purpose of the code below it.
-    - **Filler Characters**: After the section name, append a series of `#` characters to fill the remaining space up to the 88-character limit. Additionally, place three `#` characters above and below the section name line.
+    - **Filler Characters**: After the section name, append a series of `#` characters to fill the remaining space up to the 92-character limit. Additionally, place three `#` characters above and below the section name line.
     - **Spacing**: Include a single blank line above and below the filler characters to separate the previous command(s), the triple pound sign comment, and the next command(s).
     - **Section Comments**: If necessary, add comments to describe the section's content or purpose, prefixed with three `#` characters.
 
