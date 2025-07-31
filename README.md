@@ -1,6 +1,6 @@
 # Bash Style Guide
 
-[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://wiki.hthompson.dev/en/project-tracker) [![Static Badge](https://img.shields.io/badge/Click%20to%20Access%20Bash%20Style%20Guide-blue)](https://bsg.hthompson.dev)
+[![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-255784006) [![Static Badge](https://img.shields.io/badge/Click%20to%20Access%20Bash%20Style%20Guide-blue)](https://bsg.hthompson.dev) [![GitHub License](https://img.shields.io/github/license/StrangeRanger/HThompson)](LICENSE)
 
 > [!NOTE]
 > To access the full Bash Style Guide, click the blue badge above or navigate to [bsg.hthompson.dev](https://bsg.hthompson.dev).
