@@ -1,19 +1,11 @@
 [project]
 name = "bash-style-guide"
 version = "2025.7.15"
-requires-python = "~=3.12"
+description = "A comprehensive style guide and documentation resource for writing robust, readable, and maintainable Bash scripts."
+readme = "README.md"
+requires-python = ">=3.10"
 dependencies = [
     "mkdocs-git-revision-date-localized-plugin==1.4.7",
     "mkdocs-material==9.6.16",
     "mkdocs-exclude==1.0.2",
 ]
-
-[dependency-groups]
-dev = []
-
-[tool.uv]
-package = false
-
-[[tool.uv.index]]
-name = "pypi"
-url = "https://pypi.org/simple"
