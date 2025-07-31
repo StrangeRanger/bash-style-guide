@@ -14,27 +14,33 @@ This Bash Style Guide provides detailed recommendations for writing safe and pre
 
 You are encouraged to fork this repository for your own use and contribute to its improvements.
 
+## Requirements
+
+- Python 3.10 or higher ([Download Python](https://www.python.org/downloads/))
+- [uv](https://github.com/astral-sh/uv#installation) (a fast Python package manager and resolver)
+
 ## Quick Start
 
 To preview the Bash Style Guide locally:
 
-1. Install [uv](https://github.com/astral-sh/uv#installation) (a fast Python package manager and resolver).
-2. Install dependencies:
+1. Ensure you have Python 3.10+ installed.
+2. Install [uv](https://github.com/astral-sh/uv#installation).
+3. Install dependencies:
    ```bash
    uv sync
    ```
-3. Start the development server:
+4. Start the development server:
    ```bash
    uv run mkdocs serve
    ```
-4. Open [http://localhost:8000](http://localhost:8000) in your browser.
+5. Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 Or, visit the hosted version at [bsg.hthompson.dev](https://bsg.hthompson.dev).
 
 ## Project Structure
 
 - `docs/` — Main documentation content (guidelines, changelog, etc.)
-- `stylesheets/` — Custom CSS for the site
+- `docs/stylesheets/` — Custom CSS for the site
 - `overrides/` — MkDocs Material theme overrides
 - `mkdocs.yml` — MkDocs configuration
 
