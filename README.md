@@ -1,23 +1,38 @@
 # Bash Style Guide
 
 [![Project Tracker](https://img.shields.io/badge/repo%20status-Project%20Tracker-lightgrey)](https://hthompson.dev/project-tracker#project-255784006)
-[![GitHub License](https://img.shields.io/github/license/StrangeRanger/HThompson)](LICENSE)
-<br />
-[![Static Badge](https://img.shields.io/badge/Click%20to%20access%20Bash%20Style%20Guide-blue)](https://bsg.hthompson.dev)
+
+[![Click to access Bash Style Guide](https://img.shields.io/badge/Click%20to%20access%20Bash%20Style%20Guide-blue?style=for-the-badge)](https://bsg.hthompson.dev)
 
 > [!NOTE]
 > To access the full Bash Style Guide, click the blue badge above or navigate to [bsg.hthompson.dev](https://bsg.hthompson.dev).
 
-Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills the lessons I've learned into a set of best practices for writing safe, predictable, and maintainable Bash scripts.
+Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills those experiences into a set of best practices for writing safe, predictable, and maintainable Bash scripts.
 
-This Bash Style Guide provides detailed recommendations for writing safe and predictable bash scripts. The guidelines in this document are a complete rewrite of the [Bash Style Guide](https://github.com/bahamas10/bash-style-guide) written by [bahamas10](https://github.com/bahamas10), drawing inspiration from the core concepts and ideas in [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). While this guide expands upon and reinterprets those foundational principles, any practices not explicitly covered here should be assumed to align with the standards outlined in the aforementioned resources.
+The guide expands significantly upon [bahamas10’s Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
 
 You are encouraged to fork this repository for your own use and contribute to its improvements.
 
+<details>
+<summary><strong>Table of Contents</strong></summary>
+
+- [Bash Style Guide](#bash-style-guide)
+  - [Requirements](#requirements)
+  - [Quick Start](#quick-start)
+  - [Project Structure](#project-structure)
+  - [Build \& Development](#build--development)
+  - [Acknowledgments](#acknowledgments)
+  - [License](#license)
+
+</details>
+
 ## Requirements
+
+These tools are necessary **only** if you wish to build or preview the documentation locally.
 
 - Python 3.10 or higher ([Download Python](https://www.python.org/downloads/))
 - [uv](https://github.com/astral-sh/uv#installation) (a fast Python package manager and resolver)
+
 
 ## Quick Start
 
@@ -67,3 +82,7 @@ Or, visit the hosted version at [bsg.hthompson.dev](https://bsg.hthompson.dev).
 
 - [bahamas10/bash-style-guide](https://github.com/bahamas10/bash-style-guide)
 - [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices)
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
