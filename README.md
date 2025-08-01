@@ -4,9 +4,6 @@
 
 [![Click to access Bash Style Guide](https://img.shields.io/badge/Click%20to%20access%20Bash%20Style%20Guide-blue?style=for-the-badge)](https://bsg.hthompson.dev)
 
-> [!NOTE]
-> To access the full Bash Style Guide, click the blue badge above or navigate to [bsg.hthompson.dev](https://bsg.hthompson.dev).
-
 Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills those experiences into a set of best practices for writing safe, predictable, and maintainable Bash scripts.
 
 The guide expands significantly upon [bahamas10’s Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
@@ -19,7 +16,6 @@ You are encouraged to fork this repository for your own use and contribute to it
 - [Bash Style Guide](#bash-style-guide)
   - [Requirements](#requirements)
   - [Quick Start](#quick-start)
-  - [Project Structure](#project-structure)
   - [Build \& Development](#build--development)
   - [Acknowledgments](#acknowledgments)
   - [License](#license)
@@ -51,13 +47,6 @@ To preview the Bash Style Guide locally:
 5. Open [http://localhost:8000](http://localhost:8000) in your browser.
 
 Or, visit the hosted version at [bsg.hthompson.dev](https://bsg.hthompson.dev).
-
-## Project Structure
-
-- `docs/` — Main documentation content (guidelines, changelog, etc.)
-- `docs/stylesheets/` — Custom CSS for the site
-- `overrides/` — MkDocs Material theme overrides
-- `mkdocs.yml` — MkDocs configuration
 
 ## Build & Development
 
