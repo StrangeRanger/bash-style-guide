@@ -3,7 +3,7 @@ name = "bash-style-guide"
 version = "2025.7.15"
 description = "A comprehensive style guide and documentation resource for writing robust, readable, and maintainable Bash scripts."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = [
     "mkdocs-git-revision-date-localized-plugin==1.4.7",
     "mkdocs-material==9.6.16",

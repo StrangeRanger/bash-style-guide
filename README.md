@@ -4,9 +4,11 @@
 
 [![Click to access Bash Style Guide](https://img.shields.io/badge/Click%20to%20access%20Bash%20Style%20Guide-blue?style=for-the-badge)](https://bsg.hthompson.dev)
 
-Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills those experiences into a set of best practices for writing safe, predictable, and maintainable Bash scripts.
+Over the past few years, I've written many Bash scripts—some good, some bad, and some downright ugly. This guide distills those experiences into a comprehensive set of best practices for writing safe, predictable, and maintainable Bash scripts.
 
-The guide expands significantly upon [bahamas10’s Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
+Whether you're a beginner looking to avoid common pitfalls or an experienced developer seeking to improve your scripting practices, this guide provides practical advice on error handling, code style, performance considerations, and security practices.
+
+The guide expands significantly upon [bahamas10's Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
 
 You are encouraged to fork this repository for your own use and contribute to its improvements.
 
@@ -14,58 +16,46 @@ You are encouraged to fork this repository for your own use and contribute to it
 <summary><strong>Table of Contents</strong></summary>
 
 - [Bash Style Guide](#bash-style-guide)
-  - [Requirements](#requirements)
-  - [Quick Start](#quick-start)
-  - [Build \& Development](#build--development)
+  - [Local Development](#local-development)
+    - [Prerequisites](#prerequisites)
+    - [Download and Setup](#download-and-setup)
   - [Acknowledgments](#acknowledgments)
   - [License](#license)
 
 </details>
 
-## Requirements
+## Local Development
 
-These tools are necessary **only** if you wish to build or preview the documentation locally.
+> [!NOTE]
+> The Bash Style Guide is hosted online at [bsg.hthompson.dev](https://bsg.hthompson.dev). You only need to set up a local environment if you want to preview changes or contribute to the documentation.
 
-- Python 3.10 or higher ([Download Python](https://www.python.org/downloads/))
-- [uv](https://github.com/astral-sh/uv#installation) (a fast Python package manager and resolver)
+### Prerequisites
 
+To build and preview the documentation locally, you'll need:
 
-## Quick Start
+- **Python** 3.9 or higher
+- **[uv](https://github.com/astral-sh/uv#installation)** (a fast Python package manager and resolver)
 
-To preview the Bash Style Guide locally:
+### Download and Setup
 
-1. Ensure you have Python 3.10+ installed.
-2. Install [uv](https://github.com/astral-sh/uv#installation).
-3. Install dependencies:
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/StrangeRanger/bash-style-guide
+    cd bash-style-guide
+    ```
+
+2. **Install dependencies:**
    ```bash
    uv sync
    ```
-4. Start the development server:
+
+3. **Start the development server:**
    ```bash
    uv run mkdocs serve
    ```
-5. Open [http://localhost:8000](http://localhost:8000) in your browser.
 
-Or, visit the hosted version at [bsg.hthompson.dev](https://bsg.hthompson.dev).
-
-## Build & Development
-
-- **Install dependencies:**
-  ```bash
-  uv sync
-  ```
-- **Serve locally for live preview:**
-  ```bash
-  uv run mkdocs serve
-  ```
-- **Build the static site for deployment:**
-  ```bash
-  uv run mkdocs build
-  ```
-- **Deploy to GitHub Pages (if configured):**
-  ```bash
-  uv run mkdocs gh-deploy
-  ```
+4. **Open your browser:**
+   Visit [http://localhost:8000](http://localhost:8000) to view the documentation with live reload.
 
 ## Acknowledgments
 
