@@ -19,6 +19,7 @@ You are encouraged to fork this repository for your own use and contribute to it
   - [Local Development](#local-development)
     - [Prerequisites](#prerequisites)
     - [Download and Setup](#download-and-setup)
+  - [Support and Community](#support-and-community)
   - [Acknowledgments](#acknowledgments)
   - [License](#license)
 
@@ -56,6 +57,13 @@ To build and preview the documentation locally, you'll need:
 
 4. **Open your browser:**
    Visit [http://localhost:8000](http://localhost:8000) to view the documentation with live reload.
+
+## Support and Community
+
+Have a question, idea, or feedback about the guide?
+
+- Use [Discussions](https://github.com/StrangeRanger/bash-style-guide/discussions) to ask questions, propose new or revised guidelines, request clarifications, or share resources and examples.
+- Use [Issues](https://github.com/StrangeRanger/bash-style-guide/issues) for actionable problems with the docs or site: broken links, incorrect examples, contradictions, build/deploy problems, or tracked maintenance tasks.
 
 ## Acknowledgments
 
