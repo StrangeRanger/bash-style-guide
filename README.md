@@ -55,8 +55,7 @@ To build and preview the documentation locally, you'll need:
    uv run mkdocs serve
    ```
 
-4. **Open your browser:**
-   Visit [http://localhost:8000](http://localhost:8000) to view the documentation with live reload.
+4. **Open your browser:** http://localhost:8000
 
 ## Support and Community
 
