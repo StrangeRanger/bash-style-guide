@@ -8,9 +8,9 @@ Over the past few years, I've written many Bash scripts—some good, some bad, a
 
 Whether you're a beginner looking to avoid common pitfalls or an experienced developer seeking to improve your scripting practices, this guide provides practical advice on error handling, code style, performance considerations, and security practices.
 
-The guide expands significantly upon [bahamas10's Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
+While rooted in my own experiences, this guide expands significantly upon [bahamas10's Bash Style Guide](https://github.com/bahamas10/bash-style-guide) and incorporates foundational principles from [Wooledge's Bash Practices](http://mywiki.wooledge.org/BashGuide/Practices). Any practices not explicitly covered here generally align with those resources.
 
-You are encouraged to fork this repository for your own use and contribute to its improvements.
+You are encouraged to fork this repository for your own use.
 
 <details>
 <summary><strong>Table of Contents</strong></summary>
@@ -61,8 +61,8 @@ To build and preview the documentation locally, you'll need:
 
 Have a question, idea, or feedback about the guide?
 
-- Use [Discussions](https://github.com/StrangeRanger/bash-style-guide/discussions) to ask questions, propose new or revised guidelines, request clarifications, or share resources and examples.
 - Use [Issues](https://github.com/StrangeRanger/bash-style-guide/issues) for actionable problems with the docs or site: broken links, incorrect examples, contradictions, build/deploy problems, or tracked maintenance tasks.
+- Use [Discussions](https://github.com/StrangeRanger/bash-style-guide/discussions) to ask questions, propose new or revised guidelines, request clarifications, or share resources and examples.
 
 ## Acknowledgments
 
