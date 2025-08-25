@@ -19,19 +19,8 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v6
 
-      - name: Install uv and define a cache dependency glob
-        uses: astral-sh/setup-uv@v6
-        with:
-          enable-cache: true
-          cache-dependency-glob: "uv.lock"
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: "pyproject.toml"
-
       - name: Install the project
-        run: uv sync --all-extras --dev
+        run: uv sync --locked
 
       - name: Build the site with MkDocs
         run: uv run mkdocs build --strict
