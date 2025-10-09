@@ -1,4 +1,4 @@
-name: Deploy Bash Style Guide GitHub Page
+name: Deploy 'Bash Style Guide' GitHub Page
 
 on:
   push:
@@ -7,6 +7,10 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
