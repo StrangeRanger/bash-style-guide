@@ -67,7 +67,7 @@ rsync -avz /source/directory/with/a/very/long/path/ \
     - **Reason**: Multiple commands on a single line can obscure operations. Placing them onto their own lines improves readability by making the sequence more transparent. (1)
         { .annotate }
 
-            1. **Logical Operator Placement**<br />I have no objective reasoning for placing logical operators at the beginning of a new line. It's just a personal preference. I find it easier to read and understand the command sequence when each operator is at the beginning of a new line rather than at the end of the previous line.
+        1. **Logical Operator Placement**<br />I have no objective reasoning for placing logical operators at the beginning of a new line. It's just a personal preference. I find it easier to read and understand the command sequence when each operator is at the beginning of a new line rather than at the end of the previous line.
 
 - **Single Operator**: If a single logical operator connects two commands and the length is within the CPL limit, both commands may remain on the same line.
     - **Reason**: Keeping a single operator on the same line can be more concise and easier to read when the command sequence is short. Splitting them unnecessarily may introduce complexity without added clarity.
