@@ -52,7 +52,7 @@ To build and preview the documentation locally, you'll need:
 
 3. **Start the development server:**
    ```bash
-   uv run mkdocs serve
+   uv run zensical serve
    ```
 
 4. **Open your browser:** http://localhost:8000
