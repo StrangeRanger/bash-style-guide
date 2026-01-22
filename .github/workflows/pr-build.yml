@@ -1,8 +1,8 @@
-name: Build the site with MkDocs
+name: Build the site with Zensical
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -11,7 +11,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 1
 
@@ -21,5 +22,5 @@ jobs:
       - name: Install the project
         run: uv sync --locked
 
-      - name: Build the site with MkDocs
-        run: uv run mkdocs build --strict
+      - name: Build the site with Zensical
+        run: uv run zensical build
