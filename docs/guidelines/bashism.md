@@ -736,7 +736,7 @@ echo "First element: $first"
 **Advantage**: Arrays allow direct access to individual elements without additional parsing.
 
 ////
-//// Adding Elements to a Collection
+//// tab | Adding Elements to a Collection
 
 _Using Space-Separated Strings_
 
