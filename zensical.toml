@@ -138,5 +138,5 @@ line_spans = "__span"
 custom_checkbox = true
 
 # DOCS: https://zensical.org/docs/setup/extensions/python-markdown-extensions/#snippets
-# [project.markdown_extensions.pymdownx.snippets]
+[project.markdown_extensions.pymdownx.snippets]
 # auto_append = ["includes/abbreviations.md"]
