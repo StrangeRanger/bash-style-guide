@@ -312,8 +312,6 @@ variable="value"  # Inline comment with two spaces before it.
 
 Functions in Bash differ from those in other languages, especially regarding argument handling, global state, printed output, and exit statuses. Due to these differences, functions should be documented according to their complexity, side effects, and importance within the script.
 
-Function comments should provide enough information for a reader to use, modify, or debug the function without having to reverse-engineer its entire body. Short, self-contained functions may only need a brief description, while complex functions or functions in larger scripts often need more detail about parameters, global variables, output, return values, exit behavior, and other important side effects.
-
 /// admonition | Guidelines
     type: info
 
@@ -329,7 +327,7 @@ Function comments should provide enough information for a reader to use, modify,
     - **Reason**: Identifying how the function interacts with global variables helps developers, including yourself, understand the function's impact on the script's state. This is especially important in larger scripts where tracking variable scope can be challenging.
 - **Parameters**: Document positional parameters when their purpose, required status, default value, or accepted values are not immediately clear.
     - **Value Assignment**: Assign parameter values to `local` variables within the function.
-        - **Reason**: Assigning parameters to `local` variables enhances understanding by giving the parameters meaningful names within the function's scope. This practice also prevents accidental modification of the original parameters.
+    - **Reason**: While positional parameters are common in Bash, they can be less intuitive than named parameters in other languages. Documenting them helps clarify their purpose and usage.
 - **Output**: Document stdout or stderr output when callers rely on it, when the output is parsed elsewhere, or when the distinction between display output and return status matters.
     - **Reason**: Bash functions often communicate through printed output, so callers need to know whether output is informational or part of the function's contract.
 - **Exit and Return**: Document meaningful return values and any conditions where the function exits the script. Specify return and exit values separately when both are possible.
@@ -355,9 +353,9 @@ Function comments should provide enough information for a reader to use, modify,
     #   - global_variable_two : Description of how global_variable_two is modified.
     #
     # PARAMETERS:
-    #   - $1: parameter_name (1)
+    #   - $1: parameter_name (Required) (1)
     #       - Description of the parameter. (2)
-    #   - $2: parameter_name
+    #   - $2: parameter_name (Optional, Default: default_value)
     #       - Description of the parameter.
     #       - Acceptable values: (3)
     #           - value_one: Description of value_one.
@@ -393,7 +391,7 @@ print_error() {
 }
 ```
 
-This function only needs a brief description. The function name and local variable make the parameter obvious, and the function has no hidden side effects.
+This function only needs a brief description because its purpose, input, and output are easy to understand from the name and implementation. The local variable gives `$1` a clear name, and the function does not modify global state or affect script control flow. If callers depended on the exact output format, an `OUTPUTS` section could be added.
 
 ////
 //// tab | Modified Global
@@ -415,7 +413,7 @@ require_pkg() {
 }
 ```
 
-This function is still simple, but it modifies a global array. Documenting that side effect is more useful than documenting the obvious positional parameter.
+This function is still small, but its main behavior is modifying a global array. Documenting that side effect is more useful than documenting the positional parameter, which is already clear from the function name and `local required_pkg="$1"` assignment. This is the kind of extra detail that becomes more important in larger scripts.
 
 ////
 //// tab | Output Contract
@@ -439,7 +437,7 @@ ip_to_int() {
 }
 ```
 
-The function's output is part of its contract because callers are expected to capture or compare it.
+This function writes a computed value to stdout so callers can capture it with command substitution or compare it in arithmetic expressions. Because stdout is how the function returns useful data, the `OUTPUTS` section fits better than a `RETURNS` section.
 
 ////
 //// tab | Return Status
@@ -464,7 +462,7 @@ is_valid_ip() {
 }
 ```
 
-This function does not print or exit. Its return status is the behavior callers rely on, so the `RETURNS` section is the most important part of the comment.
+This function does not print output or exit the script. Callers use it directly in conditionals, so the return status is the function's contract. The `RETURNS` section therefore documents the meaningful behavior without adding unnecessary `OUTPUTS` or `EXITS` sections.
 
 ////
 //// tab | Complex Function
@@ -493,10 +491,6 @@ This function does not print or exit. Its return status is the behavior callers 
 #   - $3: display_message (Optional, Default: true)
 #       - Whether an exit message should be printed.
 #       - Acceptable values: true, false
-#
-# OUTPUTS:
-#   stdout: Cleanup and interruption messages intended for the user.
-#   stderr: Error messages when exiting due to a failure.
 #
 # EXITS:
 #   exit_code: Always exits the script after cleanup is complete.
@@ -528,8 +522,7 @@ clean_exit() {
 }
 ```
 
-This function uses a full comment block because it has multiple parameters, global state,
-user-facing output, cleanup behavior, and unconditional exit behavior.
+This function uses a full comment block because it has multiple parameters, modifies global state, performs cleanup, and always exits the script.
 
 ////
 ///
