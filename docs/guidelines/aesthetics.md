@@ -310,30 +310,35 @@ variable="value"  # Inline comment with two spaces before it.
 
 ### Function Comments
 
-Functions in Bash differ from those in other languages, especially regarding argument handling. Due to these differences, functions should be thoroughly documented to clarify their purpose, parameters, and expected behavior.
+Functions in Bash differ from those in other languages, especially regarding argument handling, global state, printed output, and exit statuses. Due to these differences, functions should be documented according to their complexity, side effects, and importance within the script.
+
+Function comments should provide enough information for a reader to use, modify, or debug the function without having to reverse-engineer its entire body. Short, self-contained functions may only need a brief description, while complex functions or functions in larger scripts often need more detail about parameters, global variables, output, return values, exit behavior, and other important side effects.
 
 /// admonition | Guidelines
     type: info
 
-- **Purpose**: Provide a clear and comprehensive description of the function's role within the script. This description should go beyond merely repeating the function's name; it should offer context and explain its intended use.
-    - **Reason**: Clearly documenting a function's purpose allows developers, including yourself, to quickly grasp what the function is meant to achieve. Even if the function name is descriptive, a brief explanation adds valuable context, facilitating a better understanding of its role.
-    - **Exception**: If the function is short **AND** its name is descriptive, the purpose may be left blank, or a short and simple description may be used instead. This exception should be used sparingly and only when the function's purpose is immediately evident from its name.
-- **Global Variables**: If the function introduces new global variables or modifies existing ones, document their purpose or how they are modified.
+- **Scale Detail With Complexity**: The amount of detail in a function comment should scale primarily with the function's complexity, side effects, and risk. It should also account for the complexity of the script as a whole.
+    - **Simple Functions**: Short functions with descriptive names, obvious behavior, and no surprising side effects may use a brief one-line comment. Optional sections such as `PARAMETERS`, `RETURNS`, or `EXITS` may be omitted if they do not add useful information.
+    - **Complex Functions**: Functions that accept multiple parameters, modify global state, produce output that callers rely on, perform cleanup, validate input, parse data, call external commands, or control script flow should use a more detailed comment block.
+    - **Larger Scripts**: In larger or more complex scripts, document function behavior more explicitly because readers must track more global state, control flow, and interactions between functions.
+    - **Reason**: Over-documenting simple functions can make scripts harder to scan, while under-documenting complex functions forces future readers to infer behavior from implementation details.
+- **Purpose**: Describe what the function does and why it exists when the function name alone is not sufficient. This description should go beyond repeating the function's name in sentence form.
+    - **Reason**: Clearly documenting a function's purpose allows developers, including yourself, to quickly understand the function's role within the script.
+    - **Exception**: If the function is short, self-contained, and clearly named, a brief description may be enough.
+- **Global Variables**: Document any global variables the function creates, modifies, or depends on when that interaction is not obvious.
     - **Reason**: Identifying how the function interacts with global variables helps developers, including yourself, understand the function's impact on the script's state. This is especially important in larger scripts where tracking variable scope can be challenging.
-- **Parameters**: Detail each parameter the function accepts, noting whether they are required or optional, and specify any default values.
-    - **Reason**: Documenting the parameters clarifies how the function should be called and what inputs it requires to operate correctly. This reduces the likelihood of errors or misuse and ensures that the function is used consistently with its intended design.
+- **Parameters**: Document positional parameters when their purpose, required status, default value, or accepted values are not immediately clear.
     - **Value Assignment**: Assign parameter values to `local` variables within the function.
         - **Reason**: Assigning parameters to `local` variables enhances understanding by giving the parameters meaningful names within the function's scope. This practice also prevents accidental modification of the original parameters.
-- **Exit and Return**: Specify the function's exit and return values separately. Describe the reason and when the exit occurs, as well as what the function outputs and the values it returns for use elsewhere in the script.
-    - **Reason**: Describing the function's exit and return values helps developers understand what to expect when calling the function and how to handle the results.
-- **General Reasoning**: Besides the reasons previously mentioned, documenting functions allows for quick reference and understanding of the script's structure and logic. This is especially beneficial when revisiting the script or collaborating with other developers after an extended period.
-- **Format/Structure Example**: Below is the recommended format and structure for documenting functions in Bash scripts. This format provides a clear outline for documenting functions effectively. Please pay attention to the annotations within the examples. They provide additional context and explanations for the documentation.
-
-    /// admonition | Important Note
-
-    While all of the fields are highly recommended, some may be omitted if they are not applicable to the function, or if they do not provide additional value. However, it is recommended to include as much information as possible to ensure the function is well-documented. Additionally, if information in one of the fields is already provided elsewhere or is self-evident from the function's name or logic, it may be omitted.
-
-    ///
+- **Output**: Document stdout or stderr output when callers rely on it, when the output is parsed elsewhere, or when the distinction between display output and return status matters.
+    - **Reason**: Bash functions often communicate through printed output, so callers need to know whether output is informational or part of the function's contract.
+- **Exit and Return**: Document meaningful return values and any conditions where the function exits the script. Specify return and exit values separately when both are possible.
+    - **Reason**: A function that returns a status code is different from one that terminates the script. This distinction should be clear before the function is called.
+- **Important Notes**: Include notes for non-obvious behavior, assumptions, edge cases, dependencies, or risks.
+    - **Reason**: Notes are useful for information that does not fit cleanly into purpose, parameters, globals, output, returns, or exits.
+- **Omit Empty Sections**: Do not include sections that are not applicable or do not add useful information.
+    - **Reason**: Empty or obvious sections make comments longer without making the function easier to understand.
+- **Format/Structure Example**: Below is the recommended format and structure for documenting functions in Bash scripts. This format provides a clear outline for documenting functions effectively, but it should be adapted to the function being documented.
 
     ```{ .bash .annotate }
     ####
@@ -350,14 +355,13 @@ Functions in Bash differ from those in other languages, especially regarding arg
     #   - global_variable_two : Description of how global_variable_two is modified.
     #
     # PARAMETERS:
-    #   - $1: parameter_name (Required) (1)
+    #   - $1: parameter_name (1)
+    #       - Description of the parameter. (2)
+    #   - $2: parameter_name
     #       - Description of the parameter.
-    #   - $2: parameter_name (Optional, Default: default_value)
-    #       - Description of the parameter.
-    #       - Acceptable values: (2)
+    #       - Acceptable values: (3)
     #           - value_one: Description of value_one.
     #           - value_two: Description of value_two.
-    #
     #
     # RETURNS:
     #   return value: Description of when the return value is provided and its significance.
@@ -370,25 +374,62 @@ Functions in Bash differ from those in other languages, especially regarding arg
     ```
 
     1. **Parameter Requirement**: Specify whether the parameter is "Required" or "Optional." If the parameter is optional, include the default value in the format of `(Optional, Default: default_value)`.
-    2. **Acceptable Values**: If a parameter has specific values it accepts/expects, list them. This ensures that the function is used correctly and helps prevent errors. If the value's purpose is not immediately clear, provide a brief description.
+    2. **Parameter Description**: May be omitted if the parameter's purpose is immediately clear from its name or the function's logic.
+    3. **Acceptable Values**: If a parameter has specific values it accepts/expects, list them. This ensures that the function is used correctly and helps prevent errors. If the value's purpose is not immediately clear, provide a brief description.
 
 ///
 
-/// admonition | Example
+/// admonition | Examples
     type: example
-//// tab | Example 1
+//// tab | Simple Function
 
 ```bash
 ####
-# Convert a given IP address into an integer, using bitwise operations.
+# Print a formatted error message.
+print_error() {
+    local message="$1"
+
+    echo "${C_RED}ERROR:${C_NC} $message" >&2
+}
+```
+
+This function only needs a brief description. The function name and local variable make the parameter obvious, and the function has no hidden side effects.
+
+////
+//// tab | Modified Global
+
+```bash
+####
+# Add a package to the required package list if it is not already present.
 #
-# NOTE:
-#   This allows for easier IP address comparison and calculation. Specifically, the
-#   integer is used to calculate the range of IP addresses to scan, among other things.
+# MODIFIED GLOBALS:
+#   - required_pkgs: Appends the package name when it is not already present.
+require_pkg() {
+    local required_pkg="$1"
+
+    for pkg in "${required_pkgs[@]}"; do
+        [[ $pkg == "$required_pkg" ]] && return
+    done
+
+    required_pkgs+=("$required_pkg")
+}
+```
+
+This function is still simple, but it modifies a global array. Documenting that side effect is more useful than documenting the obvious positional parameter.
+
+////
+//// tab | Output Contract
+
+```bash
+####
+# Convert an IPv4 address into an integer for numeric comparison.
 #
 # PARAMETERS:
 #   - $1: ip (Required)
-#       - The IP address to convert to an integer.
+#       - The IPv4 address to convert.
+#
+# OUTPUTS:
+#   stdout: The integer representation of the IPv4 address.
 ip_to_int() {
     local ip="$1"
     local IFS='.'
@@ -398,73 +439,87 @@ ip_to_int() {
 }
 ```
 
+The function's output is part of its contract because callers are expected to capture or compare it.
+
 ////
-//// tab | Example 2
+//// tab | Return Status
 
 ```bash
 ####
-# Verify that the provided IP address is valid, based on a regular expression pattern.
+# Check whether the provided value is a valid IPv4 address.
 #
 # PARAMETERS:
 #   - $1: ip (Required)
-#       - The IP address to verify.
-verify_valid_ip() {
+#       - The value to validate.
+#
+# RETURNS:
+#   0: The value is a valid IPv4 address.
+#   1: The value is not a valid IPv4 address.
+is_valid_ip() {
     local ip="$1"
     local valid_ip_regex="^((25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|1?[0-9][0-9]?)$"
 
-    if [[ ! $ip =~ $valid_ip_regex ]]; then
-        echo -e "${C_RED}ERROR:${C_NC} Invalid IP address: $ip" >&2
-        clean_exit "1" "" "false"
-    fi
+    [[ $ip =~ $valid_ip_regex ]] && return 0
+    return 1
 }
 ```
 
-////
-//// tab | Example 3
+This function does not print or exit. Its return status is the behavior callers rely on, so the `RETURNS` section is the most important part of the comment.
 
-```{ .bash .annotate }
+////
+//// tab | Complex Function
+
+```bash
 ####
-# Perform cleanup operations when the script exits. This includes killing any background
-# jobs and removing temporary files.
+# Perform cleanup operations and terminate the script with the provided exit code.
+#
+# NOTES:
+#   This function is intended to be called from normal error handling and signal traps.
+#
+# MODIFIED GLOBALS:
+#   - background_jobs: Cleared after tracked processes are terminated during cleanup.
 #
 # PARAMETERS:
 #   - $1: exit_code (Required)
-#       - The type of exit that occurred.
-#       - Acceptable values: (1)
-#           - 0: Normal exit. The script completed its task successfully.
-#           - 1: Exiting due to an error. An error occurred during the script execution.
-#           - 130: User interruption. The user interrupted the script using Ctrl+C.
-#           - 143: SIGTERM signal received. The script was terminated by a SIGTERM signal.
+#       - The exit code to use when terminating the script.
+#       - Acceptable values:
+#           - 0: Normal exit.
+#           - 1: Error exit.
+#           - 130: User interruption.
+#           - 143: Termination signal.
 #   - $2: clean_up (Optional, Default: true)
-#       - Whether to perform cleanup operations.
-#       - Acceptable values: (2)
-#           - true
-#           - false
-#   - $3: display_message (Optional, Default: "true") (3)
-#       - Acceptable values: true, false (4)
+#       - Whether cleanup operations should be performed.
+#       - Acceptable values: true, false
+#   - $3: display_message (Optional, Default: true)
+#       - Whether an exit message should be printed.
+#       - Acceptable values: true, false
+#
+# OUTPUTS:
+#   stdout: Cleanup and interruption messages intended for the user.
+#   stderr: Error messages when exiting due to a failure.
 #
 # EXITS:
-#   exit_code: The exit code passed by the caller. Always executes once cleanup
-#       operations are complete.
+#   exit_code: Always exits the script after cleanup is complete.
 clean_exit() {
     local exit_code="$1"
     local clean_up="${2:-true}"
     local display_message="${3:-true}"
 
     if [[ $exit_code == "1" && $display_message == "true" ]]; then
-        echo "${C_RED}==>${C_NC} A fatal error occurred." >&2
-    elif [[ ($exit_code == "130" ||  $exit_code == "143")
+        echo "${C_RED}ERROR:${C_NC} A fatal error occurred." >&2
+    elif [[ ($exit_code == "130" || $exit_code == "143")
             && $display_message == "true" ]]; then
         echo ""
-        echo "${C_YELLOW}==>${C_NC} User interruption detected."
+        echo "${C_YELLOW}WARNING:${C_NC} User interruption detected."
     fi
 
     if [[ $clean_up == "true" ]]; then
-        echo "${C_CYAN}==>${C_NC} Cleaning up..."
+        echo "${C_CYAN}INFO:${C_NC} Cleaning up..."
 
         for job in "${background_jobs[@]}"; do
             kill -9 "$job" > /dev/null 2>&1
         done
+        background_jobs=()
 
         [[ -f $C_TMP_FILE ]] && rm "$C_TMP_FILE"
     fi
@@ -473,46 +528,8 @@ clean_exit() {
 }
 ```
 
-1. **Acceptable Values**: As mentioned in the guidelines, if a parameter has a specific set of acceptable values, list them. This is an example of how to document such values.
-2. **Value Descriptions**: Since the values' purpose is self-explanatory, no additional descriptions are necessary.
-3. **No Description**: If the parameter's purpose is immediately evident from its name or the function's logic, a description may be omitted.
-4. **Alternative Formatting**: When the "Acceptable values" section is short and without additional descriptions, they may be placed on the same line rather than as a separate bullet point.
-
-////
-//// tab | Example 4
-
-```{ .bash .annotate }
-####
-# Given two IP addresses, determine the lower and upper bounds, and store them in the
-# global in two new global variables.
-#
-# NEW GLOBALS: (1)
-#   - C_LOWER_BOUND: Indicates the *start* of the IP range to be scanned.
-#   - C_UPPER_BOUND: Indicates the *end* of the IP range to be scanned.
-#
-# PARAMETERS:
-#   - $1: bound_one (Required)
-#       - The first IP address to compare.
-#   - $2: bound_two (Required)
-#       - The second IP address to compare.
-check_lower_upper_bounds() {
-    local bound_one="$1"
-    local bound_two="$2"
-
-    if (( $(ip_to_int "$bound_one") > $(ip_to_int "$bound_two") )); then
-        C_LOWER_BOUND="$bound_two"
-        C_UPPER_BOUND="$bound_one"
-    elif (( $(ip_to_int "$bound_one") < $(ip_to_int "$bound_two") )); then
-        C_LOWER_BOUND="$bound_one"
-        C_UPPER_BOUND="$bound_two"
-    else
-        echo "${C_RED}ERROR:${C_NC} The lower and upper bounds are the same." >&2
-        clean_exit "1" "" "false"
-    fi
-}
-```
-
-1. **New Globals**: As mentioned in the guidelines, if the function introduces new global variables, document them here. This section provides a clear overview of the new variables and their purpose.
+This function uses a full comment block because it has multiple parameters, global state,
+user-facing output, cleanup behavior, and unconditional exit behavior.
 
 ////
 ///
