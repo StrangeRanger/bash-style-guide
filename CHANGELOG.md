@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2026.5.31] - 2026-05-31
+
 ### Changed
 
 - **Guidelines**: Revise function comment guidance to scale documentation detail with
@@ -153,7 +155,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2026.1.21...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2026.5.31...HEAD
+[2026.5.31]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2026.5.31
 [2026.1.21]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2026.1.21
 [2025.7.15]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.7.15
 [2025.3.7]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.3.7
