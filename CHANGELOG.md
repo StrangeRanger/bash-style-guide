@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- **Guidelines**: Revise function comment guidance to scale documentation detail with
+  function complexity, script complexity, side effects, and risk.
+    - `Aesthetics -> Comments -> Function Comments`
+- **Guidelines**: Replace function comment examples with a progression covering simple
+  functions, modified globals, output contracts, return statuses, and complex cleanup
+  behavior.
+    - `Aesthetics -> Comments -> Function Comments`
+
 ## [2026.1.21] - 2026-01-21
 
 ### Changed
