@@ -9,7 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Improved general grammar and wording of the guidelines.
-- **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms` and update related wording to describe those patterns as idiomatic Bash practices.
+- **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms`, update
+  related wording to describe those patterns as idiomatic Bash practices, and expand
+  the section rationale around safety, clarity, performance, consistency, and POSIX
+  portability tradeoffs.
     - `Bash Idioms`
 
 ## [2026.5.31] - 2026-05-31
