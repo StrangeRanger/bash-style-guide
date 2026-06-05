@@ -7,8 +7,11 @@ This section focuses on common Bash idioms, which are Bash-specific patterns, bu
 /// admonition | Why This Matters
     type: tip
 
-- **Efficiency and Availability**: Bash idioms often use built-in functionality instead of external commands or purely [POSIX](https://mywiki.wooledge.org/POSIX)-compliant syntax. By leveraging these features, you can write scripts that execute faster and run consistently on systems where Bash is available.
-- **Readability**: While Bash idioms generally improve readability, some features, such as parameter expansion syntax, may be confusing for beginners. However, the robustness and efficiency they offer make them worth learning.
+- **Safety**: Bash idioms often avoid common shell pitfalls such as word splitting, pathname expansion, unsafe parsing, and accidental reliance on external command behavior.
+- **Clarity**: Bash-native constructs make the script's intent easier to see. For example, `[[ ... ]]`, arrays, parameter expansion, and arithmetic contexts communicate what the script is doing more directly than workarounds built from external commands.
+- **Performance**: Built-ins, keywords, and expansions avoid unnecessary subprocesses, which is especially helpful inside loops or frequently called functions.
+- **Consistency**: Relying on Bash features gives scripts more predictable behavior on systems where Bash is the target shell, instead of depending on differences between external tools or POSIX-compatible fallbacks.
+- **Portability Tradeoff**: These patterns may not work in POSIX `sh`. Use them when the script is intentionally written for Bash, and use POSIX-compatible syntax only when `/bin/sh` portability is an explicit requirement.
 
 ///
 
