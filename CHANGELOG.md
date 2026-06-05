@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+
+- Improved general grammar and wording of the guidelines.
+- **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms` and update related wording to describe those patterns as idiomatic Bash practices.
+    - `Bash Idioms`
+
 ## [2026.5.31] - 2026-05-31
 
 ### Changed
