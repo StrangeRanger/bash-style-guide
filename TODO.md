@@ -6,7 +6,7 @@ Pages requiring review and improvement (completed pages are highlighted as green
 
 - [x] Home Page
 - [x] Aesthetics
-- [ ] Bashism
+- [ ] Bash Idioms
 - [ ] Common Mistakes
 - [ ] Error Handling
 - [ ] Style
