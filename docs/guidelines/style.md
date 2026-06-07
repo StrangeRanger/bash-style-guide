@@ -26,7 +26,7 @@ echo "Hello, $name"
 //// tab | Single Quotes (`'`)
 
 - **String Literals**: Use single quotes to define string literals.
-    - **Reason**: Single quotes preserve the literal value of every character in a string, preventing the shell from performing expansions or substitutions. This behavior is essential for commands like `find`, `grep`, and `awk`, which have their own rules for interpreting special characters. Using single quotes ensures that these commands receive the input exactly as written, without modification by the shell.
+    - **Reason**: Single quotes preserve the literal value of every character in a string, preventing the shell from performing expansions or substitutions. This behavior is essential for commands such as `find`, `grep`, and `awk`, each of which has its own rules for interpreting special characters. Using single quotes ensures that these commands receive the input exactly as written, without the shell modifying it.
 
 ///// admonition | Example
     type: example
@@ -34,7 +34,8 @@ echo "Hello, $name"
 _Literal string_:
 
 ```bash
-echo '${C_BLUE}This is a literal ${string} with no variable substitution${C_NC}'
+string="cat"
+echo 'This is a literal ${string} with no variable substitution or command expansion.'
 ```
 
 ---
@@ -51,7 +52,7 @@ find . -name '*.txt' -exec grep 'pattern.*here' {} \; -print
 
 - **When to Omit Quotes**: In certain cases, quotes can be safely omitted without risk. Common scenarios include arithmetic operations and double bracket tests.
     - **Arithmetic Operations (`$(( ... ))`)**: [Arithmetic expansion](https://mywiki.wooledge.org/ArithmeticExpression) treats the content as a single unit, preventing word splitting and globbing.
-    - **Double Bracket Tests `[[ ... ]]`**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing comparisons and checks without the need for quotes.
+    - **Double Bracket Tests `[[ ... ]]`**: The `[[ ... ]]` syntax is a Bash built-in that protects against word splitting and globbing, allowing comparisons and checks without quotes.
 
 ///// admonition | Example
     type: example
@@ -79,7 +80,7 @@ fi
 
 ## Declaring and Naming Variables
 
-Bash offers several methods for declaring variables, each with implications for scope, immutability, and readability. Following best practices for naming and declaring variables is essential to maintain consistency and avoid unintended side effects
+Bash offers several methods for declaring variables, each with implications for scope, immutability, and readability. Following best practices for naming and declaring variables is essential to maintain consistency and avoid unintended side effects.
 
 /// admonition | Guidelines
     type: info
@@ -92,21 +93,23 @@ Bash offers several methods for declaring variables, each with implications for 
 
         1. **Variable Scope**: In Bash, variables declared inside a function without the `local` keyword are global by default, meaning they persist beyond the function's scope and can impact other parts of the script.
 
-    - **Example**:
-        ```bash
-        my_var="global value"
+///// admonition | Example
+    type: example
 
-        my_function() {
-            # This local variable won't overwrite the global variable.
-            local my_var="local value"
-            echo "$my_var"
-        }
+```bash
+my_var="global value"
 
-        my_function
-        echo "$my_var"
-        ```
-        **Explanation**: In this example, `my_var` is defined both globally and locally within `my_function`. The `local` keyword ensures that the `my_var` inside the function is distinct from the global `my_var`. When the function is called, it outputs the local value, whereas the final `echo` statement outputs the global value.
+my_function() {
+    # This local variable won't overwrite the global variable.
+    local my_var="local value"
+    echo "$my_var"
+}
 
+my_function
+echo "$my_var"
+```
+
+/////
 ////
 //// tab | Constant Variables
 
@@ -114,9 +117,9 @@ Bash offers several methods for declaring variables, each with implications for 
     - **Reason**: This naming convention helps distinguish constants from other variables and aligns with common practices across various programming languages. (1)
         { .annotate }
 
-        1. **Constants and Environment Variables**: Constants typically use `UPPER_SNAKE_CASE`, a standard followed in many languages, such as C, Python, and Java. Adopting a common convention ensures that other developers can easily recognize constants in your scripts. However, in Unix-like systems, environment variables are also written in `UPPER_SNAKE_CASE`. To prevent confusion, a prefix such as `C_` is used to differentiate constants from environment variables.
+        1. **Constants and Environment Variables**: Constants typically use `UPPER_SNAKE_CASE`, a standard followed in many languages, such as C, Python, and Java. Adopting a common convention ensures that other developers can easily recognize constants in your scripts. However, in Unix-like systems, environment variables are also written in `UPPER_SNAKE_CASE`. To prevent confusion and accidental overwrites, a prefix such as `C_` is used to differentiate constants from environment variables.
 
-    - **Alternative Prefix**: While `C_` is the default prefix for constants, other prefixes like `CONST_` or `CONFIG_` may be used if they better suit your naming conventions or project requirements. The key is to maintain consistency within your script or project.
+    - **Alternative Prefix**: While `C_` is the default prefix for constants, other prefixes may be used if they better suit your naming conventions or project requirements. The key is to maintain consistency within your script or project.
         - **Example**: The [oh-my-zsh project](https://github.com/ohmyzsh/ohmyzsh) uses the `OMZ_` prefix to clearly indicate constants as part of the project while following the `UPPER_SNAKE_CASE` convention.
 
 - **Selective Use of `readonly`**: Use `readonly` to define constants that must remain unchanged throughout the script.
@@ -180,13 +183,11 @@ perform_operation
 ////
 //// tab | Exported Variables
 
-<!-- TODO: Come back and update wording for 'Reason' and annotation. -->
-
 - **Naming Conventions**: Use `UPPER_SNAKE_CASE` with an `E_` prefix for exported variables (e.g., `E_PATH`).
     - **Reason**: This naming convention differentiates exported variables from other variable types and aligns with the Unix naming convention for environment variables. (1)
         { .annotate }
 
-        1. **Exported and Environment Variables**: Under Unix conventions, environment variables are written in `UPPER_SNAKE_CASE`. However, just like constants, using the same naming convention for exported variables can cause confusion and lead to accidental modifications of existing environment variables. A prefix such as `E_` is used to differentiate exported variables from others while adhering to the `UPPER_SNAKE_CASE` convention.
+        1. **Exported and Environment Variables**: Under Unix conventions, environment variables are written in `UPPER_SNAKE_CASE`. However, as with constants, using the same naming convention for exported variables can cause confusion and lead to accidental modification of existing environment variables. To prevent this, a prefix such as `E_` is used to clearly indicate that the variable is intended for export, distinguishing it from both constants and regular variables.
 
 - **Declaration**: Use `export` when initializing an exported variable or immediately afterward.
 
@@ -198,8 +199,7 @@ perform_operation
 export PATH="$HOME/.local/bin/"
 
 ## Does NOT overwrite the existing $PATH environment variable.
-E_PATH="$HOME/.local/bin/"
-export E_PATH
+export E_PATH="$HOME/.local/bin/"
 ```
 
 /////
@@ -208,8 +208,8 @@ export E_PATH
 
 <!-- TODO: Re-review the wording of the below guidelines. -->
 
-- **Selective Use**: Use the `declare` command to manage advanced variable attributes, such as associative arrays. For simple variable declarations, or when keywords like `local` and `readonly` are sufficient, avoid using `declare`.
-    - **Reason**: The `declare` command is useful for managing complex variable types, such as associative arrays, or when specific attributes are needed. However, using `declare` for basic variable assignments can reduce readability and is often unnecessary.
+- **Selective Use**: Use `declare` to set or manage advanced variable attributes, such as associative arrays. For simple variable declarations, or when keywords like `local` and `readonly` are sufficient, avoid using `declare`.
+    - **Reason**: `declare` is useful when a variable needs explicit Bash attributes. However, using `declare` for basic variable assignments adds noise and can reduce readability.
 
 ///// details | Example
     type: example
