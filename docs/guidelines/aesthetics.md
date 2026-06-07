@@ -2,7 +2,7 @@
 
 As mentioned in the [Preface](../index.md#preface), this guide aims to be as objective as possible by providing well-founded reasons for each recommended practice. However, some practices are purely stylistic and may vary based on personal preference or specific project requirements.
 
-This section addresses these aesthetic choices and offers guidelines for maintaining a consistent and visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
+This section addresses these aesthetic choices and offers guidelines for maintaining a consistent, visually appealing script. Where applicable, the guidelines will include explanations of their advantages over alternative practices.
 
 For stylistic guidelines that impact a script's functionality, please refer to this guide's [Style](style.md) section.
 
@@ -28,7 +28,7 @@ In the past, the maximum number of characters per line (CPL) was limited to 80 b
     type: info
 
 - **CPL Limit**: Set a maximum CPL of <u>92 characters</u>.
-    - **Reason**: An 92-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.
+    - **Reason**: A 92-character limit balances the historical 80-character standard and the need for more descriptive code. It accommodates longer variable names, comments, and strings without sacrificing readability.
 - **Exceptions**: The CPL limit may be exceeded if line splitting _significantly_ reduces readability or negatively impacts the script's structure.
 
 ///
@@ -37,7 +37,7 @@ In the past, the maximum number of characters per line (CPL) was limited to 80 b
     type: tip
 
 - **Readability**: Shorter lines reduce the need for horizontal scrolling and minimize word wrapping issues, which can make all the difference when working with multiple windows simultaneously.
-- **Tool Compatibility**: A shorter CPL ensures that code is displayed uniformly across different development environments, such as code review platforms, IDEs, and terminals. This prevents layout issues and preserves the intended structure.
+- **Tool Compatibility**: A shorter CPL ensures code is displayed consistently across development environments, including code review platforms, IDEs, and terminals. This prevents layout issues and preserves the intended structure.
 
 ///
 
@@ -151,7 +151,7 @@ grep -r "TODO" /path/to/project \
 
 ## Formatting Control Structures
 
-Control structures in Bash, such as `if` statements and `for` or `while` loops can be formatted in several ways. Depending on the context, you can choose between a standard or single-line control structure. In either case, maintaining consistency and readability is key.
+Control structures in Bash, such as `if` statements and `for` or `while` loops, can be formatted in several ways. Depending on the context, you can choose between a standard or single-line control structure. In either case, maintaining consistency and readability is key.
 
 /// admonition | Guidelines
     type: info

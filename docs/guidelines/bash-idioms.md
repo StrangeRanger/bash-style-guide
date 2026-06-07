@@ -1,12 +1,19 @@
-# Bashisms
+# Bash Idioms
 
 As a reminder, this style guide is designed specifically for Bash scripting. When given a choice, <mark>**_ALWAYS_**</mark> prefer Bash built-ins or keywords over external commands or `sh(1)` syntax.
 
-This section focuses on common Bashisms, which are shell features or commands unique to Bash. Using these Bash-specific constructs can improve your scripts' efficiency, portability (1), readability (2), and robustness.
-{ .annotate }
+This section focuses on common Bash idioms, which are Bash-specific patterns, built-ins, keywords, and expansions that improve script safety, readability, performance, and maintainability. These idioms are preferred when writing Bash scripts, but they may not be portable to POSIX `sh`.
 
-1. **Efficiency and Portability**: Bashisms provide built-in functionalities that are more efficient and portable than external commands or purely [POSIX](https://mywiki.wooledge.org/POSIX)-compliant syntax. By leveraging these features, you can write scripts that execute faster and run on any system where Bash is available, without relying on external tools.
-2. **Readability**: While Bashisms generally improve readability, some features, such as the parameter expansion syntax, may be confusing for beginners. However, the robustness and efficiency they offer make them worth learning.
+/// admonition | Why This Matters
+    type: tip
+
+- **Safety**: Bash idioms often avoid common shell pitfalls such as word splitting, pathname expansion, unsafe parsing, and accidental reliance on external command behavior.
+- **Clarity**: Bash-native constructs make the script's intent easier to see. For example, `[[ ... ]]`, arrays, parameter expansion, and arithmetic contexts communicate what the script is doing more directly than workarounds built from external commands.
+- **Performance**: Built-ins, keywords, and expansions avoid unnecessary subprocesses, which is especially helpful inside loops or frequently called functions.
+- **Consistency**: Relying on Bash features gives scripts more predictable behavior on systems where Bash is the target shell, instead of depending on differences between external tools or POSIX-compatible fallbacks.
+- **Portability Tradeoff**: These patterns may not work in POSIX `sh`. Use them when the script is intentionally written for Bash, and use POSIX-compatible syntax only when `/bin/sh` portability is an explicit requirement.
+
+///
 
 ## Conditional Tests
 
@@ -375,7 +382,6 @@ fi
 ## Parameter Expansion
 
 [Parameter expansion](https://mywiki.wooledge.org/BashGuide/Parameters#Parameter_Expansion) in Bash allows you to manipulate variables and perform string operations directly within the shell. It offers a wide range of options, including substring extraction, string replacement, and transformations.
-{ .annotate }
 
 /// admonition | Guidelines
     type: info

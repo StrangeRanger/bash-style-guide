@@ -5,11 +5,11 @@
 Pages requiring review and improvement (completed pages are highlighted as green):
 
 - [x] Home Page
-- [x] Aesthetics
-- [ ] Bashism
+- [ ] Aesthetics
+- [ ] Bash Idioms
 - [ ] Common Mistakes
 - [ ] Error Handling
-- [ ] Style
+- [x] Style
 
 Action items for these pages:
 
