@@ -1,22 +1,22 @@
 # Proper Error Handling
 
-Error handling is essential for ensuring scripts operate as intended, providing meaningful feedback, and efficiently managing unexpected events. It helps prevent minor issues from escalating into major problems.
+Error handling helps scripts behave predictably, report useful feedback, and recover cleanly from unexpected events. It also keeps small problems from turning into larger failures.
 
-This section outlines essential practices for handling errors in Bash, such as verifying command success, managing standard error streams (`stderr`) (1), and using `trap` for signal handling.
+This section outlines essential practices for handling errors in Bash, including checking whether commands succeed, writing errors to the standard error stream (`stderr`) (1), and using `trap` for signal handling.
 { .annotate }
 
-1. **Streams**: In Unix-like systems, streams are standardized channels for input and output operations between programs and the operating system. `stdin` (standard input) is the stream from which a program reads input data, with the keyboard typically serving as the default input source. `stdout` (standard output) is the stream to which a program writes its output, usually directed to the terminal. `stderr` (standard error) is the stream used for outputting error messages, which are typically directed to the terminal, separate from `stdout`.<br>_(Definition provided by ChatGPT, vetted by human)_
+1. **Streams**: In Unix-like systems, streams are standard channels for input and output between programs and the operating system. `stdin` (standard input) is where a program reads input, with the keyboard typically serving as the default input source. `stdout` (standard output) is where a program writes its normal output, usually to the terminal. `stderr` (standard error) is where a program writes error messages, which are typically directed to the terminal separately from `stdout`.
 
 ## Checking Command Success
 
-Commands like `cd`, `rm`, and `mv` can fail for various reasons, such as incorrect paths, insufficient permissions, or missing files. If the success of these commands is not verified, it may lead to unintended consequences, such as deleting the wrong files or modifying the wrong directories.
+Commands like `cd`, `rm`, and `mv` can fail for many reasons, including incorrect paths, insufficient permissions, or missing files. If those failures are not checked, a script may continue in the wrong state and produce unintended results, such as deleting the wrong files or modifying the wrong directories.
 
 /// admonition | Guidelines
     type: info
 //// tab | Conditional Checks
 
-- **Usage**: <mark>**_ALWAYS_**</mark> perform conditional checks for commands where failure, if left unhandled, could cause issues for the rest of the script.
-    - **Reason**: Verifying the success of critical commands ensures that failures are appropriately managed, preventing unintended side effects and maintaining control over script execution.
+- **Usage**: <mark>**_ALWAYS_**</mark> check commands whose failure could affect the rest of the script.
+    - **Reason**: Checking critical commands makes failures explicit, prevents unintended side effects, and keeps control over script execution.
 
 ///// admonition | Example
     type: example
@@ -26,14 +26,12 @@ cd /some/path || exit 1
 rm file
 ```
 
-<!-- **Explanation**: In this example, if the `cd` command fails, the script immediately exits, preventing any subsequent commands (like `rm`) from running. -->
-
 /////
 ////
 //// tab | Error Messages for Clarity
 
-- **Guideline**: When a command fails, provide a clear and descriptive error message that indicates what went wrong.
-    - **Reason**: Descriptive error messages help users—including yourself—understand what failed and why, simplifying troubleshooting.
+- **Guideline**: When a command fails, provide a clear error message that explains what went wrong.
+    - **Reason**: Clear error messages help users, including yourself, understand what failed and why, making troubleshooting easier.
 
 ///// admonition | Example
     type: example
@@ -46,21 +44,19 @@ cd /some/path || {
 rm file
 ```
 
-<!-- **Explanation**: In this example, if the `cd` command fails, an error message is sent to the terminal, and the script exits with a status code of `1`. The error message clearly indicates that the directory change failed, offering context for troubleshooting. -->
-
 /////
 ////
 ///
 
 ## Standard Error Stream
 
-Standard error (`stderr`) is a [file descriptor](https://mywiki.wooledge.org/FileDescriptor) used for directing error messages on Unix-like systems. By default, messages sent to `stderr` are displayed in the terminal separate from the standard output (`stdout`). This separation is essential for effective error management, ensuring that error messages can be handled independently from other streams. <!-- This is particularly useful when scripts are part of pipelines or used by command-line tools that parse specific output streams. -->
+Standard error (`stderr`) is a [file descriptor](https://mywiki.wooledge.org/FileDescriptor) used for error messages on Unix-like systems. By default, messages sent to `stderr` are displayed in the terminal separately from standard output (`stdout`). This separation lets error messages be handled independently from normal output.
 
 /// admonition | Guidelines
     type: info
 
 - **Guideline**: <mark>**_ALWAYS_**</mark> use `>&2` to redirect error messages to `stderr`.
-    - **Reason**: Command-line utilities rely on separating standard output (`stdout`) from error output (`stderr`). By redirecting errors to `stderr`, you ensure that error messages are correctly displayed and can be captured separately for logging or further processing.
+    - **Reason**: Command-line utilities rely on keeping `stdout` separate from `stderr`. Redirecting errors to `stderr` ensures that error messages are displayed correctly and can be captured separately for logging or further processing.
 
 ///
 
@@ -74,20 +70,18 @@ cd /some/nonexistent/path || {
 }
 ```
 
-<!-- **Explanation**: In this example, `cd` attempts to change its working directory to a nonexistent path. When the command fails, the error message is sent to `stderr` using `>&2`, ensuring that the error is communicated clearly and separately from regular output. The script then exits with a status code of `1`, signaling that an error occurred. -->
-
 ///
 
 ## Using `trap` for Signal Handling
 
-The `trap` command enables scripts to capture and respond to signals sent by the system or user actions. It allows you to define specific actions to execute when a signal is received, making it particularly useful for tasks such as cleanup operations before a script exits or handling signals like `SIGINT` (triggered by pressing ++ctrl+'C'++).
+The `trap` command lets scripts capture and respond to signals sent by the system or triggered by the user. It lets you define actions to run when a signal is received, making it useful for cleanup before a script exits or for handling signals like `SIGINT` (triggered by pressing ++ctrl+'C'++).
 
 /// admonition | Guidelines
     type: info
 //// tab | Cleanup Operations
 
-- **Usage**: Use `trap` to define actions, like cleaning up temporary files, that should run before a script exits.
-    - **Reason**: Without `trap`, ensuring proper cleanup can be challenging, especially if a script terminates unexpectedly. `trap` ensures these actions are executed regardless of how the script ends, helping to maintain a clean environment.
+- **Usage**: Use `trap` to define actions, such as removing temporary files, that should run before a script exits.
+    - **Reason**: Without `trap`, reliable cleanup can be difficult, especially if a script exits unexpectedly. `trap` runs cleanup actions regardless of how the script ends, helping keep the environment clean.
 
 ///// admonition | Example
     type: example
@@ -111,8 +105,8 @@ exit 0
 ////
 //// tab | Functions for Complex Trapping Logic
 
-- **Guideline**: For complex signal handling, define a function that performs all necessary actions, and then invoke this function in your `trap` command.
-    - **Reason**: Using a function helps organize and manage complex trapping logic, making your script easier to read and maintain, especially when dealing with multiple signals or detailed cleanup operations.
+- **Guideline**: For complex signal handling, define a function that performs the necessary actions, then call that function from your `trap`.
+    - **Reason**: Using a function keeps complex trapping logic organized and makes the script easier to read and maintain, especially when handling multiple signals or detailed cleanup operations.
 
 ///// admonition | Example
     type: example
@@ -123,20 +117,20 @@ TMP_FILE=$(mktemp)
 # Define a cleanup function.
 cleanup() {
     if (( $1 == 0 )); then
-        echo "[INFO]  Exiting normally"
+        echo "[INFO] Exiting normally"
     else
         echo "[ERROR] An error occurred" >&2
     fi
 
     echo "[INFO]  Cleaning up..."
     rm -f "$TMP_FILE" \
-        && echo "[INFO]  Temporary file removed" \
+        && echo "[INFO] Temporary file removed" \
         || {
             echo "[ERROR] Failed to remove temporary file" >&2
-            echo "[NOTE]  Please remove it manually: $TMP_FILE"
+            echo "[NOTE] Please remove it manually: $TMP_FILE"
         }
 
-    echo "[INFO]  Exiting with status code: $1"
+    echo "[INFO] Exiting with status code: $1"
     exit "$1"
 }
 
@@ -149,7 +143,7 @@ echo "[INFO]  Performing some operations..."
 exit 1
 ```
 
-**Explanation**: In this example, a cleanup function is defined to handle both successful and erroneous exits. The `trap` command ensures that `cleanup` is called when the script exits, providing a clear structure for managing resources and logging exit statuses.
+**Explanation**: In this example, a cleanup function handles both successful and failed exits. The `trap` ensures that `cleanup` runs when the script exits, providing a clear structure for managing resources and logging exit statuses.
 
 /////
 ////

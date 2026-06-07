@@ -8,7 +8,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Improved general grammar and wording of the guidelines.
+- **Guidelines**: Improve grammar, wording, and clarity in the error handling
+  guidance without changing the underlying recommendations.
+    - `Proper Error Handling`
+- **Guidelines**: Improve grammar, wording, and consistency in the quoting and
+  variable declaration guidance.
+    - `Style`
+- **TODO**: Mark the error handling guideline review as complete and remove an
+  outdated wording-review example.
 - **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms`, update
   related wording to describe those patterns as idiomatic Bash practices, and expand
   the section rationale around safety, clarity, performance, consistency, and POSIX
