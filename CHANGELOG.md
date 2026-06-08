@@ -16,11 +16,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - `Style`
 - **TODO**: Mark the error handling guideline review as complete and remove an
   outdated wording-review example.
+- **Guidelines**: Improve grammar, wording, heading consistency, and internal
+  references in the aesthetics guidance.
+    - `Aesthetics`
 - **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms`, update
   related wording to describe those patterns as idiomatic Bash practices, and expand
   the section rationale around safety, clarity, performance, consistency, and POSIX
-  portability tradeoffs.
+  portability tradeoffs. Also improve wording across the conditional test, sequence
+  iteration, command substitution, arithmetic, parameter expansion, file handling,
+  collection, input parsing, and array population guidance.
     - `Bash Idioms`
+- **Guidelines**: Improve wording and terminology in the draft common mistakes
+  guidance for choosing between `for` and `while` loops.
+    - `Common Mistakes`
 
 ## [2026.5.31] - 2026-05-31
 
