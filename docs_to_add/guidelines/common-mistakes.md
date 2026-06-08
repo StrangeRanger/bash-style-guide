@@ -1,29 +1,29 @@
 # Common Mistakes
 
-This section covers common mistakes and pitfalls encountered when writing Bash scripts. Understanding these issues and learning how to avoid them can help improve script reliability and maintainability.
+This section covers common mistakes and pitfalls in Bash scripts. Understanding these issues and learning how to avoid them can improve script reliability and maintainability.
 
 ## Understanding When to Use For vs. While Loops
 
-Choosing between `for` and `while` loops in Bash scripting depends on the nature of the data being processed. `For` loops are optimal for fixed-size data sets such as lists and arrays, while `while` loops excel in handling streams or large, indefinite data sets.
+Choosing between `for` and `while` loops in Bash depends on the data being processed. `for` loops are best for fixed-size data sets, such as lists and arrays, while `while` loops are better for streams or large, indefinite data sets.
 
-### Limitations of For Loops with Newline Separated Data
+### Limitations of For Loops with Newline-Separated Data
 
 Using `for` loops to process newline-separated data, such as files or command outputs, can lead to several issues:
 
-- **Memory Usage**: `For` loops load all elements into memory, which can become inefficient with large data sets.
-- **Field Splitting Issues**: Incorrectly parsing spaces and special characters can cause errors, as `for` loops split data based on spaces by default.
+- **Memory Usage**: `for` loops load all elements into memory, which can become inefficient with large data sets.
+- **Field Splitting Issues**: Incorrectly parsing spaces and special characters can cause errors because `for` loops split data on spaces by default.
 - **Word Splitting and Globbing**: Unquoted variables in `for` loops can lead to unexpected word splitting and globbing, altering script behavior.
 
 ### Advantages of While Loops
 
-- **Memory Efficiency**: `While` loops process data line by line, which is more efficient for memory usage.
+- **Memory Efficiency**: `while` loops process data line by line, which is more memory efficient.
 - **Accurate Field Handling**: Using `while` loops with `read` allows precise control over field splitting and can handle complex data patterns more reliably.
 
 ### Guidelines for Using For and While Loops
 
-- **Use For Loops for Known, Fixed-Size Data Sets**: Employ `for` loops when the number of iterations is known beforehand, such as iterating over an array or a range of numbers defined by brace expansion.
-- **Opt for While Loops for Streaming or Large Data Sets**: Choose `while` loops when dealing with potentially large or undefined data streams, particularly when reading lines from a file or the output of a command. This method prevents the entire data set from being loaded into memory at once.
-- **Handle Field and Word Splitting Carefully**: When using `for` loops, ensure variables are properly quoted to prevent word splitting and globbing issues. In `while` loops, use `IFS` (Internal Field Separator) adjustments and `read` to manage how input lines are divided into fields.
+- **Use For Loops for Known, Fixed-Size Data Sets**: Use `for` loops when the number of iterations is known beforehand, such as when iterating over an array or a range of numbers defined by brace expansion.
+- **Use While Loops for Streaming or Large Data Sets**: Choose `while` loops for potentially large or undefined data streams, especially when reading lines from a file or command output. This prevents the entire data set from being loaded into memory at once.
+- **Handle Field and Word Splitting Carefully**: When using `for` loops, quote variables properly to prevent word splitting and globbing issues. In `while` loops, adjust `IFS` (Internal Field Separator) and use `read` to control how input lines are divided into fields.
 
 ### Examples
 
@@ -55,7 +55,7 @@ done
 **Advantage:** Ideal for iterating over a predefined range of numbers.
 
 ////
-//// tab | Limitations of For Loops with Newline Separated Data
+//// tab | Limitations of For Loops with Newline-Separated Data
 
 _Processing Lines from a File_
 
@@ -65,7 +65,7 @@ for line in $(cat myfile.txt); do
 done
 ```
 
-**Issue:** Can lead to incorrect parsing and high memory usage for large files.
+**Issue:** This can lead to incorrect parsing and high memory usage for large files.
 
 ////
 //// tab | Using While Loops for Streaming Data
@@ -92,7 +92,7 @@ while IFS= read -r line; do
 done <<< "$command_output"
 ```
 
-**Advantage:** Reads and processes command output line by line, ensuring accurate field handling and memory efficiency.
+**Advantage:** Reads and processes command output line by line, ensuring accurate field handling and efficient memory use.
 
 ////
 //// tab | Preventing Word Splitting in For Loops
