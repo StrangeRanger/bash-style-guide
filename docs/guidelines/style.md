@@ -26,7 +26,7 @@ echo "Hello, $name"
 //// tab | Single Quotes (`'`)
 
 - **String Literals**: Use single quotes to define string literals.
-    - **Reason**: Single quotes preserve the literal value of every character in a string, preventing the shell from performing expansions or substitutions. This behavior is important for commands such as `find`, `grep`, and `awk`, each of which has its own rules for interpreting special characters. Single quotes ensure that these commands receive the input exactly as written, without the shell modifying it first.
+    - **Reason**: Single quotes preserve the literal value of every character in a string, preventing the shell from performing expansions or substitutions. This behavior is important for commands such as `find`, `grep`, and `awk`, each of which has its own rules for interpreting special characters. Single quotes ensure that these commands receive the input exactly as written, without the shell first modifying it.
 
 ///// admonition | Example
     type: example
@@ -88,7 +88,7 @@ Bash offers several ways to declare variables, each with implications for scope,
 
 - **Naming Convention**: Use `snake_case` for variable names.
 - **Scope Management**: Use the `local` keyword to limit a variable's scope to a function.
-    - **Reason**: Declaring a variable as `local` prevents accidental overwrites of global variables with the same name. It also ensures that once the function completes, the variable is unset and released from memory. (1)
+    - **Reason**: Declaring a variable as `local` prevents accidental overwrites to global variables with the same name. It also ensures that once the function completes, the variable is unset and released from memory. (1)
         { .annotate }
 
         1. **Variable Scope**: In Bash, variables declared inside a function without the `local` keyword are global by default, meaning they persist beyond the function's scope and can impact other parts of the script.

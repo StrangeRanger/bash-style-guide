@@ -6,29 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [2026.6.9] - 2026-06-09
+
 ### Changed
 
-- **Guidelines**: Improve grammar, wording, and clarity in the error handling
-  guidance without changing the underlying recommendations.
-    - `Proper Error Handling`
-- **Guidelines**: Improve grammar, wording, and consistency in the quoting and
-  variable declaration guidance.
-    - `Style`
-- **TODO**: Mark the error handling guideline review as complete and remove an
-  outdated wording-review example.
-- **Guidelines**: Improve grammar, wording, heading consistency, and internal
-  references in the aesthetics guidance.
-    - `Aesthetics`
-- **Guidelines**: Rename the Bash-specific patterns section to `Bash Idioms`, update
-  related wording to describe those patterns as idiomatic Bash practices, and expand
-  the section rationale around safety, clarity, performance, consistency, and POSIX
-  portability tradeoffs. Also improve wording across the conditional test, sequence
-  iteration, command substitution, arithmetic, parameter expansion, file handling,
-  collection, input parsing, and array population guidance.
+- **Guidelines**: Rename `Bashisms` to `Bash Idioms` and reframe the section
+  around Bash-specific patterns, built-ins, keywords, and expansions.
     - `Bash Idioms`
-- **Guidelines**: Improve wording and terminology in the draft common mistakes
-  guidance for choosing between `for` and `while` loops.
+- **Guidelines**: Expand the Bash idioms rationale around safety, clarity,
+  performance, consistency, and POSIX portability tradeoffs.
+    - `Bash Idioms`
+- **Guidelines**: Improve grammar, wording, and consistency across reviewed
+  guideline pages without changing the underlying recommendations.
+    - `Aesthetics`
+    - `Bash Idioms`
+    - `Proper Error Handling`
+    - `Style`
+- **Guidelines**: Improve wording and terminology in the draft guidance for
+  choosing between `for` and `while` loops.
     - `Common Mistakes`
+- **TODO**: Update guideline review tracking for `Aesthetics`, `Bash Idioms`,
+  `Error Handling`, and `Style`, and remove an outdated wording-review example.
+- **CI**: Update pinned GitHub Actions references for `actions/checkout` and
+  `astral-sh/setup-uv` in the PR build and Zensical deploy workflows.
 
 ## [2026.5.31] - 2026-05-31
 
@@ -179,7 +179,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 N/A
 
-[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2026.5.31...HEAD
+[unreleased]: https://github.com/StrangeRanger/bash-style-guide/compare/2026.6.9...HEAD
+[2026.6.9]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2026.6.9
 [2026.5.31]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2026.5.31
 [2026.1.21]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2026.1.21
 [2025.7.15]: https://github.com/StrangeRanger/bash-style-guide/releases/tag/2025.7.15
