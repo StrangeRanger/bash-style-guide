@@ -22,6 +22,7 @@ Commands like `cd`, `rm`, and `mv` can fail for many reasons, including incorrec
     type: example
 
 ```bash
+# Exit if changing to the specified directory fails.
 cd /some/path || exit 1
 rm file
 ```
@@ -31,12 +32,13 @@ rm file
 //// tab | Error Messages for Clarity
 
 - **Guideline**: When a command fails, provide a clear error message that explains what went wrong.
-    - **Reason**: Clear error messages help users, including yourself, understand what failed and why, making troubleshooting easier.
+    - **Reason**: Error messages help users, including yourself, understand what failed and why, making troubleshooting easier.
 
 ///// admonition | Example
     type: example
 
 ```bash
+# Exit if changing to the specified directory fails, and provide an error message.
 cd /some/path || {
     echo "ERROR: Failed to change directory to '/some/path'" >&2
     exit 1
@@ -65,7 +67,7 @@ Standard error (`stderr`) is a [file descriptor](https://mywiki.wooledge.org/Fil
 
 ```bash
 cd /some/nonexistent/path || {
-    echo "Error: Failed to change directory to '/some/nonexistent/path'" >&2
+    echo "ERROR: Failed to change directory to '/some/nonexistent/path'" >&2
     exit 1
 }
 ```
@@ -81,7 +83,7 @@ The `trap` command lets scripts capture and respond to signals sent by the syste
 //// tab | Cleanup Operations
 
 - **Usage**: Use `trap` to define actions, such as removing temporary files, that should run before a script exits.
-    - **Reason**: Without `trap`, reliable cleanup can be difficult, especially if a script exits unexpectedly. `trap` runs cleanup actions regardless of how the script ends, helping keep the environment clean.
+    - **Reason**: Without `trap`, reliable cleanup can be difficult, especially if a script exits unexpectedly. Traps ensure cleanup actions run regardless of how the script ends, helping keep the environment clean.
 
 ///// admonition | Example
     type: example
@@ -116,28 +118,27 @@ TMP_FILE=$(mktemp)
 
 # Define a cleanup function.
 cleanup() {
-    if (( $1 == 0 )); then
-        echo "[INFO] Exiting normally"
-    else
+    local exit_code="$1"
+
+    if (( exit_code != 0 )); then
         echo "[ERROR] An error occurred" >&2
+        echo "[NOTE] Exit code: $exit_code" >&2
     fi
 
-    echo "[INFO]  Cleaning up..."
-    rm -f "$TMP_FILE" \
-        && echo "[INFO] Temporary file removed" \
-        || {
-            echo "[ERROR] Failed to remove temporary file" >&2
-            echo "[NOTE] Please remove it manually: $TMP_FILE"
-        }
+    echo "[INFO] Cleaning up..."
+    rm "$TMP_FILE" || {
+        echo "[ERROR] Failed to remove temporary file" >&2
+        echo "[NOTE] Please remove it manually: '$TMP_FILE'" >&2
+    }
 
-    echo "[INFO] Exiting with status code: $1"
-    exit "$1"
+    echo "[INFO] Exiting..."
+    exit "$exit_code"
 }
 
 # Trap EXIT signal and invoke the cleanup function.
 trap 'cleanup $?' EXIT
 
-echo "[INFO]  Performing some operations..."
+echo "[INFO] Performing some operations..."
 
 # Simulate an error.
 exit 1
